@@ -4,24 +4,20 @@
 #include <cstring>
 #include <type_traits>
 
-using std::string;
+#include <iostream>
+
+#include <string>
+using namespace std;
 
 TEST_CASE("DSString class", "[DSString]"){
-    SECTION("Tests not implimented"){
-        REQUIRE(false);
-    }
-/*
-    DSString s[3];
-    s[0] = DSString("some string");
-    s[1] = DSString("string2");
-    s[2] = DSString("ssssss");
+
 
     SECTION("Equality operators"){
-        REQUIRE(s[0] == DSString("some string"));
-        REQUIRE(!(s[0] == s[1]));
+        DSString testString("some string");
+        REQUIRE(testString == "some string");
     }
-
-    SECTION("Assignment Operator"){
+/*
+    SECTION("Assignment Operator"){?
         DSString str;
         str = "stirng2";
         REQUIRE(str == s[1]);

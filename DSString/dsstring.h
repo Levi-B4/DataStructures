@@ -7,29 +7,31 @@
 class DSString
 {
     public:
+
+
         // default constructor
         DSString();
         // constructor - parameters: const char* cString
         DSString(const char* data);
         // constructor - parameters: const DSString cString
-        DSString(const DSString& data);
+        DSString(const DSString& other);
 
         // default destructor
         ~DSString();
 
-        DSString& operator = (const char* other);
-        DSString& operator = (const DSString& other);
-        DSString& operator + (const DSString& other);
-        DSString& operator += (const DSString& other);
+        DSString& operator= (const char* other);
+        DSString& operator= (const DSString& other);
+        DSString& operator+ (const DSString& other);
+        DSString& operator+= (const DSString& other);
 
-        bool operator == (const char* other);
-        bool operator == (const DSString& other);
-        bool operator < (const char* other);
-        bool operator < (const DSString& other);
+        bool operator== (const char* other);
+        bool operator== (const DSString& other);
+        bool operator< (const char* other);
+        bool operator< (const DSString& other);
 
         char& operator [] (const int index);
 
-        int size();
+        int size() const;
 
         // returns a smaller DSString from the original
         // parameters:
