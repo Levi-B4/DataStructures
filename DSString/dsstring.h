@@ -2,52 +2,58 @@
 #define DSSTRING_H
 
 #include <iostream>
-#include <cstring>
 
 class DSString
 {
-    public:
+public:
+    // default constructor
+    DSString();
+    // constructor - paramaters: const char* otherData
+    DSString(const char* data);
+    // constructor - paramaters: const DSString& otherData
+    DSString(const DSString& other);
+
+    // default destructor
+    ~DSString();
+
+    // assign operators
+    DSString& operator=(const char* data);
+    DSString& operator=(DSString& other);
+
+    // Comparison operators (check about making free functions instead)
+    bool operator==(const char* other) const;
+    bool operator==(const DSString& other) const;
+
+    bool operator<(const char* other) const;
+    bool operator<(const DSString& other) const;
+
+    bool operator>(const char* other) const;
+    bool operator>(const DSString& other) const;
+
+    bool operator<=(const char* other) const;
+    bool operator<=(const DSString& other) const;
+
+    bool operator>=(const char* other) const;
+    bool operator>=(const DSString& other) const;
+
+    // index operator
+    char& operator[](const int index);
 
 
-        // default constructor
-        DSString();
-        // constructor - parameters: const char* cString
-        DSString(const char* data);
-        // constructor - parameters: const DSString cString
-        DSString(const DSString& other);
+    // returns size of data array
+    int size() const;
 
-        // default destructor
-        ~DSString();
+    // returns sub-string between the given indexes
+    DSString substring(int startingIndex, int size);
 
-        DSString& operator= (const char* other);
-        DSString& operator= (const DSString& other);
-        DSString& operator+ (const DSString& other);
-        DSString& operator+= (const DSString& other);
+    char* c_str();
 
-        bool operator== (const char* other);
-        bool operator== (const DSString& other);
-        bool operator< (const char* other);
-        bool operator< (const DSString& other);
+    //TODO: Error: causes error with catch.hpp
+    //friend std::ostream operator<<(std::ostream&, const DSString);
+    friend std::istream operator>>(std::istream&, const DSString);
 
-        char& operator [] (const int index);
-
-        int size() const;
-
-        // returns a smaller DSString from the original
-        // parameters:
-            // int startingIndex - first element of the sub-string
-            // int numElements - number of elements the sub-string contains
-        DSString substring(int startingIndex, int numElements);
-
-        // c_str returns a c-string  representation of the DSString obj
-        char* c_str();
-
-        // grants private access to ostream operator function for <<
-        friend std::ostream& operator << (std::ostream&, const DSString&);
-
-    private:
-        char* data;
-
+private:
+    char* data;
 };
 
 #endif // DSSTRING_H
