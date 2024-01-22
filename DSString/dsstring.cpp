@@ -1,6 +1,7 @@
 #include "dsstring.h"
 
 #include <cstring>
+#include <iostream>
 
 // default constructor
 DSString::DSString() {
@@ -211,4 +212,24 @@ DSString DSString::substring(int startingIndex, int len){
 
 char* DSString::c_str(){
     return data;
+}
+
+std::ostream& operator<<(std::ostream& stream, const DSString& theString){
+    stream << theString.data;
+
+    return stream;
+}
+
+std::istream& operator>>(std::istream& stream, DSString& theString){
+    char * tempChar = theString.data;
+    theString.data = new char[100];
+
+    if(stream.good()){
+        while(!stream.eof()){
+            stream >> *theString.data;
+        }
+    }
+
+    delete[] tempChar;
+    return stream;
 }

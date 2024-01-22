@@ -49,11 +49,19 @@ public:
     char* c_str();
 
     //TODO: Error: causes error with catch.hpp
-    //friend std::ostream operator<<(std::ostream&, const DSString);
-    friend std::istream operator>>(std::istream&, const DSString);
+    //template <class U>
+    friend std::ostream& operator<<(std::ostream& stream, const DSString& theString);
+
+    //template <class U>
+    friend std::istream& operator>>(std::istream& stream, DSString& theString);
 
 private:
     char* data;
 };
+
+std::ostream& operator<<(std::ostream& stream, const DSString& theString);
+std::istream& operator>>(std::istream& stream, DSString& theString);
+
+
 
 #endif // DSSTRING_H
