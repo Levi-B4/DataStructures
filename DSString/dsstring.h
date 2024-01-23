@@ -20,6 +20,11 @@ public:
     DSString& operator=(const char* data);
     DSString& operator=(DSString& other);
 
+    DSString& operator+=(const char* data);
+    DSString& operator+=(DSString& other);
+
+    DSString& operator+=(const char data);
+
     // Comparison operators (check about making free functions instead)
     bool operator==(const char* other) const;
     bool operator==(const DSString& other) const;

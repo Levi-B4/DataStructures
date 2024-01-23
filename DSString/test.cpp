@@ -15,6 +15,17 @@ TEST_CASE("DSString class", "[DSString]"){
     DSString nonPtrArray[1];
     nonPtrArray[0] = "nonPtr";
 
+    SECTION("concatination operators"){
+        REQUIRE((*stringsArray[0] += "yo") == "test1yo");
+        *stringsArray[0] = "test1";
+
+        REQUIRE((*stringsArray[1] += testStr) == "yotestStr");
+        *stringsArray[1] = "yo";
+
+        REQUIRE((*stringsArray[1] += 'x') == "yox");
+        *stringsArray[1] = "yo";
+    }
+
     SECTION("Comparison Operators"){
         REQUIRE(testStr == "testStr");
         REQUIRE(nonPtrArray[0] == "nonPtr");

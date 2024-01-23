@@ -56,6 +56,43 @@ DSString& DSString::operator=(DSString& other){
     return *this;
 }
 
+DSString& DSString::operator+=(const char* data){
+    int newSize = unsigned(strlen(data)) + size() + 1;
+
+    char* tempData = this->data;
+
+    this->data = new char[newSize];
+    this->data[0] = '\0';
+
+    std::strcat(this->data, tempData);
+    delete[] tempData;
+
+    std::strcat(this->data, data);
+
+    return *this;
+}
+
+DSString& DSString::operator+=(DSString& other){
+    *this += other.c_str();
+
+    return *this;
+}
+
+DSString& DSString::operator+=(const char data){
+    int oldSize = unsigned(strlen(this->data));
+    char* oldData = this->data;
+
+    this->data = new char[oldSize + 2];
+
+    memcpy(this->data, oldData, oldSize);
+    delete[] oldData;
+
+    this->data[oldSize] = data;
+    this->data[oldSize + 1] = '\0';
+
+    return *this;
+}
+
 /*
  * comparison operator: ==
  * parameter: const char* other
