@@ -1,9 +1,14 @@
 #include "catch.hpp"
-#include "dsstring.h"
-
 #include <type_traits>
 
-TEST_CASE("DSString class", "[DSString]"){
+#include "DSString/dsstring.h"
+#include "DSVector/dsvector.h"
+
+TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
+
+/*
+ *  String
+ */
 
     DSString* stringsArray[3];
 
@@ -12,10 +17,14 @@ TEST_CASE("DSString class", "[DSString]"){
     stringsArray[2] = new DSString();
 
     DSString testStr = "testStr";
+
     DSString nonPtrArray[1];
     nonPtrArray[0] = "nonPtr";
 
-    SECTION("concatination operators"){
+
+
+
+    SECTION("String concatination operators"){
         REQUIRE((*stringsArray[0] += "yo") == "test1yo");
         *stringsArray[0] = "test1";
 
@@ -26,14 +35,12 @@ TEST_CASE("DSString class", "[DSString]"){
         *stringsArray[1] = "yo";
     }
 
-    SECTION("Comparison Operators"){
+    SECTION("String Comparison Operators"){
         REQUIRE(testStr == "testStr");
         REQUIRE(nonPtrArray[0] == "nonPtr");
 
 
         REQUIRE(*stringsArray[0] == "test1");
-        //TODO: ERROR: may need to make comparison operators free functions rather than member functions
-        //REQUIRE("yo" == *stringsArray[1]);
         REQUIRE(!(*stringsArray[0] == *stringsArray[1]));
 
         REQUIRE(!(*stringsArray[0] < "test1"));
@@ -51,7 +58,7 @@ TEST_CASE("DSString class", "[DSString]"){
         REQUIRE(*stringsArray[2] == "");
     }
 
-    SECTION("Indexing"){
+    SECTION("String Indexing"){
         REQUIRE((*stringsArray[0])[0] == 't');
         REQUIRE((*stringsArray[1])[1] == 'o');
         REQUIRE((*stringsArray[2])[0] == '\0');
@@ -77,8 +84,67 @@ TEST_CASE("DSString class", "[DSString]"){
         REQUIRE(*stringsArray[0] == stringsArray[0]->c_str());
     }
 
+ /*
+ *  Vector
+ */
+    int numArray1[3] = {0, 1, 2};
 
-    for(int i = 0; i < 3; i++){
-        delete stringsArray[i];
+    DSVector<int> numVect1(8);
+    for(int element : numArray1){
+        numVect1.pushBack(element);
+    }
+
+    DSVector<int> numVect1Copy = numVect1;
+
+    int numArray2[3] = {3, 4, 5};
+
+    DSVector<int> numVect2(3);
+    for(int element : numArray2){
+        numVect2.pushBack(element);
+    }
+
+
+    int numArray3[6] = {0, 1, 2, 3, 4, 5};
+    DSVector<int> numVect3;
+    for(int element : numArray3){
+        numVect3.pushBack(element);
+    }
+
+
+    SECTION("Vector getters and setters"){
+        // getters
+        REQUIRE(numVect1.getNumIndexes() == 3);
+        REQUIRE(numVect1.getCapacity() == 8);
+        REQUIRE(numVect1.getResizeIncrement() == 8);
+
+        // setters
+        numVect1.setCapacity(9);
+        numVect1.setResizeIncrement(10);
+        REQUIRE(numVect1.getCapacity() == 9);
+        REQUIRE(numVect1.getResizeIncrement() == 10);
+
+        numVect1.setCapacity(8);
+        numVect1.setResizeIncrement(8);
+    }
+
+    SECTION("Vector indexing"){
+        REQUIRE(numVect1[0] == 0);
+        REQUIRE(numVect1[2] == 2);
+    }
+
+    SECTION("Vector Comparison Operators"){
+        REQUIRE(numVect1 == numVect1Copy);
+        REQUIRE(numVect1 != numVect2);
+    }
+
+    SECTION("Vector Concatination"){
+        numVect1 += numVect2;
+        REQUIRE(numVect1 == numVect3);
+
+        numVect1 = numVect1Copy;
+
+        REQUIRE(numVect3 == (numVect1 + numVect2));
+
+        REQUIRE(numVect1 == numVect1Copy);
     }
 }

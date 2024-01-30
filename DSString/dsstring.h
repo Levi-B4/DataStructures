@@ -62,6 +62,8 @@ public:
 
 private:
     char* data;
+    char* begin;
+    char* end;
 };
 
 std::ostream& operator<<(std::ostream& stream, const DSString& theString);

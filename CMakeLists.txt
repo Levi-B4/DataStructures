@@ -1,6 +1,6 @@
-cmake_minimum_required(VERSION 3.14)
-project(Day1-Project0)
-set (EXE_NAME DayOne)
+cmake_minimum_required(VERSION 3.5)
+project(DataStructures LANGUAGES CXX)
+set (EXE_NAME Data_Structures_Test)
 
 ##########################################
 # Edit the items below.  In the quotes,
@@ -25,7 +25,10 @@ foreach(file IN LISTS input01 input02 input03 input04)
 endforeach()
 
 set(CMAKE_CXX_STANDARD 17)
-add_executable(${EXE_NAME} DSString/main.cpp
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+add_executable(${EXE_NAME} ./main.cpp
 	DSString/dsstring.h DSString/dsstring.cpp 
-	DSString/catch.hpp
-	DSString/test.cpp)
+	./catch.hpp
+        ./test.cpp
+        DSVector/dsvector.h )

@@ -3,8 +3,6 @@
 
 #include "catch.hpp"
 
-#include "dsstring.h"
-
 using namespace std;
 
 // Test flag
