@@ -10,7 +10,7 @@ jobs:
     runs-on: ${{matrix.config.os}}
     env:
       BUILD_TYPE: Release
-      EXE_NAME: DayOne
+      EXE_NAME: Data_Structures_Test
       ### ***** Put the name of the input files and output files here.
       ###   List them in the order that they need to appear in Argv param of main.
       ###   Output Files will follow input files
