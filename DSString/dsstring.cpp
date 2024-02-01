@@ -44,7 +44,7 @@ DSString& DSString::operator=(const char* data){
     return *this;
 }
 
-DSString& DSString::operator=(DSString& other){
+DSString& DSString::operator=(const DSString& other){
     delete[] data;
 
     data = new char[other.size() + 1];
@@ -72,12 +72,6 @@ DSString& DSString::operator+=(const char* data){
     return *this;
 }
 
-DSString& DSString::operator+=(DSString& other){
-    *this += other.c_str();
-
-    return *this;
-}
-
 DSString& DSString::operator+=(const char data){
     int oldSize = unsigned(strlen(this->data));
     char* oldData = this->data;
@@ -91,6 +85,30 @@ DSString& DSString::operator+=(const char data){
     this->data[oldSize + 1] = '\0';
 
     return *this;
+}
+
+DSString& DSString::operator+=(const DSString& other){
+    *this += other.c_str();
+
+    return *this;
+}
+
+DSString DSString::operator+(const char* data) const{
+    DSString result = *this;
+    result += data;
+    return result;
+}
+
+DSString DSString::operator+(const char data) const{
+    DSString result = *this;
+    result += data;
+    return result;
+}
+
+DSString DSString::operator+(const DSString& data) const{
+    DSString result = *this;
+    result += data;
+    return result;
 }
 
 /*
@@ -203,7 +221,7 @@ bool DSString::operator>=(const DSString& other) const{
     return false;
 }
 
-char& DSString::operator[](const int index){
+char& DSString::operator[](const int index) const{
     return data[index];
 }
 
@@ -212,7 +230,7 @@ int DSString::size() const{
 }
 
 // returns sub-string between the given indexes
-DSString DSString::substring(int startingIndex, int len){
+DSString DSString::substring(int startingIndex, int len) const{
     // TODO: throw outOfBounds exception for startingIndex < 0 || startingIndex > size() - 1
 
     // if len is 0 return empty string
@@ -247,7 +265,7 @@ DSString DSString::substring(int startingIndex, int len){
     return output;
 }
 
-char* DSString::c_str(){
+char* DSString::c_str() const{
     return data;
 }
 
