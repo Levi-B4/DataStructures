@@ -56,6 +56,18 @@ int DSString::findChar(const char searchChar, const int numInstance) const{
     return -1;
 }
 
+void DSString::deleteIndex(const int index){
+    int newSize = size() - 1;
+    char* tempData = new char[newSize + 1];
+    tempData[newSize] = '\0';
+
+    std::memcpy(tempData, data, index);
+    std::strcpy(tempData + index, data + index + 1);
+
+    delete[] data;
+    data = tempData;
+}
+
 // default destructor
 DSString::~DSString() {
     delete[] data;

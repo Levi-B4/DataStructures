@@ -18,6 +18,8 @@ public:
     // returns the location of the numInstance instance of the passed char - parameters: const char searchChar, const int numInstance
     int findChar(const char searchChar, const int numInstance) const;
 
+    void deleteIndex(const int index);
+
     // default destructor
     ~DSString();
 

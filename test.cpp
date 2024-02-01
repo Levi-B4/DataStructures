@@ -21,9 +21,6 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
     DSString nonPtrArray[1];
     nonPtrArray[0] = "nonPtr";
 
-
-
-
     SECTION("String concatination operators"){
         REQUIRE((*stringsArray[0] += "yo") == "test1yo");
         *stringsArray[0] = "test1";
@@ -36,18 +33,38 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
     }
 
     SECTION("String functions"){
+
+        // size()
         REQUIRE(stringsArray[0]->size() == 5);
         REQUIRE(stringsArray[2]->size() == 0);
 
+        // findChar(const char searchChar)
         REQUIRE(stringsArray[0]->findChar('s') == 2);
         REQUIRE(stringsArray[0]->findChar('y') == -1);
 
+        // findChar(const char searchChar, const int numInstance)
         REQUIRE(stringsArray[0]->findChar('t', 1) == 0);
         REQUIRE(stringsArray[0]->findChar('t', 2) == 3);
         REQUIRE(stringsArray[0]->findChar('t', 3) == -1);
+
+        // deleteIndex(const int index)
+        stringsArray[0]->deleteIndex(1);
+        REQUIRE(*stringsArray[0] == "tst1");
+        stringsArray[0]->deleteIndex(3);
+        REQUIRE(*stringsArray[0] == "tst");
+        *stringsArray[0] = "test1";
     }
 
     SECTION("String Comparison Operators"){
+        /*
+         *  TODO: this doesnt error out even tho it isnt in bounds
+         *  makes me think theres a leak
+         *  will error out if in at end of previous section
+         *      REQUIRE(!(*stringsArray[3] == "notEmpty"));
+         */
+
+        REQUIRE(!(*stringsArray[2] == "notEmpty"));
+
         REQUIRE(testStr == "testStr");
         REQUIRE(nonPtrArray[0] == "nonPtr");
 
