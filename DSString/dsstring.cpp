@@ -27,6 +27,16 @@ DSString::DSString(const DSString &other){
     data[other.size()] = '\0';
 }
 
+// returns the location of the passed char - parameters: const char searchChar
+int DSString::findChar(const char searchChar) const{
+    for(int i = 0; data[i] != '\0'; i++){
+        if(data[i] == searchChar){
+            return i;
+        }
+    }
+    return -1;
+}
+
 // default destructor
 DSString::~DSString() {
     delete[] data;

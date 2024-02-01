@@ -13,6 +13,9 @@ public:
     // constructor - paramaters: const DSString& otherData
     DSString(const DSString& other);
 
+    // returns the location of the passed char - parameters: const char searchChar
+    int findChar(const char searchChar) const;
+
     // default destructor
     ~DSString();
 

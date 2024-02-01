@@ -35,6 +35,11 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
         *stringsArray[1] = "yo";
     }
 
+    SECTION("String functions"){
+        REQUIRE(stringsArray[0]->findChar('s') == 2);
+        REQUIRE(stringsArray[0]->findChar('y') == -1);
+    }
+
     SECTION("String Comparison Operators"){
         REQUIRE(testStr == "testStr");
         REQUIRE(nonPtrArray[0] == "nonPtr");
