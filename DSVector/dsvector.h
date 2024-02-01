@@ -33,6 +33,9 @@ class DSVector
         // creates new vector with capacity equal to numIndexes
         void shrink();
 
+        // deletes data and creates an empty array in its place
+        void clear();
+
         // returns the first element of data array
         T& front();
 
@@ -59,8 +62,10 @@ class DSVector
         // returns true if passed in vector does not have the same values as data - params: const DSVector<T>& other
         bool operator!=(const DSVector<T>& other) const;
 
+
         // returns the value at the passed in index - params: const int index
         T operator[](const int index) const;
+
 
         // default destructor
         ~DSVector();
@@ -175,6 +180,16 @@ void DSVector<T>::shrink(){
     }
 
     delete[] oldData;
+}
+
+// deletes data and creates an empty array in its place
+template <class T>
+void DSVector<T>::clear(){
+    delete[] data;
+
+    numIndexes = 0;
+
+    data = new T[capacity];
 }
 
 // returns the first element of data array
