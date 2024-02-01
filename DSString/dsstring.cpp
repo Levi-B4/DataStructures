@@ -37,6 +37,25 @@ int DSString::findChar(const char searchChar) const{
     return -1;
 }
 
+// returns the location of the numInstance instance of the passed char - parameters: const char searchChar, const int numInstance
+int DSString::findChar(const char searchChar, const int numInstance) const{
+
+    if(numInstance <= 0){
+        return -1;
+    }
+
+    int currentInstances = 0;
+    for(int i = 0; data[i] != '\0'; i++){
+        if(data[i] == searchChar){
+            currentInstances++;
+            if(currentInstances == numInstance){
+                return i;
+            }
+        }
+    }
+    return -1;
+}
+
 // default destructor
 DSString::~DSString() {
     delete[] data;
@@ -257,7 +276,15 @@ DSString DSString::substring(int startingIndex, int len) const{
             startingIndex = 0;
         }
         len = endingIndex - startingIndex + 1;
+    } else{
+        // adjust len so that ending index is within string
+        if((startingIndex + len) > size()){
+            len = size() - startingIndex;
+        }
     }
+
+    // shrink len to be within the size of this string
+
 
     // if startingIndex is last index, return empty string
     if(startingIndex == size() - 1){

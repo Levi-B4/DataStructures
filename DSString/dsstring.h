@@ -15,6 +15,8 @@ public:
 
     // returns the location of the passed char - parameters: const char searchChar
     int findChar(const char searchChar) const;
+    // returns the location of the numInstance instance of the passed char - parameters: const char searchChar, const int numInstance
+    int findChar(const char searchChar, const int numInstance) const;
 
     // default destructor
     ~DSString();
@@ -56,7 +58,7 @@ public:
     int size() const;
 
     // returns sub-string between the given indexes
-    DSString substring(int startingIndex, int size) const;
+    DSString substring(int startingIndex, int len) const;
 
     char* c_str() const;
 

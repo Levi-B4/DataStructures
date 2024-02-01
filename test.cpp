@@ -36,8 +36,15 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
     }
 
     SECTION("String functions"){
+        REQUIRE(stringsArray[0]->size() == 5);
+        REQUIRE(stringsArray[2]->size() == 0);
+
         REQUIRE(stringsArray[0]->findChar('s') == 2);
         REQUIRE(stringsArray[0]->findChar('y') == -1);
+
+        REQUIRE(stringsArray[0]->findChar('t', 1) == 0);
+        REQUIRE(stringsArray[0]->findChar('t', 2) == 3);
+        REQUIRE(stringsArray[0]->findChar('t', 3) == -1);
     }
 
     SECTION("String Comparison Operators"){
@@ -82,6 +89,8 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
         REQUIRE(stringsArray[0]->substring(2, -2) == "es");
         REQUIRE(stringsArray[0]->substring(0, -3) == "t");
         REQUIRE(stringsArray[0]->substring(stringsArray[0]->size() - 1, -2) == "t1");
+
+        REQUIRE(stringsArray[0]->substring(3, 999) == "t1");
     }
 
     SECTION("c_string"){
