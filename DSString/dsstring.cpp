@@ -283,9 +283,6 @@ DSString DSString::substring(int startingIndex, int len) const{
         }
     }
 
-    // shrink len to be within the size of this string
-
-
     // if startingIndex is last index, return empty string
     if(startingIndex == size() - 1){
         DSString output;
