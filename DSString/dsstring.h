@@ -75,9 +75,4 @@ private:
     char* data;
 };
 
-std::ostream& operator<<(std::ostream& stream, const DSString& theString);
-std::istream& operator>>(std::istream& stream, DSString& theString);
-
-
-
 #endif // DSSTRING_H
