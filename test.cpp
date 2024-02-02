@@ -1,6 +1,9 @@
 #include "catch.hpp"
 #include <type_traits>
 
+#include <fstream>
+#include <iostream>
+
 #include "DSString/dsstring.h"
 #include "DSVector/dsvector.h"
 
@@ -113,6 +116,37 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
     SECTION("c_string"){
         REQUIRE(*stringsArray[0] == stringsArray[0]->c_str());
         REQUIRE(*stringsArray[0] == stringsArray[0]->c_str());
+    }
+
+    SECTION("File input/output"){
+        // output
+        DSString filePath = "/home/Levi/repos/DataStructuresProjects/DataStructures/testFile.txt";
+
+        std::ofstream testOutFile;
+        testOutFile.open(filePath.c_str());
+
+        testOutFile << DSString("hello\n");
+        testOutFile << DSString("Test Test") << std::endl;
+
+        testOutFile.close();
+
+        // input
+        DSString fileTestString;
+
+        std::ifstream testInFile;
+        testInFile.open(filePath.c_str());
+
+        testInFile >> fileTestString;
+        REQUIRE(fileTestString == "hello");
+
+        testInFile >> fileTestString;
+        REQUIRE(fileTestString == "Test Test");
+
+        testInFile.close();
+
+        std::ofstream clearFile;
+        clearFile.open(filePath.c_str());
+        clearFile.close();
     }
 
  /*

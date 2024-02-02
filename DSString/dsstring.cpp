@@ -322,15 +322,38 @@ std::ostream& operator<<(std::ostream& stream, const DSString& theString){
 }
 
 std::istream& operator>>(std::istream& stream, DSString& theString){
-    char * tempChar = theString.data;
-    theString.data = new char[100];
-
     if(stream.good()){
-        while(!stream.eof()){
-            stream >> *theString.data;
+        // change data to empty string if no content
+        if(stream.eof()){
+            theString = "";
+            return stream;
         }
+
+        char tempChar;
+        char* tempArray = new char[100];
+        int currentIndex;
+
+        // itterate through each char of input adding to temp array
+        for(currentIndex = 0; !stream.eof(); currentIndex++){
+            stream.get(tempChar);
+            if(tempChar == '\r'){
+                continue;
+            }
+            if(tempChar == '\n'){
+                break;
+            }
+            tempArray[currentIndex] = tempChar;
+        }
+
+        delete[] theString.data;
+        theString.data = new char[currentIndex + 1];
+
+        /// copy temp array to data
+        memcpy(theString.data, tempArray, currentIndex);
+        theString.data[currentIndex] = '\0';
+
+        delete[] tempArray;
     }
 
-    delete[] tempChar;
     return stream;
 }
