@@ -210,8 +210,34 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
 
         numVect1 = numVect1Copy;
 
-        REQUIRE(numVect3 == (numVect1 + numVect2));
 
+        REQUIRE(numVect3 == (numVect1 + numVect2));
         REQUIRE(numVect1 == numVect1Copy);
+
+
+        numVect1 += 3;
+        numVect1 += 4;
+        REQUIRE(numVect3 == (numVect1 + 5));
+
+        numVect1 = numVect1Copy;
+
+        // low capacities
+        numVect1.setCapacity(2);
+        numVect1 += numVect2;
+        REQUIRE(numVect1 == numVect3);
+
+        numVect1 = numVect1Copy;
+
+        numVect1.setCapacity(2);
+        REQUIRE(numVect3 == (numVect1 + numVect2));
+        REQUIRE(numVect1 == numVect1Copy);
+
+        numVect1.setCapacity(2);
+        numVect1 += 3;
+        numVect1 += 4;
+        REQUIRE(numVect3 == (numVect1 + 5));
+
+        numVect1 = numVect1Copy;
+
     }
 }
