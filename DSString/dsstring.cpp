@@ -345,7 +345,7 @@ std::istream& operator>>(std::istream& stream, DSString& theString){
         }
 
         char tempChar;
-        char* tempArray = new char[100];
+        char* tempArray = new char[999];
         int currentIndex;
 
         // itterate through each char of input adding to temp array
