@@ -111,6 +111,8 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
         REQUIRE(stringsArray[0]->substring(stringsArray[0]->size() - 1, -2) == "t1");
 
         REQUIRE(stringsArray[0]->substring(3, 999) == "t1");
+
+        REQUIRE(stringsArray[0]->substring(1) == "est1");
     }
 
     SECTION("c_string"){

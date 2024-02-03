@@ -311,6 +311,21 @@ DSString DSString::substring(int startingIndex, int len) const{
     return output;
 }
 
+// returns sub-string starting at the given index
+DSString DSString::substring(int startingIndex) const{
+    if(startingIndex > size() - 1){
+        return "";
+    }
+    char outputArray[size()];
+
+    memcpy(&outputArray, data + startingIndex, size());
+    outputArray[size() - 1] = '\0';
+
+    DSString output(outputArray);
+
+    return output;
+}
+
 char* DSString::c_str() const{
     return data;
 }

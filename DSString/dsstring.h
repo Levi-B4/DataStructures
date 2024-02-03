@@ -61,6 +61,8 @@ public:
 
     // returns sub-string between the given indexes
     DSString substring(int startingIndex, int len) const;
+    // returns sub-string starting at the given index
+    DSString substring(int startingIndex) const;
 
     char* c_str() const;
 
