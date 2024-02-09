@@ -342,7 +342,10 @@ std::istream& operator>>(std::istream& stream, DSString& theString){
         char* buffer;
         buffer = new char[500];
 
-        stream.getline(buffer, std::streamsize(500));
+        stream.get(buffer, 500);
+        // clear newline char
+        stream.get();
+
         theString = buffer;
 
         delete[] buffer;
