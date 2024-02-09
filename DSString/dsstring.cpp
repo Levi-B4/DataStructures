@@ -19,7 +19,7 @@ DSString::DSString(const char* data) {
 }
 
 // constructor - parameters: const DSString otherData
-DSString::DSString(const DSString &other){
+DSString::DSString(const DSString& other){
     data = new char[other.size() + 1];
 
     std::memcpy(data, other.data, strlen(other.data));
@@ -86,6 +86,10 @@ DSString& DSString::operator=(const char* data){
 }
 
 DSString& DSString::operator=(const DSString& other){
+
+    if(this == &other){
+        return *this;
+    }
     delete[] data;
 
     data = new char[other.size() + 1];
