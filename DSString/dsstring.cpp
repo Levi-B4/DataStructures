@@ -338,7 +338,7 @@ std::ostream& operator<<(std::ostream& stream, const DSString& theString){
 
 // operator >>
 std::istream& operator>>(std::istream& stream, DSString& theString){
-    if(stream.good()){
+    if(!stream.bad()){
         char* buffer;
         buffer = new char[500];
 

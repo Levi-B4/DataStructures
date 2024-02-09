@@ -122,7 +122,7 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
 
     SECTION("File input/output"){
         // output
-        DSString filePath = "/home/Levi/repos/DataStructuresProjects/DataStructures/testFile.txt";
+        DSString filePath = "./testFile.txt";
 
         std::ofstream testOutFile;
         testOutFile.open(filePath.c_str());
