@@ -31,4 +31,6 @@ add_executable(${EXE_NAME} ./main.cpp
 	DSString/dsstring.h DSString/dsstring.cpp 
 	./catch.hpp
         ./test.cpp
-        DSVector/dsvector.h)
+        DSVector/dsvector.h
+        DSStack/dsstack.h
+    )
