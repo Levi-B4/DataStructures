@@ -6,8 +6,9 @@ class DSStack{
 public:
     /**
      * @brief Default constructor
+     * @param int capacity = 10, int resizeIncrement = 10
      */
-    DSStack();
+    DSStack(int capacity = 10, int resizeIncrement = 10);
 
     /**
      * @brief adds element to the top of the stack
@@ -45,18 +46,23 @@ public:
 private:
     T* data;
     T* top;
+    int size;
     int capacity;
-    int numIndexes;
     int resizeIncrement;
 
 };
 
 /**
  * @brief Default constructor
+ * @param int capacity = 10, int resizeIncrement = 10
  */
 template <class T>
 DSStack::DSStack(){
-
+    this->capacity = capacity;
+    data = new T[capacity];
+    this->resizeIncrement = resizeIncrement;
+    top = nullptr;
+    size = 0;
 }
 
 /**
@@ -64,39 +70,73 @@ DSStack::DSStack(){
  * @param T element
  */
 void push(T element){
-    top++;
+    size++;
+
+    if(top == nullptr){
+        top = data;
+        *top = element;
+        return;
+    }
+
+    if(capacity == size){
+        T* temp = data;
+        data = new T[capacity + resizeIncrement];
+
+        for(int i = 0; temp + i - 1 != top; i++){
+            data[i] = temp[i];
+        }
+
+        delete temp;
+        top = data + size - 1;
+    }
+
     *top = element;
 }
 
 /**
  * @brief removes last element from the top of the stack
  */
-void pop();
+void pop(){
+    if(top != nullptr){
+        size--;
+        top--;
+    }
+}
 
 /**
  * @brief accesses top element of the stack
  * @return T
  */
-T top();
+T top(){
+    return *top;
+}
 
 /**
  * @brief returns true if top is nullptr
  * @return bool
  */
-bool isEmpty();
+bool isEmpty(){
+    if(top == nullptr){
+        return true;
+    } else{
+        return false;
+    }
+}
 
 /**
  * @brief returns the size of data
  * @return int
  */
-int size();
+int size(){
+    return size;
+}
 
 /**
  * Default destructor
  */
 template <class T>
 DSStack::~DSStack(){
-
+    delete data;
 }
 
 #endif // DSSTACK_H
