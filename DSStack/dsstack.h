@@ -69,6 +69,7 @@ DSStack::DSStack(){
  * @brief places element one position after top, making it the new top
  * @param T element
  */
+template <class T>
 void push(T element){
     size++;
 
@@ -96,6 +97,7 @@ void push(T element){
 /**
  * @brief removes last element from the top of the stack
  */
+template <class T>
 void pop(){
     if(top != nullptr){
         size--;
@@ -107,6 +109,7 @@ void pop(){
  * @brief accesses top element of the stack
  * @return T
  */
+template <class T>
 T top(){
     return *top;
 }
@@ -115,6 +118,7 @@ T top(){
  * @brief returns true if top is nullptr
  * @return bool
  */
+template <class T>
 bool isEmpty(){
     if(top == nullptr){
         return true;
@@ -127,6 +131,7 @@ bool isEmpty(){
  * @brief returns the size of data
  * @return int
  */
+template <class T>
 int size(){
     return size;
 }
