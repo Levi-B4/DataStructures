@@ -25,7 +25,7 @@ public:
      * @brief accesses top element of the stack
      * @return T
      */
-    T top();
+    T peekTop();
 
     /**
      * @brief returns true if data is empty
@@ -46,7 +46,7 @@ public:
 private:
     T* data;
     T* top;
-    int size;
+    int numElements;
     int capacity;
     int resizeIncrement;
 
@@ -57,12 +57,12 @@ private:
  * @param int capacity = 10, int resizeIncrement = 10
  */
 template <class T>
-DSStack::DSStack(){
+DSStack<T>::DSStack(int capacity, int resizeIncrement){
     this->capacity = capacity;
     data = new T[capacity];
     this->resizeIncrement = resizeIncrement;
     top = nullptr;
-    size = 0;
+    numElements = 0;
 }
 
 /**
@@ -70,8 +70,8 @@ DSStack::DSStack(){
  * @param T element
  */
 template <class T>
-void push(T element){
-    size++;
+void DSStack<T>::push(T element){
+    numElements++;
 
     if(top == nullptr){
         top = data;
@@ -83,12 +83,12 @@ void push(T element){
         T* temp = data;
         data = new T[capacity + resizeIncrement];
 
-        for(int i = 0; temp + i - 1 != top; i++){
+        for(int i = 0; i < numElements - 1; i++){
             data[i] = temp[i];
         }
 
         delete temp;
-        top = data + size - 1;
+        top = data + numElements - 2;
     }
 
     *top = element;
@@ -98,9 +98,9 @@ void push(T element){
  * @brief removes last element from the top of the stack
  */
 template <class T>
-void pop(){
+void DSStack<T>::pop(){
     if(top != nullptr){
-        size--;
+        numElements--;
         top--;
     }
 }
@@ -110,7 +110,7 @@ void pop(){
  * @return T
  */
 template <class T>
-T top(){
+T DSStack<T>::peekTop(){
     return *top;
 }
 
@@ -119,7 +119,7 @@ T top(){
  * @return bool
  */
 template <class T>
-bool isEmpty(){
+bool DSStack<T>::isEmpty(){
     if(top == nullptr){
         return true;
     } else{
@@ -132,15 +132,15 @@ bool isEmpty(){
  * @return int
  */
 template <class T>
-int size(){
-    return size;
+int DSStack<T>::size(){
+    return numElements;
 }
 
 /**
  * Default destructor
  */
 template <class T>
-DSStack::~DSStack(){
+DSStack<T>::~DSStack(){
     delete data;
 }
 

@@ -6,6 +6,7 @@
 
 #include "DSString/dsstring.h"
 #include "DSVector/dsvector.h"
+#include "DSStack/dsstack.h"
 
 TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
 
