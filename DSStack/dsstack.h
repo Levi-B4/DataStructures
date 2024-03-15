@@ -40,6 +40,13 @@ public:
     int size();
 
     /**
+     * @brief operator =
+     * @param DSStack<T>& other
+     * @return DSStack<T>&
+     */
+    DSStack<T>& operator=(const DSStack<T>& other);
+
+    /**
      * @brief Default destructor
      */
     ~DSStack();
@@ -83,7 +90,7 @@ void DSStack<T>::push(T element){
         T* temp = data;
         data = new T[capacity + resizeIncrement];
 
-        for(int i = 0; i < numElements - 1; i++){
+        for(int i = 0; i < numElements; i++){
             data[i] = temp[i];
         }
 
@@ -134,6 +141,28 @@ bool DSStack<T>::isEmpty(){
 template <class T>
 int DSStack<T>::size(){
     return numElements;
+}
+
+/**
+ * @brief operator =
+ * @param DSStack<T>& other
+ * @return DSStack<T>&
+ */
+template <class T>
+DSStack<T>& DSStack<T>::operator=(const DSStack<T>& other){
+    delete[] data;
+
+    numElements = other.numElements;
+    capacity = other.capacity;
+    resizeIncrement = other.resizeIncrement;
+
+    data = new T[capacity];
+
+    for(int i = 0; i < numElements; i++){
+        this->data[i] = other.data[i];
+    }
+
+    return *this;
 }
 
 /**
