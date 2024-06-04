@@ -15,6 +15,27 @@ class DSStack{
          */
         DSStack(const DSStack<T>& other);
 
+        /**
+         * @brief ~DSStack - destructor
+         */
+        ~DSStack();
+
+        /**
+         * @brief push - adds an element to the top of the stack
+         * @param element - element to add to stack
+         */
+        void push(T element);
+
+        /**
+         * @brief pop - removes the top element of the stack
+         */
+        void pop();
+
+        /**
+         * @brief peek - returns the top element of the stack
+         * @return top element of the stack
+         */
+        T peek();
 
 
 
@@ -24,6 +45,7 @@ class DSStack{
         int capacity;
         int numIndexes = 0;
         int resizeIncrement;
+        T* top = nullptr;
 };
 
 /**
@@ -53,6 +75,37 @@ DSStack<T>::DSStack(const DSStack<T>& other){
         this->data[i] = other.data[i];
     }
 }
+
+/**
+ * @brief ~DSStack - destructor
+ */
+template <class T>
+DSStack<T>::~DSStack(){
+    delete[] data;
+}
+
+/**
+ * @brief pop - decrements the top pointer by one element
+ */
+template <class T>
+void DSStack<T>::pop(){
+    if(numIndexes == 0){
+        return;
+    } else{
+        top--;
+        numIndexes--;
+    }
+}
+
+/**
+ * @brief peek - returns the top element of the stack
+ * @return top element of the stack
+ */
+template <class T>
+T DSStack<T>::peek(){
+    return *top;
+}
+
 
 
 #endif // DSSTACK_H
