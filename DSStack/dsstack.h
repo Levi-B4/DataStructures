@@ -85,7 +85,22 @@ DSStack<T>::~DSStack(){
 }
 
 /**
- * @brief pop - decrements the top pointer by one element
+ * @brief DSStack::push - increments the top pointer by one element and sets its target to the given element. Sets it to data if it is currently nullptr.
+ * @param element
+ */
+template <class T>
+void DSStack<T>::push(T element){
+    if(top == nullptr){
+        top = data;
+    } else {
+        top++;
+    }
+
+    *top = element;
+}
+
+/**
+ * @brief DSStack::pop - decrements the top pointer by one element
  */
 template <class T>
 void DSStack<T>::pop(){
@@ -98,7 +113,7 @@ void DSStack<T>::pop(){
 }
 
 /**
- * @brief peek - returns the top element of the stack
+ * @brief DSStack::peek - returns the top element of the stack
  * @return top element of the stack
  */
 template <class T>

@@ -6,8 +6,17 @@
 
 #include "DSString/dsstring.h"
 #include "DSVector/dsvector.h"
+//#include "DSStack/dsstack.h"
 
 TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
+
+/*
+ *  Set Variables
+ */
+
+    const int intArray1[3] = {0, 1, 2};
+    const int intArray2[3] = {3, 4, 5};
+    const int intArray3[6] = {0, 1, 2, 3, 4, 5};
 
 /*
  *  DSString
@@ -59,12 +68,6 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
     }
 
     SECTION("String Comparison Operators"){
-        /*
-         *  TODO: this doesnt error out even tho it isnt in bounds
-         *  makes me think theres a leak
-         *  will error out if in at end of previous section
-         *      REQUIRE(!(*stringsArray[3] == "notEmpty"));
-         */
 
         REQUIRE(!(*testStringArray[2] == "notEmpty"));
 
@@ -155,29 +158,31 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
  *  DSVector
  */
 
-    // setting variables
-    int testVectArray1[3] = {0, 1, 2};
-    int testVectArray2[3] = {3, 4, 5};
-    int testVectArray3[6] = {0, 1, 2, 3, 4, 5};
-
     DSVector<int> numVect1(8);
     DSVector<int> numVect1Copy;
     DSVector<int> numVect2(3);
     DSVector<int> numVect3;
 
-    for(int element : testVectArray1){
+    for(int element : intArray1){
         numVect1.pushBack(element);
     }
 
-    for(int element : testVectArray2){
+    for(int element : intArray2){
         numVect2.pushBack(element);
     }
 
-    for(int element : testVectArray3){
+    for(int element : intArray3){
         numVect3.pushBack(element);
     }
 
     numVect1Copy = numVect1;
+
+    DSVector<int> debugVect;
+    DSVector<int> debugVectEqual;
+    for(int element : intArray3){
+        debugVect.pushBack(element);
+        debugVectEqual.pushBack(element);
+    }
 
 
     SECTION("Vector getters and setters"){
@@ -245,5 +250,7 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
 /*
  * DSStack
  */
+
+
 
 }
