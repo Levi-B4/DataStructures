@@ -26,6 +26,10 @@ class DSStack{
         int resizeIncrement;
 };
 
+/**
+ * @brief DSStack::DSStack - default constructor
+ * @param resizeIncrement - increment of size increase when at max capacity, 10 by default
+ */
 template <class T>
 DSStack<T>::DSStack(int resizeIncrement){
     this->resizeIncrement = resizeIncrement;
@@ -33,6 +37,10 @@ DSStack<T>::DSStack(int resizeIncrement){
     data = new T[capacity];
 }
 
+/**
+ * @brief DSStack::DSStack - copy constructor
+ * @param other - reference to target stack
+ */
 template <class T>
 DSStack<T>::DSStack(const DSStack<T>& other){
     capacity = other.capacity;
