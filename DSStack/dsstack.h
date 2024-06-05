@@ -38,6 +38,20 @@ class DSStack{
         T peek();
 
 
+        /**
+         * @brief operator = :  Sets this stack equal to the passed in stack
+         * @param other - reference to target stack
+         * @return reference to this stack
+         */
+        DSStack<T>& operator=(const DSStack<T>& other);
+
+        /**
+         * @brief operator == :  compares this stack against another stack
+         * @param other - reference to target stack
+         * @return true if the stacks have equal values
+         */
+        bool operator==(const DSStack<T>& other) const;
+
 
 
     private:
@@ -120,6 +134,55 @@ template <class T>
 T DSStack<T>::peek(){
     return *top;
 }
+
+/**
+ * @brief operator = :  Sets this stack equal to the passed in stack
+ * @param other - reference to target stack
+ * @return reference to this stack
+ */
+template <class T>
+DSStack<T>& DSStack<T>::operator=(const DSStack<T>& other){
+    delete[] data;
+
+    numIndexes = other.numIndexes;
+    capacity = other.capacity;
+    resizeIncrement = other.resizeIncrement;
+
+    data = new T[capacity];
+
+    for(int i = 0; i < numIndexes; i++){
+        data[i] = other.data[i];
+    }
+
+    top = data + numIndexes - 1;
+
+    return *this;
+}
+
+
+/**
+ * @brief operator == :  compares this stack against another stack, value by value
+ * @param other - reference to target stack
+ * @return true if the stacks have equal values
+ */
+template <class T>
+bool DSStack<T>::operator==(const DSStack<T>& other) const{
+    if(numIndexes != other.numIndexes){
+        return false;
+    }
+
+    for(int i = 0; i < numIndexes; i++){
+        if(data[i] != other.data[i]){
+            return false;
+        }
+    }
+
+    return true;
+}
+
+
+
+
 
 
 

@@ -236,7 +236,7 @@ DSVector<T>& DSVector<T>::operator=(const DSVector<T>& other){
     data = new T[capacity];
 
     for(int i = 0; i < numIndexes; i++){
-        this->data[i] = other.data[i];
+        data[i] = other.data[i];
     }
 
     return *this;

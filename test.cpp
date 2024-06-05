@@ -6,7 +6,7 @@
 
 #include "DSString/dsstring.h"
 #include "DSVector/dsvector.h"
-//#include "DSStack/dsstack.h"
+#include "DSStack/dsstack.h"
 
 TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
 
@@ -250,6 +250,33 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
 /*
  * DSStack
  */
+
+    DSStack<int> numStack1(8);
+    DSStack<int> numStack1Copy;
+    DSStack<int> numStack2(3);
+    DSStack<int> numStack3;
+
+    for(int element : intArray1){
+        numStack1.push(element);
+        numStack1Copy.push(element);
+    }
+
+    for(int element : intArray2){
+        numStack2.push(element);
+    }
+
+    for(int element : intArray3){
+        numStack3.push(element);
+    }
+
+    SECTION("PlaceHolder"){
+
+        REQUIRE(numStack1 == numStack1Copy);
+
+        numStack1 = numStack1Copy;
+
+        REQUIRE(numStack1 == numStack1Copy);
+    }
 
 
 
