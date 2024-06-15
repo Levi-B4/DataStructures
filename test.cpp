@@ -269,6 +269,12 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
         numStack3.push(element);
     }
 
+    SECTION("Getters and Setters"){
+        REQUIRE(numStack1.getNumIndexes() == 3);
+        REQUIRE(numStack1.getCapacity() == 8);
+        REQUIRE(numStack1.getResizeIncrement() == 8);
+    }
+
     SECTION("PlaceHolder"){
 
         REQUIRE(numStack1 == numStack1Copy);

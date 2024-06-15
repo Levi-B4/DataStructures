@@ -21,6 +21,31 @@ class DSStack{
         ~DSStack();
 
         /**
+         * @brief Getter - numIndexes
+         */
+        int getNumIndexes();
+
+        /**
+         * @brief Getter - capacity
+         */
+        int getCapacity();
+
+        /**
+         * @brief Setter - capacity
+         */
+        void setCapacity();
+
+        /**
+         * @brief Getter - risizeIncrement
+         */
+        int getResizeIncrement();
+
+        /**
+         * @brief Setter - resizeIncrement
+         */
+        void setResizeIncrement();
+
+        /**
          * @brief push - adds an element to the top of the stack
          * @param element - element to add to stack
          */
@@ -99,6 +124,46 @@ DSStack<T>::~DSStack(){
 }
 
 /**
+ * @brief Getter - numIndexes
+ */
+template <class T>
+int DSStack<T>::getNumIndexes(){
+    return numIndexes;
+}
+
+/**
+ * @brief Getter - capacity
+ */
+template <class T>
+int DSStack<T>::getCapacity(){
+    return capacity;
+}
+
+/**
+ * @brief Setter - capacity
+ */
+template <class T>
+void DSStack<T>::setCapacity(){
+
+}
+
+/**
+ * @brief Getter - risizeIncrement
+ */
+template <class T>
+int DSStack<T>::getResizeIncrement(){
+    return resizeIncrement;
+}
+
+/**
+ * @brief Setter - resizeIncrement
+ */
+template <class T>
+void DSStack<T>::setResizeIncrement(){
+
+}
+
+/**
  * @brief DSStack::push - increments the top pointer by one element and sets its target to the given element. Sets it to data if it is currently nullptr.
  * @param element
  */
@@ -110,6 +175,7 @@ void DSStack<T>::push(T element){
         top++;
     }
 
+    numIndexes++;
     *top = element;
 }
 
