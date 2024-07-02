@@ -184,7 +184,6 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
         debugVectEqual.pushBack(element);
     }
 
-
     SECTION("Vector getters and setters"){
         // getters
         REQUIRE(numVect1.getNumIndexes() == 3);
@@ -251,7 +250,7 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
  * DSStack
  */
 
-    DSStack<int> numStack1(8);
+    DSStack<int> numStack1(4);
     DSStack<int> numStack1Copy;
     DSStack<int> numStack2(3);
     DSStack<int> numStack3;
@@ -269,21 +268,66 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
         numStack3.push(element);
     }
 
-    SECTION("Getters and Setters"){
-        REQUIRE(numStack1.getNumIndexes() == 3);
-        REQUIRE(numStack1.getCapacity() == 8);
-        REQUIRE(numStack1.getResizeIncrement() == 8);
-    }
-
-    SECTION("PlaceHolder"){
+    SECTION("Operators"){
 
         REQUIRE(numStack1 == numStack1Copy);
+
+        numStack1 = numStack2;
+
+        REQUIRE(numStack1 == numStack2);
 
         numStack1 = numStack1Copy;
-
-        REQUIRE(numStack1 == numStack1Copy);
     }
 
+    SECTION("Getters"){
+        REQUIRE(numStack1.getNumIndexes() == 3);
+        REQUIRE(numStack1.getCapacity() == 4);
+        REQUIRE(numStack1.getResizeIncrement() == 4);
 
+        numStack1.setCapacity(9);
+        REQUIRE(numStack1.getCapacity() == 9);
+    }
+
+    SECTION("Peek and Pop"){
+        REQUIRE(numStack1.peek() == 2);
+        numStack1.pop();
+        REQUIRE(numStack1.peek() == 1);
+        numStack1.pop();
+        REQUIRE(numStack1.peek() == 0);
+
+        numStack1 = numStack1Copy;
+    }
+
+    SECTION("Push"){
+        numStack1.push(3);
+        REQUIRE(numStack1.getCapacity() == 4);
+        REQUIRE(numStack1.getNumIndexes() == 4);
+        REQUIRE(numStack1.peek() == 3);
+
+        numStack1.push(4);
+        REQUIRE(numStack1.getCapacity() == (4 + 4));
+        REQUIRE(numStack1.getNumIndexes() == 5);
+        REQUIRE(numStack1.peek() == 4);
+
+        numStack1 = numStack1Copy;
+    }
+
+    SECTION("Setters"){
+        numStack1.setCapacity(9);
+        REQUIRE(numStack1.peek() == 2);
+        REQUIRE(numStack1.getCapacity() == 9);
+
+        numStack1.setCapacity(0);
+        REQUIRE(numStack1.peek() == 2);
+        REQUIRE(numStack1.getCapacity() == 3);
+
+        numStack1.setResizeIncrement(5);
+        numStack1.push(3);
+        REQUIRE(numStack1.peek() == 3);
+        REQUIRE(numStack1.getCapacity() == 8);
+        REQUIRE(numStack1.getResizeIncrement() == 5);
+
+        numStack1 = numStack1Copy;
+    }
 
 }

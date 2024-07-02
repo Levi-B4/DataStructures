@@ -33,7 +33,12 @@ class DSStack{
         /**
          * @brief Setter - capacity
          */
-        void setCapacity();
+        void setCapacity(int capacity);
+
+        /**
+         * @brief DSStack::Shrink - creates new vector with capacity equal to numIndexes
+         */
+        void shrink();
 
         /**
          * @brief Getter - risizeIncrement
@@ -43,7 +48,7 @@ class DSStack{
         /**
          * @brief Setter - resizeIncrement
          */
-        void setResizeIncrement();
+        void setResizeIncrement(int resizeIncrement);
 
         /**
          * @brief push - adds an element to the top of the stack
@@ -140,11 +145,44 @@ int DSStack<T>::getCapacity(){
 }
 
 /**
- * @brief Setter - capacity
+ * @brief Setter - sets capacity, and moves stack to a smaller array of that size
+ *
  */
 template <class T>
-void DSStack<T>::setCapacity(){
+void DSStack<T>::setCapacity(int capacity){
+    if(this->capacity == capacity){
+        return;
+    }
 
+    if(capacity <= numIndexes){
+        this->capacity = numIndexes;
+    } else {
+        this->capacity = capacity;
+    }
+
+    T* tempArray = new T[this->capacity];
+
+    for(int i = 0; i < numIndexes; i++){
+        tempArray[i] = data[i];
+    }
+
+    delete[] data;
+
+    data = tempArray;
+
+    if(numIndexes == 0){
+        top == nullptr;
+    } else {
+        top = data + numIndexes - 1;
+    }
+}
+
+/**
+ * @brief DSStack::Shrink - creates new vector with capacity equal to numIndexes
+ */
+template <class T>
+void DSStack<T>::shrink(){
+    setCapacity(0);
 }
 
 /**
@@ -159,8 +197,8 @@ int DSStack<T>::getResizeIncrement(){
  * @brief Setter - resizeIncrement
  */
 template <class T>
-void DSStack<T>::setResizeIncrement(){
-
+void DSStack<T>::setResizeIncrement(int resizeIncrement){
+    this->resizeIncrement = resizeIncrement;
 }
 
 /**
@@ -171,6 +209,20 @@ template <class T>
 void DSStack<T>::push(T element){
     if(top == nullptr){
         top = data;
+    } else if (numIndexes == capacity){
+        capacity += resizeIncrement;
+
+        T* tempArray = new T[capacity];
+
+        for(int i = 0; i < numIndexes; i++){
+            tempArray[i] = data[i];
+        }
+
+        delete[] data;
+
+        data = tempArray;
+        top = data + numIndexes;
+        top++;
     } else {
         top++;
     }
@@ -224,7 +276,6 @@ DSStack<T>& DSStack<T>::operator=(const DSStack<T>& other){
 
     return *this;
 }
-
 
 /**
  * @brief operator == :  compares this stack against another stack, value by value

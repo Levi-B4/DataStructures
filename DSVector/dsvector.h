@@ -134,14 +134,13 @@ void DSVector<T>::setCapacity(const int capacity){
         return;
     }
 
-    if(capacity < numIndexes){
-        shrink();
-        return;
+    if(capacity <= numIndexes){
+        this->capacity = numIndexes;
+    } else {
+        this->capacity = capacity;
     }
 
-    this->capacity = capacity;
-
-    T* tempArray = new T[capacity];
+    T* tempArray = new T[this->capacity];
 
     for(int i = 0; i < numIndexes; i++){
         tempArray[i] = data[i];
@@ -155,17 +154,7 @@ void DSVector<T>::setCapacity(const int capacity){
 // creates new vector with capacity equal to numIndexes
 template <class T>
 void DSVector<T>::shrink(){
-    capacity = numIndexes;
-
-    T* tempArray = new T[capacity];
-
-    for(int i = 0; i < numIndexes; i++){
-        tempArray[i] = data[i];
-    }
-
-    delete[] data;
-
-    data = tempArray;
+    setCapacity(numIndexes);
 }
 
 // adds element to back of data array - params: T newElement
@@ -260,7 +249,7 @@ DSVector<T>& DSVector<T>::operator+=(const DSVector<T>& other){
             tempArray[i] = data[i];
         }
 
-        delete[] data;
+    delete[] data;
 
         data = tempArray;
     }
