@@ -4,19 +4,26 @@
 template <class T>
 class DSNode{
     public:
+        DSNode* next = nullptr;
+        DSNode* prev = nullptr;
+
+        T data;
+
         /**
          * @brief DSNode - default constructor
          */
         DSNode();
 
         /**
-         * @brief ~DSNode - default destructor
+         * @brief DSNode - constructor
+         * @param data - value to set as this node's data
+         */
+        DSNode(T data);
+
+        /**
+         * @brief ~6DSNode - default destructor
          */
         ~DSNode();
-
-    private:
-
-
 };
 
 /**
@@ -25,6 +32,11 @@ class DSNode{
 template <class T>
 DSNode<T>::DSNode(){
 
+}
+
+template <class T>
+DSNode<T>::DSNode(T data){
+    this->data = data;
 }
 
 /**

@@ -7,6 +7,7 @@
 #include "DSString/dsstring.h"
 #include "DSVector/dsvector.h"
 #include "DSStack/dsstack.h"
+#include "DSDoublyLL/dsdoublyll.h"
 
 TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
 
@@ -15,8 +16,11 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
  */
 
     const int intArray1[3] = {0, 1, 2};
+    int arr1StartSize = 3;
     const int intArray2[3] = {3, 4, 5};
+    int arr2StartSize = 3;
     const int intArray3[6] = {0, 1, 2, 3, 4, 5};
+    int arr3StartSize = 6;
 
 /*
  *  DSString
@@ -329,5 +333,37 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
 
         numStack1 = numStack1Copy;
     }
+
+/*
+ * DSDoublyLL
+ */
+    DSDoublyLL<int> numList1;
+    DSDoublyLL<int> numList1Copy;
+    DSDoublyLL<int> numList2;
+    DSDoublyLL<int> numList3;
+
+    for(int element : intArray1){
+        numList1.pushBack(element);
+        numList1Copy.pushBack(element);
+    }
+
+    for(int element : intArray2){
+        numList2.pushBack(element);
+    }
+
+    for(int i = arr3StartSize - 1; i >= 0; i--){
+        numList3.pushFront(intArray3[i]);
+    }
+
+    SECTION("indexing"){
+        REQUIRE(numList1[0] == 0);
+        REQUIRE(numList1[2] == 2);
+        REQUIRE(numList1[-2] == 0);
+
+        REQUIRE(numList3[0] == 0);
+        REQUIRE(numList3[2] == 2);
+        REQUIRE(numList3[-2] == 3);
+    }
+
 
 }
