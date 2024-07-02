@@ -2,7 +2,8 @@ name: Day1-Project0
 
 on:
   push:
-    branches: main
+    branches:
+      - main
 
 jobs:
   build:

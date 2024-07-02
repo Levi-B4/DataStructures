@@ -98,7 +98,6 @@ DSVector<T>::DSVector(const DSVector<T>& other){
     resizeIncrement = other.resizeIncrement;
     data = new T[capacity];
 
-    // copy contents of other to this
     for(int i = 0; i < numIndexes; i++){
         this->data[i] = other.data[i];
     }
@@ -108,32 +107,6 @@ DSVector<T>::DSVector(const DSVector<T>& other){
 template <class T>
 int DSVector<T>::getNumIndexes() const{
     return numIndexes;
-}
-
-// setter - capacity
-template <class T>
-void DSVector<T>::setCapacity(const int capacity){
-    if(capacity < numIndexes){
-        this->capacity = numIndexes;
-    } else {
-        this->capacity = capacity;
-    }
-
-    //create new data with new capactity and delete old one
-    T* oldData = data;
-    data = new T[capacity];
-
-    for(int i = 0; i < numIndexes; i++){
-        data[i] = oldData[i];
-    }
-
-    delete[] oldData;
-}
-
-// getter - capacity
-template <class T>
-int DSVector<T>::getCapacity() const{
-    return capacity;
 }
 
 // setter - resizeIncrement (no data change till resize occurs)
@@ -148,6 +121,41 @@ int DSVector<T>::getResizeIncrement() const{
     return resizeIncrement;
 }
 
+// getter - capacity
+template <class T>
+int DSVector<T>::getCapacity() const{
+    return capacity;
+}
+
+// setter - capacity
+template <class T>
+void DSVector<T>::setCapacity(const int capacity){
+    if(this->capacity == capacity){
+        return;
+    }
+
+    if(capacity <= numIndexes){
+        this->capacity = numIndexes;
+    } else {
+        this->capacity = capacity;
+    }
+
+    T* tempArray = new T[this->capacity];
+
+    for(int i = 0; i < numIndexes; i++){
+        tempArray[i] = data[i];
+    }
+
+    delete[] data;
+
+    data = tempArray;
+}
+
+// creates new vector with capacity equal to numIndexes
+template <class T>
+void DSVector<T>::shrink(){
+    setCapacity(numIndexes);
+}
 
 // adds element to back of data array - params: T newElement
 template <class T>
@@ -156,14 +164,15 @@ void DSVector<T>::pushBack(const T& newElement){
     if(numIndexes == capacity){
         capacity = numIndexes + resizeIncrement - (numIndexes % resizeIncrement);
 
-        T* oldData = data;
-        data = new T[capacity];
+        T* tempArray = new T[capacity];
 
         for(int i = 0; i < numIndexes; i++){
-            data[i] = oldData[i];
+            tempArray[i] = data[i];
         }
 
-        delete[] oldData;
+        delete[] data;
+
+        data = tempArray;
     }
 
     data[numIndexes++] = newElement;
@@ -174,20 +183,6 @@ void DSVector<T>::pushBack(const T& newElement){
 template <class T>
 void DSVector<T>::removeLast(){
     numIndexes--;
-}
-
-// creates new vector with capacity equal to numIndexes
-template <class T>
-void DSVector<T>::shrink(){
-    capacity = numIndexes;
-    T* oldData = data;
-    data = new T[capacity];
-
-    for(int i = 0; i < numIndexes; i++){
-        data[i] = oldData[i];
-    }
-
-    delete[] oldData;
 }
 
 // deletes data and creates an empty array in its place
@@ -230,7 +225,7 @@ DSVector<T>& DSVector<T>::operator=(const DSVector<T>& other){
     data = new T[capacity];
 
     for(int i = 0; i < numIndexes; i++){
-        this->data[i] = other.data[i];
+        data[i] = other.data[i];
     }
 
     return *this;
@@ -242,20 +237,21 @@ DSVector<T>& DSVector<T>::operator+=(const DSVector<T>& other){
     int oldSize = numIndexes;
     numIndexes += other.numIndexes;
 
+    // keep capacity as a multiple of the resizeIncrement
     int newCap = numIndexes + resizeIncrement - (numIndexes % resizeIncrement);
 
     if(capacity < newCap){
         capacity = newCap;
 
-        T* oldData = data;
-
-        data = new T[newCap];
+        T* tempArray = new T[newCap];
 
         for(int i = 0; i < oldSize; i++){
-            data[i] = oldData[i];
+            tempArray[i] = data[i];
         }
 
-        delete[] oldData;
+    delete[] data;
+
+        data = tempArray;
     }
 
     for(int i = oldSize; i < numIndexes; i++){
@@ -271,13 +267,14 @@ DSVector<T>& DSVector<T>::operator+=(const T& element){
     if(capacity == numIndexes){
         capacity += resizeIncrement;
         
-        T* oldData = data;
+        T* tempArray = new T[capacity];
         
-        data = new T[capacity];
         for(int i = 0; i < numIndexes; i++){
-            data[i] = oldData[i];
+            tempArray[i] = data[i];
         }
-        delete[] oldData;
+        delete[] data;
+
+        data = tempArray;
     }
 
     data[numIndexes++] = element;
