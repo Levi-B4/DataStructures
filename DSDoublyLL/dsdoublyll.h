@@ -1,7 +1,7 @@
 #ifndef DSDOUBLYLL_H
 #define DSDOUBLYLL_H
 
-#include "DSNode.h"
+#include "dsnode.h"
 
 template <class T>
 class DSDoublyLL{
