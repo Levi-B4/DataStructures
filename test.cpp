@@ -365,5 +365,17 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
         REQUIRE(numList3[-2] == 3);
     }
 
+    SECTION("Comparison Operator"){
+        REQUIRE(numList1 == numList1Copy);
+
+        for(int i = 0; i < numList2.getNumIndexes(); i++){
+            numList1.pushBack(numList2[i]);
+        }
+
+        REQUIRE(numList1 == numList3);
+
+        numList1 = numList1Copy;
+    }
+
 
 }

@@ -19,6 +19,12 @@ class DSDoublyLL{
         DSDoublyLL(T* data, int size);
 
         /**
+         * @brief getNumIndexes - Getter: numIndexes
+         * @return numIndexes
+         */
+        int getNumIndexes();
+
+        /**
          * @brief pushFront - adds element data to the front of the list
          * @param data - data to be added
          */
@@ -55,6 +61,13 @@ class DSDoublyLL{
         T operator[](const int index) const;
 
         /**
+         * @brief operator == :  compares this list against another list
+         * @param other - reference to target list
+         * @return true if the lists have equal values
+         */
+        bool operator==(const DSDoublyLL<T>& other) const;
+
+        /**
          * @brief ~DSDoublyLL - default destructor
          */
         ~DSDoublyLL();
@@ -62,6 +75,8 @@ class DSDoublyLL{
     private:
         DSNode<T>* head = nullptr;
         DSNode<T>* tail = nullptr;
+
+        int numIndexes = 0;
 };
 
 /**
@@ -72,12 +87,23 @@ DSDoublyLL<T>::DSDoublyLL(){
 
 }
 
+
+/**
+ * @brief getNumIndexes - Getter: numIndexes
+ * @return numIndexes
+ */
+template <class T>
+int DSDoublyLL<T>::getNumIndexes(){
+    return numIndexes;
+}
+
 /**
  * @brief pushFront - creates a node with data and has the current head point to it as prev, and makes it the new head
  * @param data - data to be added
  */
 template <class T>
 void DSDoublyLL<T>::pushFront(T data){
+    numIndexes++;
     DSNode<T>* newNode = new DSNode<T>;
     newNode->data = data;
 
@@ -98,6 +124,7 @@ void DSDoublyLL<T>::pushFront(T data){
  */
 template <class T>
 void DSDoublyLL<T>::pushBack(T data){
+    numIndexes++;
     DSNode<T>* newNode = new DSNode<T>;
     newNode->data = data;
 
@@ -136,8 +163,28 @@ T DSDoublyLL<T>::operator[](const int index) const{
         }
     }
 
-
     return current->data;
+}
+
+/**
+ * @brief operator == :  compares this list against another list
+ * @param other - reference to target list
+ * @return true if the lists have equal values
+ */
+template <class T>
+bool DSDoublyLL<T>::operator==(const DSDoublyLL<T>& other) const{
+    if(numIndexes != other.numIndexes){
+        return false;
+    }
+
+    DSNode<T>* i = head;
+    for(DSNode<T>* j = other.head; i != nullptr; i = i->next, j = j->next){
+        if(i->data != j->data){
+            return false;
+        }
+    }
+
+    return true;
 }
 
 /**
