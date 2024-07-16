@@ -16,7 +16,7 @@ class DSDoublyLL{
          * @param data - pointer to array of size elements
          * @param size - size of data array
          */
-        DSDoublyLL(T* data, int size);
+        DSDoublyLL(const T* data, const int size);
 
         /**
          * @brief getNumIndexes - Getter: numIndexes
@@ -85,6 +85,18 @@ class DSDoublyLL{
 template <class T>
 DSDoublyLL<T>::DSDoublyLL(){
 
+}
+
+/**
+ * @brief DSDoublyLL - constructor
+ * @param data - pointer to array of size elements
+ * @param size - size of data array
+ */
+template <class T>
+DSDoublyLL<T>::DSDoublyLL(const T* data, const int size){
+    for(int i = 0; i < size; i++){
+        pushBack(data[i]);
+    }
 }
 
 

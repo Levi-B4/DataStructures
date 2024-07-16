@@ -351,9 +351,7 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
         numList2.pushBack(element);
     }
 
-    for(int i = arr3StartSize - 1; i >= 0; i--){
-        numList3.pushFront(intArray3[i]);
-    }
+    numList3 = DSDoublyLL<int>(intArray3, arr3StartSize);
 
     SECTION("indexing"){
         REQUIRE(numList1[0] == 0);
