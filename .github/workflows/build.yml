@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - DSDoublyLL
+      - DSDoublyLL_Destructor
 
 jobs:
   build:
