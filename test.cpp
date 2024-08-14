@@ -337,6 +337,7 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
 /*
  * DSDoublyLL
  */
+
     DSDoublyLL<int> numList1;
     DSDoublyLL<int> numList1Copy;
     DSDoublyLL<int> numList2;
@@ -361,6 +362,7 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
         REQUIRE(numList3[0] == 0);
         REQUIRE(numList3[2] == 2);
         REQUIRE(numList3[-2] == 3);
+
     }
 
     SECTION("Comparison Operator"){
@@ -375,5 +377,21 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
         numList1 = numList1Copy;
     }
 
+
+////testing
+/*
+    DSDoublyLL<int> numList1;
+    DSDoublyLL<int> numList1Copy;
+
+    for(int i = 1; i <= 5; i++){
+        numList1.pushFront(i);
+        numList1Copy.pushFront(i);
+    }
+
+    SECTION("testing"){
+        REQUIRE(numList1 == numList1Copy);
+        numList1 = numList1Copy;
+        REQUIRE(numList1 == numList1Copy);
+    }*/
 
 }

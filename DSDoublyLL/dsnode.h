@@ -21,6 +21,13 @@ class DSNode{
         DSNode(T data);
 
         /**
+         * @brief operator =
+         * @param data - new data to replace current
+         * @return reference to this node
+         */
+        DSNode<T>& operator=(const T data);
+
+        /**
          * @brief ~6DSNode - default destructor
          */
         ~DSNode();
@@ -36,6 +43,16 @@ DSNode<T>::DSNode(){
 
 template <class T>
 DSNode<T>::DSNode(T data){
+    this->data = data;
+}
+
+/**
+ * @brief operator =
+ * @param data - new data to replace current
+ * @return reference to this node
+ */
+template <class T>
+DSNode<T>& DSNode<T>::operator=(const T data){
     this->data = data;
 }
 

@@ -5,78 +5,85 @@
 
 template <class T>
 class DSDoublyLL{
-    public:
-        /**
+public:
+    /**
          * @brief DSDoublyLL - default constructor
          */
-        DSDoublyLL();
+    DSDoublyLL();
 
-        /**
+    /**
          * @brief DSDoublyLL - constructor
          * @param data - pointer to array of size elements
          * @param size - size of data array
          */
-        DSDoublyLL(const T* data, const int size);
+    DSDoublyLL(const T* data, const int size);
 
-        /**
+    /**
          * @brief getNumIndexes - Getter: numIndexes
          * @return numIndexes
          */
-        int getNumIndexes();
+    int getNumIndexes();
 
-        /**
+    /**
          * @brief pushFront - adds element data to the front of the list
          * @param data - data to be added
          */
-        void pushFront(T data);
+    void pushFront(T data);
 
-        /**
+    /**
          * @brief pushBack - adds data to the front of the list
          * @param data - data to be added
          */
-        void pushBack(T data);
+    void pushBack(T data);
 
-        /**
+    /**
          * @brief insert - inserts data in list at given index
          * @param data - data to be added
          * @param index - index to insert data
          */
-        void insert(T data, int index);
+    void insert(T data, int index);
 
-        /**
+    /**
          * @brief popFront - removes first node from list
          */
-        void popFront();
+    void popFront();
 
-        /**
+    /**
          * @brief popBack - removes last node from list
          */
-        void popBack();
+    void popBack();
 
-        /**
+    /**
          * @brief DSDoublyLL::operator [] - returns data at passed index
          * @param index - index to retrieve data
          * @return data at passed index
          */
-        T operator[](const int index) const;
+    T operator[](const int index) const;
 
-        /**
+    /**
+         * @brief operator = :  sets this list equal to the list passed in
+         * @param other - reference to target list
+         * @return returns this
+         */
+    DSDoublyLL<T>& operator=(const DSDoublyLL<T>& other);
+
+    /**
          * @brief operator == :  compares this list against another list
          * @param other - reference to target list
          * @return true if the lists have equal values
          */
-        bool operator==(const DSDoublyLL<T>& other) const;
+    bool operator==(const DSDoublyLL<T>& other) const;
 
-        /**
+    /**
          * @brief ~DSDoublyLL - default destructor
          */
-        ~DSDoublyLL();
+    ~DSDoublyLL();
 
-    private:
-        DSNode<T>* head = nullptr;
-        DSNode<T>* tail = nullptr;
+private:
+    DSNode<T>* head = nullptr;
+    DSNode<T>* tail = nullptr;
 
-        int numIndexes = 0;
+    int numIndexes = 0;
 };
 
 /**
@@ -179,6 +186,32 @@ T DSDoublyLL<T>::operator[](const int index) const{
 }
 
 /**
+ * @brief operator = :  sets this list equal to the list passed in
+ * @param other - reference to target list
+ * @return returns this
+ */
+template <class T>
+DSDoublyLL<T>& DSDoublyLL<T>::operator=(const DSDoublyLL<T>& other){
+    DSNode<T>* next;
+    DSNode<T>* current = head;
+    while(current != nullptr){
+        next = current->next;
+        delete current;
+        current = next;
+    }
+    numIndexes = 0;
+
+    head = nullptr;
+    tail = nullptr;
+
+    for(current = other.head; current != nullptr; current = current->next){
+        pushBack(current->data);
+    }
+
+    return *this;
+}
+
+/**
  * @brief operator == :  compares this list against another list
  * @param other - reference to target list
  * @return true if the lists have equal values
@@ -204,7 +237,13 @@ bool DSDoublyLL<T>::operator==(const DSDoublyLL<T>& other) const{
  */
 template <class T>
 DSDoublyLL<T>::~DSDoublyLL(){
-
+    DSNode<T>* next;
+    DSNode<T>* current = head;
+    while(current != nullptr){
+        next = current->next;
+        delete current;
+        current = next;
+    }
 }
 
 #endif // DSDOUBLYLL_H
