@@ -7,76 +7,90 @@ template <class T>
 class DSDoublyLL{
 public:
     /**
-         * @brief DSDoublyLL - default constructor
-         */
+     * @brief DSDoublyLL - default constructor
+     */
     DSDoublyLL();
 
     /**
-         * @brief DSDoublyLL - constructor
-         * @param data - pointer to array of size elements
-         * @param size - size of data array
-         */
+     * @brief DSDoublyLL - constructor
+     * @param data - pointer to array of size elements
+     * @param size - size of data array
+     */
     DSDoublyLL(const T* data, const int size);
 
     /**
-         * @brief getNumIndexes - Getter: numIndexes
-         * @return numIndexes
-         */
+     * @brief getNumIndexes - Getter: numIndexes
+     * @return numIndexes
+     */
     int getNumIndexes();
 
     /**
-         * @brief pushFront - adds element data to the front of the list
-         * @param data - data to be added
-         */
+     * @brief pushFront - adds element data to the front of the list
+     * @param data - data to be added
+     */
     void pushFront(T data);
 
     /**
-         * @brief pushBack - adds data to the front of the list
-         * @param data - data to be added
-         */
+     * @brief pushBack - adds data to the front of the list
+     * @param data - data to be added
+     */
     void pushBack(T data);
 
     /**
-         * @brief insert - inserts data in list at given index
-         * @param data - data to be added
-         * @param index - index to insert data
-         */
+     * @brief insert - inserts data in list at given index
+     * @param data - data to be added
+     * @param index - index to insert data
+     */
     void insert(T data, int index);
 
     /**
-         * @brief popFront - removes first node from list
-         */
+     * @brief popFront - removes first node from list
+     */
     void popFront();
 
     /**
-         * @brief popBack - removes last node from list
-         */
+     * @brief popBack - removes last node from list
+     */
     void popBack();
 
     /**
-         * @brief DSDoublyLL::operator [] - returns data at passed index
-         * @param index - index to retrieve data
-         * @return data at passed index
-         */
-    T operator[](const int index) const;
+     * @brief DSDoublyLL::operator [] - returns data at passed index
+     * @param index - index to retrieve data
+     * @return data at passed index
+     */
+    T& operator[](const int index) const;
 
     /**
-         * @brief operator = :  sets this list equal to the list passed in
-         * @param other - reference to target list
-         * @return returns this
-         */
+     * @brief operator = :  sets this list equal to the list passed in
+     * @param other - reference to target list
+     * @return returns this
+     */
     DSDoublyLL<T>& operator=(const DSDoublyLL<T>& other);
 
     /**
-         * @brief operator == :  compares this list against another list
-         * @param other - reference to target list
-         * @return true if the lists have equal values
-         */
+     * @brief operator + : returns a linked list combining this and the given list
+     * @param other - reference to given list
+     * @return combined linked list of this and given list
+     */
+    DSDoublyLL<T> operator+(const DSDoublyLL<T>& other) const;
+
+    /**
+     * @brief operator += : combines this
+     * @param other
+     * @return
+     */
+    DSDoublyLL<T>& operator+=(const DSDoublyLL<T>& other);
+
+    /**
+     * @brief operator == :  compares this list against another list
+     * @param other - reference to target list
+     * @return true if the lists have equal values
+     */
     bool operator==(const DSDoublyLL<T>& other) const;
 
     /**
-         * @brief ~DSDoublyLL - default destructor
-         */
+     * @brief ~DSDoublyLL - default destructor
+     */
     ~DSDoublyLL();
 
 private:
@@ -164,7 +178,7 @@ void DSDoublyLL<T>::pushBack(T data){
  * @return data of node at passed index
  */
 template <class T>
-T DSDoublyLL<T>::operator[](const int index) const{
+T& DSDoublyLL<T>::operator[](const int index) const{
     DSNode<T>* current;
 
     if(index < 0){
@@ -205,6 +219,40 @@ DSDoublyLL<T>& DSDoublyLL<T>::operator=(const DSDoublyLL<T>& other){
     tail = nullptr;
 
     for(current = other.head; current != nullptr; current = current->next){
+        pushBack(current->data);
+    }
+
+    return *this;
+}
+
+/**
+ * @brief operator + : returns a linked list combining this and the given list
+ * @param other - reference to given list
+ * @return combined linked list of this and given list
+ */
+template <class T>
+DSDoublyLL<T> DSDoublyLL<T>::operator+(const DSDoublyLL<T>& other) const{
+    DSDoublyLL<T> result;
+
+    for(DSNode<T>* current = this->head; current != nullptr; current = current->next){
+        result.pushBack(current->data);
+    }
+
+    for(DSNode<T>* current = other.head; current != nullptr; current = current->next){
+        result.pushBack(current->data);
+    }
+
+    return result;
+}
+
+/**
+ * @brief operator += : combines this
+ * @param other
+ * @return
+ */
+template <class T>
+DSDoublyLL<T>& DSDoublyLL<T>::operator+=(const DSDoublyLL<T>& other){
+    for(DSNode<T>* current = other.head; current != nullptr; current = current->next){
         pushBack(current->data);
     }
 
