@@ -239,14 +239,28 @@ void DSDoublyLL<T>::popBack(){
     tail->next = nullptr;
 }
 
+template <class T>
+void DSDoublyLL<T>::insert(T data, int index){
+    //ToDo: insert
+}
+
 /**
  * @brief DSDoublyLL::operator [] - returns data of node at passed index
  * @param index - index to retrieve data
  * @return data of node at passed index
  */
 template <class T>
-T& DSDoublyLL<T>::operator[](const int index) const{
+T& DSDoublyLL<T>::operator[](int index) const{
     DSNode<T>* current;
+
+    // set indexing to start from the closer end node
+    if(index < 0){
+        index = numIndexes + index;
+    }
+    if(index > (numIndexes / 2) - 1){
+        index = index - numIndexes;
+    }
+
 
     if(index < 0){
         current = tail;
