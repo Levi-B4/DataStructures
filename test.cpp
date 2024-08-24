@@ -354,21 +354,6 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
 
     numList3 = DSDoublyLL<int>(intArray3, arr3StartSize);
 
-    SECTION("indexing"){
-        REQUIRE(numList1[0] == 0);
-        REQUIRE(numList1[2] == 2);
-        REQUIRE(numList1[-2] == 0);
-
-        REQUIRE(numList3[0] == 0);
-        REQUIRE(numList3[2] == 2);
-        REQUIRE(numList3[-2] == 3);
-
-        numList1[1] = 2;
-        REQUIRE(numList1[1] == 2);
-        numList1[1] = 1;
-        REQUIRE(numList1[1] == 1);
-        REQUIRE(numList1 == numList1Copy);
-    }
 
     SECTION("Comparison Operator"){
         REQUIRE(numList1 == numList1Copy);
@@ -380,6 +365,24 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
         REQUIRE(numList1 == numList3);
 
         numList1 = numList1Copy;
+
+        // ToDo: operator!=
+    }
+
+    SECTION("indexing"){
+        REQUIRE(numList1[0] == 0);
+        REQUIRE(numList3[0] == 0);
+
+        REQUIRE(numList1[2] == 2);
+        REQUIRE(numList3[4] == 4);
+
+        REQUIRE(numList1[-2] == 1);
+        REQUIRE(numList3[-4] == 2);
+
+        numList1[1] = 2;
+        REQUIRE(numList1[1] == 2);
+        numList1[1] = 1;
+        REQUIRE(numList1[1] == 1);
     }
 
     SECTION("Other Operators"){
@@ -387,8 +390,25 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
 
         numList1 += numList2;
         REQUIRE(numList3 == numList1);
+
         numList1 = numList1Copy;
-        REQUIRE(numList1 == numList1Copy);
+    }
+
+    SECTION("popping"){
+        for(int i = 0; i < 3; i++){
+            numList3.popBack();
+        }
+        REQUIRE(numList3 == numList1);
+
+        numList3 += numList2;
+
+        for(int i = 0; i < 3; i++){
+            numList3.popFront();
+        }
+        REQUIRE(numList3 == numList2);
+
+        numList3 = numList1 + numList2;
+
     }
 
 }

@@ -173,6 +173,66 @@ void DSDoublyLL<T>::pushBack(T data){
 }
 
 /**
+ * @brief DSDoublyLL::popFront - deletes the first node and sets it to nullptr
+ */
+template <class T>
+void DSDoublyLL<T>::popFront(){
+    if(head == nullptr){
+        return;
+    }
+
+    numIndexes--;
+
+    if(numIndexes == 0){
+        delete head;
+        head = nullptr;
+        tail = nullptr;
+        return;
+    }
+
+    if(numIndexes == 1){
+        delete head;
+        head = tail;
+        head->prev = nullptr;
+        return;
+    }
+
+    head = head->next;
+    delete head->prev;
+    head->prev = nullptr;
+}
+
+/**
+ * @brief DSDoublyLL::popBack - deletes the last node and sets it to nullptr
+ */
+template<class T>
+void DSDoublyLL<T>::popBack(){
+    if(tail == nullptr){
+        return;
+    }
+
+    numIndexes--;
+
+    if(numIndexes == 0){
+        delete tail;
+        head = nullptr;
+        tail = nullptr;
+        return;
+    }
+
+    if(numIndexes == 1){
+        delete tail;
+        tail = head;
+        tail->next = nullptr;
+        return;
+    }
+
+    tail = tail->prev;
+    delete tail->next;
+    tail->next = nullptr;
+}
+
+/**
  * @brief DSDoublyLL::operator [] - returns data of node at passed index
  * @param index - index to retrieve data
  * @return data of node at passed index
@@ -184,10 +244,9 @@ T& DSDoublyLL<T>::operator[](const int index) const{
     if(index < 0){
         current = tail;
 
-        for(int i = 0; i > index; i--){
+        for(int i = -1; i > index; i--){
             current = current->prev;
         }
-
     } else {
         current = head;
 
