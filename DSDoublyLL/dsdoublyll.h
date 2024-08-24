@@ -89,6 +89,13 @@ public:
     bool operator==(const DSDoublyLL<T>& other) const;
 
     /**
+     * @brief operator != : compares this list against another list
+     * @param other - reference to target list
+     * @return false if the lists have equal values
+     */
+    bool operator!=(const DSDoublyLL<T>& other) const;
+
+    /**
      * @brief ~DSDoublyLL - default destructor
      */
     ~DSDoublyLL();
@@ -337,6 +344,16 @@ bool DSDoublyLL<T>::operator==(const DSDoublyLL<T>& other) const{
     }
 
     return true;
+}
+
+/**
+ * @brief operator != :  pipes to operator== and flips the return
+ * @param other - reference to target list
+ * @return opposite of operator==
+ */
+template <class T>
+bool DSDoublyLL<T>::operator!=(const DSDoublyLL<T>& other) const{
+    return !(*this == other);
 }
 
 /**

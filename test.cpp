@@ -355,7 +355,7 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
     numList3 = DSDoublyLL<int>(intArray3, arr3StartSize);
 
 
-    SECTION("Comparison Operator"){
+    SECTION("Comparison Operators"){
         REQUIRE(numList1 == numList1Copy);
 
         for(int i = 0; i < numList2.getNumIndexes(); i++){
@@ -366,7 +366,7 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
 
         numList1 = numList1Copy;
 
-        // ToDo: operator!=
+        REQUIRE(numList1 != numList2);
     }
 
     SECTION("indexing"){
