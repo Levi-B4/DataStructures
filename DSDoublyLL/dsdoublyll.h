@@ -105,6 +105,13 @@ private:
     DSNode<T>* tail = nullptr;
 
     int numIndexes = 0;
+
+    /**
+     * @brief getNodeAt: returns node at given index
+     * @param index - index at which the node is
+     * @return node pointer
+     */
+    DSNode<T>* getNodeAt(int index) const;
 };
 
 /**
@@ -251,32 +258,7 @@ void DSDoublyLL<T>::insert(T data, int index){
  */
 template <class T>
 T& DSDoublyLL<T>::operator[](int index) const{
-    DSNode<T>* current;
-
-    // set indexing to start from the closer end node
-    if(index < 0){
-        index = numIndexes + index;
-    }
-    if(index > (numIndexes / 2) - 1){
-        index = index - numIndexes;
-    }
-
-
-    if(index < 0){
-        current = tail;
-
-        for(int i = -1; i > index; i--){
-            current = current->prev;
-        }
-    } else {
-        current = head;
-
-        for(int i = 0; i < index; i++){
-            current = current->next;
-        }
-    }
-
-    return current->data;
+    return getNodeAt(index)->data;
 }
 
 /**
@@ -382,6 +364,41 @@ DSDoublyLL<T>::~DSDoublyLL(){
         delete current;
         current = next;
     }
+}
+
+/**
+ * @brief getNodeAt: returns node at given index
+ * @param index - index at which the node is
+ * @return node pointer
+ */
+template <class T>
+DSNode<T>* DSDoublyLL<T>::getNodeAt(int index) const{
+    DSNode<T>* current;
+
+    // set indexing to start from the closer end node
+    if(index < 0){
+        index = numIndexes + index;
+    }
+    if(index > (numIndexes / 2) - 1){
+        index = index - numIndexes;
+    }
+
+
+    if(index < 0){
+        current = tail;
+
+        for(int i = -1; i > index; i--){
+            current = current->prev;
+        }
+    } else {
+        current = head;
+
+        for(int i = 0; i < index; i++){
+            current = current->next;
+        }
+    }
+
+    return current;
 }
 
 #endif // DSDOUBLYLL_H
