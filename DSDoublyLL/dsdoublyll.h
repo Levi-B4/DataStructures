@@ -54,6 +54,12 @@ public:
     void popBack();
 
     /**
+     * @brief size - returns the size of the list
+     * @return size of the list
+     */
+    int size();
+
+    /**
      * @brief DSDoublyLL::operator [] - returns data at passed index
      * @param index - index to retrieve data
      * @return data at passed index
@@ -244,6 +250,16 @@ void DSDoublyLL<T>::popBack(){
     tail = tail->prev;
     delete tail->next;
     tail->next = nullptr;
+}
+
+template<class T>
+int DSDoublyLL<T>::size()
+{
+    int total = 0;
+    for(DSNode<T>* current = head; current != nullptr; current = current->next){
+        total++;
+    }
+    return total;
 }
 
 template <class T>

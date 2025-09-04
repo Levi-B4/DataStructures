@@ -386,12 +386,16 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
     }
 
     SECTION("Other Operators"){
+        // adding
         REQUIRE(numList3 == numList1 + numList2);
 
+        // adding and setting equal
         numList1 += numList2;
         REQUIRE(numList3 == numList1);
-
         numList1 = numList1Copy;
+
+        // size
+        REQUIRE(numList1.size() == 3);
     }
 
     SECTION("popping"){
