@@ -9,22 +9,16 @@
 #include "DSStack/dsstack.h"
 #include "DSDoublyLL/dsdoublyll.h"
 
-TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
-
 /*
- *  Set Variables
+ *  DSString
  */
-
+TEST_CASE("Data_Structures_String", "[String][Data_Structures_Test]"){
     const int intArray1[3] = {0, 1, 2};
     int arr1StartSize = 3;
     const int intArray2[3] = {3, 4, 5};
     int arr2StartSize = 3;
     const int intArray3[6] = {0, 1, 2, 3, 4, 5};
     int arr3StartSize = 6;
-
-/*
- *  DSString
- */
 
     DSString* testStringArray[3];
 
@@ -157,10 +151,18 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
         clearFile.open(filePath.c_str());
         clearFile.close();
     }
+}
 
- /*
+/*
  *  DSVector
  */
+TEST_CASE("Data_Structures_Vector", "[Vector][Data_Structures_Test]"){
+    const int intArray1[3] = {0, 1, 2};
+    int arr1StartSize = 3;
+    const int intArray2[3] = {3, 4, 5};
+    int arr2StartSize = 3;
+    const int intArray3[6] = {0, 1, 2, 3, 4, 5};
+    int arr3StartSize = 6;
 
     DSVector<int> numVect1(8);
     DSVector<int> numVect1Copy;
@@ -249,10 +251,18 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
 
         numVect1 = numVect1Copy;
     }
+}
 
 /*
- * DSStack
+ *  DSStack
  */
+TEST_CASE("Data_Structures_Stack", "[Stack][Data_Structures_Test]"){
+    const int intArray1[3] = {0, 1, 2};
+    int arr1StartSize = 3;
+    const int intArray2[3] = {3, 4, 5};
+    int arr2StartSize = 3;
+    const int intArray3[6] = {0, 1, 2, 3, 4, 5};
+    int arr3StartSize = 6;
 
     DSStack<int> numStack1(4);
     DSStack<int> numStack1Copy;
@@ -334,9 +344,19 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
         numStack1 = numStack1Copy;
     }
 
+
+}
+
 /*
- * DSDoublyLL
+ *  DSDoublyLL
  */
+TEST_CASE("Data_Structures_Doubly_Linked_List", "[Doubly_Linked_List][Data_Structures_Test]"){
+    const int intArray1[3] = {0, 1, 2};
+    int arr1StartSize = 3;
+    const int intArray2[3] = {3, 4, 5};
+    int arr2StartSize = 3;
+    const int intArray3[6] = {0, 1, 2, 3, 4, 5};
+    int arr3StartSize = 6;
 
     DSDoublyLL<int> numList1;
     DSDoublyLL<int> numList1Copy;
@@ -412,7 +432,5 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
         REQUIRE(numList3 == numList2);
 
         numList3 = numList1 + numList2;
-
     }
-
 }
