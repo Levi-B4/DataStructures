@@ -41,7 +41,13 @@ public:
      * @param data - data to be added
      * @param index - index to insert data
      */
-    void insert(T data, int index);
+    void insert(int index, T data);
+
+    /**
+     * @brief remove - removes data from list at given index
+     * @param index - index to be removed
+     */
+    void remove(int index);
 
     /**
      * @brief popFront - removes first node from list
@@ -193,6 +199,48 @@ void DSDoublyLL<T>::pushBack(T data){
 }
 
 /**
+ * @brief DSDoublyLL::insert - adds a node at an index and links the next and previous nodes to the new node
+ * @param data - data of the new node
+ * @param index - index of the new node
+ */
+template <class T>
+void DSDoublyLL<T>::insert(int index, T data){
+    if(index == 0){
+        pushFront(data);
+        return;
+    }
+
+    DSNode<T>* newNode = new DSNode<T>(data);
+
+    //ToDo: throw an "index out of bounds" error
+    DSNode<T>* current = head;
+    for(int count = 0; count < index - 1; current = current->next){
+        count++;
+    }
+
+    if(current->next == nullptr){
+        tail = newNode;
+        current->next = newNode;
+        newNode->prev = current;
+    } else {
+        current->next->prev = newNode;
+        newNode->next = current->next;
+
+        current->next = newNode;
+        newNode->prev = current;
+    }
+}
+
+/**
+ * @brief DSDoublyLL::remove - removes and deletes the node at an index and links the next and previous nodes together
+ * @param index - index where the node will be removed
+ */
+template <class T>
+void DSDoublyLL<T>::remove(int index){
+    //ToDo: remove
+}
+
+/**
  * @brief DSDoublyLL::popFront - deletes the first node and sets it to nullptr
  */
 template <class T>
@@ -252,6 +300,10 @@ void DSDoublyLL<T>::popBack(){
     tail->next = nullptr;
 }
 
+/**
+ * @brief DSDoublyLL::size - itterates through the list and counts the number of nodes
+ * @return the number of nodes in the list
+ */
 template<class T>
 int DSDoublyLL<T>::size()
 {
@@ -260,11 +312,6 @@ int DSDoublyLL<T>::size()
         total++;
     }
     return total;
-}
-
-template <class T>
-void DSDoublyLL<T>::insert(T data, int index){
-    //ToDo: insert
 }
 
 /**

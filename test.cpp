@@ -358,10 +358,14 @@ TEST_CASE("Data_Structures_Doubly_Linked_List", "[Doubly_Linked_List][Data_Struc
     const int intArray3[6] = {0, 1, 2, 3, 4, 5};
     int arr3StartSize = 6;
 
+    const int intArray4[3] = {1,2,4};
+    int arr4StartSize = 3;
+
     DSDoublyLL<int> numList1;
     DSDoublyLL<int> numList1Copy;
     DSDoublyLL<int> numList2;
     DSDoublyLL<int> numList3;
+    DSDoublyLL<int> numList4;
 
     for(int element : intArray1){
         numList1.pushBack(element);
@@ -373,6 +377,7 @@ TEST_CASE("Data_Structures_Doubly_Linked_List", "[Doubly_Linked_List][Data_Struc
     }
 
     numList3 = DSDoublyLL<int>(intArray3, arr3StartSize);
+    numList4 = DSDoublyLL<int>(intArray4, arr4StartSize);
 
 
     SECTION("Comparison Operators"){
@@ -403,6 +408,25 @@ TEST_CASE("Data_Structures_Doubly_Linked_List", "[Doubly_Linked_List][Data_Struc
         REQUIRE(numList1[1] == 2);
         numList1[1] = 1;
         REQUIRE(numList1[1] == 1);
+    }
+
+    SECTION("Insertion and Removal"){
+        numList4.insert(0, 0);
+        numList4.insert(3, 3);
+        numList4.insert(5, 5);
+
+        for (int i = 0; i < numList4.size(); i++) {
+            std::cout << "Element " << i << ": " << numList4[i] << std::endl;
+        }
+
+        numList4.remove(5);
+        numList4.remove(1);
+        numList4.remove(0);
+        numList4.remove(0);
+
+        numList4.insert(2, 5);
+
+        REQUIRE(numList4 == numList2);
     }
 
     SECTION("Other Operators"){
