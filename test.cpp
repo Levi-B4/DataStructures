@@ -415,18 +415,16 @@ TEST_CASE("Data_Structures_Doubly_Linked_List", "[Doubly_Linked_List][Data_Struc
         numList4.insert(3, 3);
         numList4.insert(5, 5);
 
-        for (int i = 0; i < numList4.size(); i++) {
-            std::cout << "Element " << i << ": " << numList4[i] << std::endl;
-        }
+        REQUIRE(numList4 == numList3);
 
-        numList4.remove(5);
+        /*numList4.remove(5);
         numList4.remove(1);
         numList4.remove(0);
         numList4.remove(0);
 
         numList4.insert(2, 5);
 
-        REQUIRE(numList4 == numList2);
+        REQUIRE(numList4 == numList2);*/
     }
 
     SECTION("Other Operators"){

@@ -19,6 +19,13 @@ public:
     DSDoublyLL(const T* data, const int size);
 
     /**
+     * @brief DSDoublyLL - copy constructor
+     * @param other - reference of list to copy
+     */
+    DSDoublyLL(const DSDoublyLL<T>& other);
+
+
+    /**
      * @brief getNumIndexes - Getter: numIndexes
      * @return numIndexes
      */
@@ -146,6 +153,17 @@ DSDoublyLL<T>::DSDoublyLL(const T* data, const int size){
     }
 }
 
+/**
+ * @brief DSDoublyLL - copy constructor
+ * @param other - reference to the list to copy
+ */
+template <class T>
+DSDoublyLL<T>::DSDoublyLL(const DSDoublyLL& other){
+    for(DSNode<T>* n = other.head; n != nullptr; n = n->next){
+        pushBack(n->data);
+    }
+}
+
 
 /**
  * @brief getNumIndexes - Getter: numIndexes
@@ -214,21 +232,22 @@ void DSDoublyLL<T>::insert(int index, T data){
 
     //ToDo: throw an "index out of bounds" error
     DSNode<T>* current = head;
-    for(int count = 0; count < index - 1; current = current->next){
-        count++;
+    for(int i = 0; i < index - 1; i++){
+        current = current->next;
     }
 
-    if(current->next == nullptr){
+    newNode->next = current->next;
+    newNode->prev = current;
+
+    current->next = newNode;
+
+    if(newNode->next == nullptr){
         tail = newNode;
-        current->next = newNode;
-        newNode->prev = current;
-    } else {
-        current->next->prev = newNode;
-        newNode->next = current->next;
-
-        current->next = newNode;
-        newNode->prev = current;
+    }else {
+        newNode->next->prev = newNode;
     }
+
+    numIndexes++;
 }
 
 /**
