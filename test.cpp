@@ -410,23 +410,6 @@ TEST_CASE("Data_Structures_Doubly_Linked_List", "[Doubly_Linked_List][Data_Struc
         REQUIRE(numList1[1] == 1);
     }
 
-    SECTION("Insertion and Removal"){
-        numList4.insert(0, 0);
-        numList4.insert(3, 3);
-        numList4.insert(5, 5);
-
-        REQUIRE(numList4 == numList3);
-
-        /*numList4.remove(5);
-        numList4.remove(1);
-        numList4.remove(0);
-        numList4.remove(0);
-
-        numList4.insert(2, 5);
-
-        REQUIRE(numList4 == numList2);*/
-    }
-
     SECTION("Other Operators"){
         // adding
         REQUIRE(numList3 == numList1 + numList2);
@@ -438,6 +421,32 @@ TEST_CASE("Data_Structures_Doubly_Linked_List", "[Doubly_Linked_List][Data_Struc
 
         // size
         REQUIRE(numList1.size() == 3);
+    }
+
+    SECTION("Insertion and Removal"){
+        // insertion
+        numList4.insert(0, 0);
+        numList4.insert(3, 3);
+        numList4.insert(5, 5);
+
+        REQUIRE(numList4 == numList3);
+
+        // removal
+        numList4.remove(5);
+        numList4.remove(1);
+        numList4.remove(0);
+        numList4.remove(0);
+
+        numList4.insert(2, 5);
+
+        REQUIRE(numList4 == numList2);
+
+        // reset list
+        numList4.remove(2);
+        numList4.remove(0);
+
+        numList4.pushFront(2);
+        numList4.pushFront(1);
     }
 
     SECTION("popping"){

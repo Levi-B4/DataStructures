@@ -228,24 +228,21 @@ void DSDoublyLL<T>::insert(int index, T data){
         return;
     }
 
+    if(index == numIndexes){
+        pushBack(data);
+        return;
+    }
+
+    DSNode<T>* nodeBefore = getNodeAt(index - 1);
+
     DSNode<T>* newNode = new DSNode<T>(data);
 
-    //ToDo: throw an "index out of bounds" error
-    DSNode<T>* current = head;
-    for(int i = 0; i < index - 1; i++){
-        current = current->next;
-    }
+    newNode->next = nodeBefore->next;
+    newNode->prev = nodeBefore;
 
-    newNode->next = current->next;
-    newNode->prev = current;
+    nodeBefore->next = newNode;
 
-    current->next = newNode;
-
-    if(newNode->next == nullptr){
-        tail = newNode;
-    }else {
-        newNode->next->prev = newNode;
-    }
+    newNode->next->prev = newNode;
 
     numIndexes++;
 }
@@ -256,7 +253,41 @@ void DSDoublyLL<T>::insert(int index, T data){
  */
 template <class T>
 void DSDoublyLL<T>::remove(int index){
-    //ToDo: remove
+    if(index == 0){
+        DSNode<T>* temp = head->next;
+        delete head;
+
+        head = temp;
+        head->prev = nullptr;
+
+        numIndexes--;
+        return;
+    }
+
+    if(index == numIndexes - 1){
+        DSNode<T>* temp = tail->prev;
+        delete tail;
+
+        tail = temp;
+        tail->next = nullptr;
+
+        numIndexes--;
+        return;
+    }
+
+    DSNode<T>* target = getNodeAt(index);
+
+    target->prev->next = target->next;
+
+    if(target->next != nullptr){
+        target->next->prev = target->prev;
+    } else {
+        tail = target->prev;
+    }
+
+    numIndexes--;
+
+    delete target;
 }
 
 /**
@@ -326,11 +357,7 @@ void DSDoublyLL<T>::popBack(){
 template<class T>
 int DSDoublyLL<T>::size()
 {
-    int total = 0;
-    for(DSNode<T>* current = head; current != nullptr; current = current->next){
-        total++;
-    }
-    return total;
+    return numIndexes;
 }
 
 /**
@@ -456,6 +483,8 @@ DSDoublyLL<T>::~DSDoublyLL(){
 template <class T>
 DSNode<T>* DSDoublyLL<T>::getNodeAt(int index) const{
     DSNode<T>* current;
+
+    //ToDo: throw an "index out of bounds" error
 
     // set indexing to start from the closer end node
     if(index < 0){
