@@ -7,20 +7,18 @@
 #include "DSString/dsstring.h"
 #include "DSVector/dsvector.h"
 #include "DSStack/dsstack.h"
-
-TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
-
-/*
- *  Set Variables
- */
-
-    const int intArray1[3] = {0, 1, 2};
-    const int intArray2[3] = {3, 4, 5};
-    const int intArray3[6] = {0, 1, 2, 3, 4, 5};
+#include "DSDoublyLL/dsdoublyll.h"
 
 /*
  *  DSString
  */
+TEST_CASE("Data_Structures_String", "[String][Data_Structures_Test]"){
+    const int intArray1[3] = {0, 1, 2};
+    int arr1StartSize = 3;
+    const int intArray2[3] = {3, 4, 5};
+    int arr2StartSize = 3;
+    const int intArray3[6] = {0, 1, 2, 3, 4, 5};
+    int arr3StartSize = 6;
 
     DSString* testStringArray[3];
 
@@ -153,10 +151,18 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
         clearFile.open(filePath.c_str());
         clearFile.close();
     }
+}
 
- /*
+/*
  *  DSVector
  */
+TEST_CASE("Data_Structures_Vector", "[Vector][Data_Structures_Test]"){
+    const int intArray1[3] = {0, 1, 2};
+    int arr1StartSize = 3;
+    const int intArray2[3] = {3, 4, 5};
+    int arr2StartSize = 3;
+    const int intArray3[6] = {0, 1, 2, 3, 4, 5};
+    int arr3StartSize = 6;
 
     DSVector<int> numVect1(8);
     DSVector<int> numVect1Copy;
@@ -245,10 +251,18 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
 
         numVect1 = numVect1Copy;
     }
+}
 
 /*
- * DSStack
+ *  DSStack
  */
+TEST_CASE("Data_Structures_Stack", "[Stack][Data_Structures_Test]"){
+    const int intArray1[3] = {0, 1, 2};
+    int arr1StartSize = 3;
+    const int intArray2[3] = {3, 4, 5};
+    int arr2StartSize = 3;
+    const int intArray3[6] = {0, 1, 2, 3, 4, 5};
+    int arr3StartSize = 6;
 
     DSStack<int> numStack1(4);
     DSStack<int> numStack1Copy;
@@ -330,4 +344,124 @@ TEST_CASE("Data_Structures_Test", "[Data_Structures_Test]"){
         numStack1 = numStack1Copy;
     }
 
+
+}
+
+/*
+ *  DSDoublyLL
+ */
+TEST_CASE("Data_Structures_Doubly_Linked_List", "[Doubly_Linked_List][Data_Structures_Test]"){
+    const int intArray1[3] = {0, 1, 2};
+    int arr1StartSize = 3;
+    const int intArray2[3] = {3, 4, 5};
+    int arr2StartSize = 3;
+    const int intArray3[6] = {0, 1, 2, 3, 4, 5};
+    int arr3StartSize = 6;
+
+    const int intArray4[3] = {1,2,4};
+    int arr4StartSize = 3;
+
+    DSDoublyLL<int> numList1;
+    DSDoublyLL<int> numList1Copy;
+    DSDoublyLL<int> numList2;
+    DSDoublyLL<int> numList3;
+    DSDoublyLL<int> numList4;
+
+    for(int element : intArray1){
+        numList1.pushBack(element);
+        numList1Copy.pushBack(element);
+    }
+
+    for(int element : intArray2){
+        numList2.pushBack(element);
+    }
+
+    numList3 = DSDoublyLL<int>(intArray3, arr3StartSize);
+    numList4 = DSDoublyLL<int>(intArray4, arr4StartSize);
+
+
+    SECTION("Comparison Operators"){
+        REQUIRE(numList1 == numList1Copy);
+
+        for(int i = 0; i < numList2.getNumIndexes(); i++){
+            numList1.pushBack(numList2[i]);
+        }
+
+        REQUIRE(numList1 == numList3);
+
+        numList1 = numList1Copy;
+
+        REQUIRE(numList1 != numList2);
+    }
+
+    SECTION("indexing"){
+        REQUIRE(numList1[0] == 0);
+        REQUIRE(numList3[0] == 0);
+
+        REQUIRE(numList1[2] == 2);
+        REQUIRE(numList3[4] == 4);
+
+        REQUIRE(numList1[-2] == 1);
+        REQUIRE(numList3[-4] == 2);
+
+        numList1[1] = 2;
+        REQUIRE(numList1[1] == 2);
+        numList1[1] = 1;
+        REQUIRE(numList1[1] == 1);
+    }
+
+    SECTION("Other Operators"){
+        // adding
+        REQUIRE(numList3 == numList1 + numList2);
+
+        // adding and setting equal
+        numList1 += numList2;
+        REQUIRE(numList3 == numList1);
+        numList1 = numList1Copy;
+
+        // size
+        REQUIRE(numList1.size() == 3);
+    }
+
+    SECTION("Insertion and Removal"){
+        // insertion
+        numList4.insert(0, 0);
+        numList4.insert(3, 3);
+        numList4.insert(5, 5);
+
+        REQUIRE(numList4 == numList3);
+
+        // removal
+        numList4.remove(5);
+        numList4.remove(1);
+        numList4.remove(0);
+        numList4.remove(0);
+
+        numList4.insert(2, 5);
+
+        REQUIRE(numList4 == numList2);
+
+        // reset list
+        numList4.remove(2);
+        numList4.remove(0);
+
+        numList4.pushFront(2);
+        numList4.pushFront(1);
+    }
+
+    SECTION("popping"){
+        for(int i = 0; i < 3; i++){
+            numList3.popBack();
+        }
+        REQUIRE(numList3 == numList1);
+
+        numList3 += numList2;
+
+        for(int i = 0; i < 3; i++){
+            numList3.popFront();
+        }
+        REQUIRE(numList3 == numList2);
+
+        numList3 = numList1 + numList2;
+    }
 }

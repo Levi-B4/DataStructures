@@ -83,11 +83,8 @@ public:
     // returns data cstring
     char* c_str() const;
 
-    //TODO: Error: causes error with catch.hpp
-    //template <class U>
     friend std::ostream& operator<<(std::ostream& stream, const DSString& theString);
 
-    //template <class U>
     friend std::istream& operator>>(std::istream& stream, DSString& theString);
 
 private:
