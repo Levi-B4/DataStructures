@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - DSDoublyLL
+      - Test-Pages
 
 jobs:
   build:
