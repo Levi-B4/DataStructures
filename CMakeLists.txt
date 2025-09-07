@@ -35,4 +35,4 @@ add_executable(${EXE_NAME} ./main.cpp
         DSStack/dsstack.h
         DSDoublyLL/dsnode.h
         DSDoublyLL/dsdoublyll.h
-        DSListStack/dsliststack.h)
+        DSDoublyLL/dsliststack.h)
