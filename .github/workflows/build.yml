@@ -39,7 +39,7 @@ jobs:
 
     steps:
       - name: Checkout project repo from GitHub
-        uses: actions/checkout@v1
+        uses: actions/checkout@v4
 
       - name: Executable name Environment Variable Check
         run: |
