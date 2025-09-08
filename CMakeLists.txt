@@ -34,4 +34,5 @@ add_executable(${EXE_NAME} ./main.cpp
         DSVector/dsvector.h
         DSStack/dsstack.h
         DSDoublyLL/dsnode.h
-        DSDoublyLL/dsdoublyll.h)
+        DSDoublyLL/dsdoublyll.h
+        DSDoublyLL/dsliststack.h)

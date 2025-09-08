@@ -8,6 +8,7 @@
 #include "DSVector/dsvector.h"
 #include "DSStack/dsstack.h"
 #include "DSDoublyLL/dsdoublyll.h"
+#include "DSDoublyLL/dsliststack.h"
 
 /*
  *  DSString
@@ -343,8 +344,6 @@ TEST_CASE("Data_Structures_Stack", "[Stack][Data_Structures_Test]"){
 
         numStack1 = numStack1Copy;
     }
-
-
 }
 
 /*
@@ -463,5 +462,72 @@ TEST_CASE("Data_Structures_Doubly_Linked_List", "[Doubly_Linked_List][Data_Struc
         REQUIRE(numList3 == numList2);
 
         numList3 = numList1 + numList2;
+    }
+}
+
+/*
+ *  DSListStack
+ */
+TEST_CASE("Data_Structures_List_Stack", "[Stack][Data_Structures_Test]"){
+    const int intArray1[3] = {0, 1, 2};
+    int arr1StartSize = 3;
+    const int intArray2[3] = {3, 4, 5};
+    int arr2StartSize = 3;
+    const int intArray3[6] = {0, 1, 2, 3, 4, 5};
+    int arr3StartSize = 6;
+
+    DSListStack<int> numStack1;
+    DSListStack<int> numStack1Copy;
+    DSListStack<int> numStack2;
+    DSListStack<int> numStack3;
+
+    for(int element : intArray1){
+        numStack1.push(element);
+        numStack1Copy.push(element);
+    }
+
+    for(int element : intArray2){
+        numStack2.push(element);
+    }
+
+    for(int element : intArray3){
+        numStack3.push(element);
+    }
+
+    SECTION("Operators"){
+
+        REQUIRE(numStack1 == numStack1Copy);
+
+        numStack1 = numStack2;
+
+        REQUIRE(numStack1 == numStack2);
+
+        numStack1 = numStack1Copy;
+    }
+
+    SECTION("Getters"){
+        REQUIRE(numStack1.size() == 3);
+    }
+
+    SECTION("Peek and Pop"){
+        REQUIRE(numStack1.peek() == 2);
+        numStack1.pop();
+        REQUIRE(numStack1.peek() == 1);
+        numStack1.pop();
+        REQUIRE(numStack1.peek() == 0);
+
+        numStack1 = numStack1Copy;
+    }
+
+    SECTION("Push"){
+        numStack1.push(3);
+        REQUIRE(numStack1.size() == 4);
+        REQUIRE(numStack1.peek() == 3);
+
+        numStack1.push(4);
+        REQUIRE(numStack1.size() == (5));
+        REQUIRE(numStack1.peek() == 4);
+
+        numStack1 = numStack1Copy;
     }
 }
