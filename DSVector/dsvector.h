@@ -4,6 +4,67 @@
 template <class T>
 class DSVector
 {
+private:
+    /**
+     * @brief The iterator struct - iterator for the vector class
+     */
+    struct iterator{
+    public:
+        /**
+         * @brief iterator - constructor
+         * @param ptr - pointer to start iteration from
+         */
+        iterator(T* ptr): ptr(ptr){}
+
+        /**
+         * @brief operator * - dereferences pointer
+         * @return - reference of the class T at the pointer's location
+         */
+        T& operator*(){
+            return *ptr;
+        }
+
+        /**
+         * @brief operator ++ - iterates to next pointer
+         * @return this iterator after iteration
+         */
+        iterator operator++(){
+            ++ptr;
+            return *this;
+        }
+
+        /**
+         * @brief operator ++
+         * @return a reference to an iterator before iteration
+         */
+        iterator operator++(int){
+            iterator tmp = *this;
+            ++ptr;
+            return tmp;
+        }
+
+        /**
+         * @brief operator == compares if two iterators are equal
+         * @param a - first iterator to compare
+         * @param b - second iterator to compare
+         * @return true if the two iterators are equal
+         */
+        friend bool operator==(const iterator& a, const iterator& b){
+            return a.ptr == b.ptr;
+        }
+
+        /**
+         * @brief operator != compares if two iterators are equal
+         * @param a - first iterator to compare
+         * @param b - second iterator to compare
+         * @return true if the two iterators are not equal
+         */
+        friend bool operator!=(const iterator& a, const iterator& b){
+            return a.ptr != b.ptr;
+        }
+    private:
+        T* ptr;
+    };
     public:
         //default constructor - params: int resizeIncrement = 5
         DSVector(int resizeIncrement = 5);
@@ -73,6 +134,15 @@ class DSVector
 
         // default destructor
         ~DSVector();
+
+
+        inline iterator begin(){
+            return iterator(data);
+        }
+
+        inline iterator end(){
+            return iterator(data + numIndexes);
+        }
 
     private:
         T* data;

@@ -260,6 +260,16 @@ TEST_CASE("Data_Structures_Vector", "[Vector][Data_Structures_Test]"){
 
         numVect1 = numVect1Copy;
     }
+
+    SECTION("Iteration"){
+        for(auto& it : numVect1){
+            it += 3;
+        }
+
+        REQUIRE(numVect1 == numVect2);
+
+        numVect1 = numVect1Copy;
+    }
 }
 
 /*
