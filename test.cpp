@@ -14,18 +14,11 @@
  *  DSString
  */
 TEST_CASE("Data_Structures_String", "[String][Data_Structures_Test]"){
-    const int intArray1[3] = {0, 1, 2};
-    int arr1StartSize = 3;
-    const int intArray2[3] = {3, 4, 5};
-    int arr2StartSize = 3;
-    const int intArray3[6] = {0, 1, 2, 3, 4, 5};
-    int arr3StartSize = 6;
+    DSString testStringArray[3];
 
-    DSString* testStringArray[3];
-
-    testStringArray[0] = new DSString("test1");
-    testStringArray[1] = new DSString("yo");
-    testStringArray[2] = new DSString();
+    testStringArray[0] = DSString("test1");
+    testStringArray[1] = DSString("yo");
+    testStringArray[2] = DSString();
 
     DSString testStr = "testStr";
 
@@ -33,93 +26,93 @@ TEST_CASE("Data_Structures_String", "[String][Data_Structures_Test]"){
     nonPtrArray[0] = "nonPtr";
 
     SECTION("String concatination operators"){
-        REQUIRE((*testStringArray[0] += "yo") == "test1yo");
-        *testStringArray[0] = "test1";
+        REQUIRE((testStringArray[0] += "yo") == "test1yo");
+        testStringArray[0] = "test1";
 
-        REQUIRE((*testStringArray[1] += testStr) == "yotestStr");
-        *testStringArray[1] = "yo";
+        REQUIRE((testStringArray[1] += testStr) == "yotestStr");
+        testStringArray[1] = "yo";
 
-        REQUIRE((*testStringArray[1] += 'x') == "yox");
-        *testStringArray[1] = "yo";
+        REQUIRE((testStringArray[1] += 'x') == "yox");
+        testStringArray[1] = "yo";
     }
 
     SECTION("String functions"){
 
         // size()
-        REQUIRE(testStringArray[0]->size() == 5);
-        REQUIRE(testStringArray[2]->size() == 0);
+        REQUIRE(testStringArray[0].size() == 5);
+        REQUIRE(testStringArray[2].size() == 0);
 
         // findChar(const char searchChar)
-        REQUIRE(testStringArray[0]->findChar('s') == 2);
-        REQUIRE(testStringArray[0]->findChar('y') == -1);
+        REQUIRE(testStringArray[0].findChar('s') == 2);
+        REQUIRE(testStringArray[0].findChar('y') == -1);
 
         // findChar(const char searchChar, const int numInstance)
-        REQUIRE(testStringArray[0]->findChar('t', 1) == 0);
-        REQUIRE(testStringArray[0]->findChar('t', 2) == 3);
-        REQUIRE(testStringArray[0]->findChar('t', 3) == -1);
+        REQUIRE(testStringArray[0].findChar('t', 1) == 0);
+        REQUIRE(testStringArray[0].findChar('t', 2) == 3);
+        REQUIRE(testStringArray[0].findChar('t', 3) == -1);
 
         // deleteIndex(const int index)
-        testStringArray[0]->deleteIndex(1);
-        REQUIRE(*testStringArray[0] == "tst1");
-        testStringArray[0]->deleteIndex(3);
-        REQUIRE(*testStringArray[0] == "tst");
-        *testStringArray[0] = "test1";
+        testStringArray[0].deleteIndex(1);
+        REQUIRE(testStringArray[0] == "tst1");
+        testStringArray[0].deleteIndex(3);
+        REQUIRE(testStringArray[0] == "tst");
+        testStringArray[0] = "test1";
     }
 
     SECTION("String Comparison Operators"){
 
-        REQUIRE(!(*testStringArray[2] == "notEmpty"));
+        REQUIRE(!(testStringArray[2] == "notEmpty"));
 
         REQUIRE(testStr == "testStr");
         REQUIRE(nonPtrArray[0] == "nonPtr");
 
 
-        REQUIRE(*testStringArray[0] == "test1");
-        REQUIRE(!(*testStringArray[0] == *testStringArray[1]));
+        REQUIRE(testStringArray[0] == "test1");
+        REQUIRE(!(testStringArray[0] == testStringArray[1]));
 
-        REQUIRE(!(*testStringArray[0] < "test1"));
-        REQUIRE(*testStringArray[1] < *testStringArray[0]);
+        REQUIRE(!(testStringArray[0] < "test1"));
+        REQUIRE(testStringArray[1] < testStringArray[0]);
 
-        REQUIRE(!(*testStringArray[0] > "test1"));
-        REQUIRE(*testStringArray[0] > *testStringArray[1]);
+        REQUIRE(!(testStringArray[0] > "test1"));
+        REQUIRE(testStringArray[0] > testStringArray[1]);
 
-        REQUIRE(*testStringArray[0] <= "test1");
-        REQUIRE(*testStringArray[1] <= *testStringArray[0]);
+        REQUIRE(testStringArray[0] <= "test1");
+        REQUIRE(testStringArray[1] <= testStringArray[0]);
 
-        REQUIRE(*testStringArray[0] >= "test1");
-        REQUIRE(*testStringArray[0] >= *testStringArray[1]);
+        REQUIRE(testStringArray[0] >= "test1");
+        REQUIRE(testStringArray[0] >= testStringArray[1]);
 
-        REQUIRE(*testStringArray[2] == "");
+        REQUIRE(testStringArray[2] == "");
     }
 
     SECTION("String Indexing"){
-        REQUIRE((*testStringArray[0])[0] == 't');
-        REQUIRE((*testStringArray[1])[1] == 'o');
-        REQUIRE((*testStringArray[2])[0] == '\0');
+        REQUIRE((testStringArray[0])[0] == 't');
+        REQUIRE((testStringArray[1])[1] == 'o');
+        REQUIRE((testStringArray[2])[0] == '\0');
     }
 
     SECTION("Substrings"){
-        REQUIRE(testStringArray[0]->substring(1, 3) == "est");
-        REQUIRE(testStringArray[1]->substring(0, 1) == "y");
+        REQUIRE(testStringArray[0].substring(1, 3) == "est");
+        REQUIRE(testStringArray[1].substring(0, 1) == "y");
 
-        REQUIRE(testStringArray[0]->substring(3,0) == "");
-        REQUIRE(testStringArray[0]->substring(testStringArray[0]->size() - 1, 3) == "");
-        REQUIRE(testStringArray[0]->substring(0, 0) == "");
+        REQUIRE(testStringArray[0].substring(3,0) == "");
+        REQUIRE(testStringArray[0].substring(testStringArray[0].size() - 1, 3) == "");
+        REQUIRE(testStringArray[0].substring(0, 0) == "");
 
 
-        REQUIRE(testStringArray[0]->substring(2, -5) == "tes");
-        REQUIRE(testStringArray[0]->substring(2, -2) == "es");
-        REQUIRE(testStringArray[0]->substring(0, -3) == "t");
-        REQUIRE(testStringArray[0]->substring(testStringArray[0]->size() - 1, -2) == "t1");
+        REQUIRE(testStringArray[0].substring(2, -5) == "tes");
+        REQUIRE(testStringArray[0].substring(2, -2) == "es");
+        REQUIRE(testStringArray[0].substring(0, -3) == "t");
+        REQUIRE(testStringArray[0].substring(testStringArray[0].size() - 1, -2) == "t1");
 
-        REQUIRE(testStringArray[0]->substring(3, 999) == "t1");
+        REQUIRE(testStringArray[0].substring(3, 999) == "t1");
 
-        REQUIRE(testStringArray[0]->substring(1) == "est1");
+        REQUIRE(testStringArray[0].substring(1) == "est1");
     }
 
     SECTION("c_string"){
-        REQUIRE(*testStringArray[0] == testStringArray[0]->c_str());
-        REQUIRE(*testStringArray[0] == testStringArray[0]->c_str());
+        REQUIRE(testStringArray[0] == testStringArray[0].c_str());
+        REQUIRE(testStringArray[0] == testStringArray[0].c_str());
     }
 
     SECTION("File input/output"){
@@ -129,8 +122,12 @@ TEST_CASE("Data_Structures_String", "[String][Data_Structures_Test]"){
         std::ofstream testOutFile;
         testOutFile.open(filePath.c_str());
 
-        testOutFile << DSString("hello\n");
-        testOutFile << DSString("Test Test") << std::endl;
+        DSString testText1, testText2;
+        testText1 = "hello";
+        testText2 = "Test Test";
+
+        testOutFile << DSString(testText1) << "\n";
+        testOutFile << DSString(testText2) << std::endl;
 
         testOutFile.close();
 
@@ -141,16 +138,27 @@ TEST_CASE("Data_Structures_String", "[String][Data_Structures_Test]"){
         testInFile.open(filePath.c_str());
 
         testInFile >> fileTestString;
-        REQUIRE(fileTestString == "hello");
+        REQUIRE(fileTestString == testText1);
 
         testInFile >> fileTestString;
-        REQUIRE(fileTestString == "Test Test");
+        REQUIRE(fileTestString == testText2);
 
         testInFile.close();
 
         std::ofstream clearFile;
         clearFile.open(filePath.c_str());
         clearFile.close();
+    }
+
+    SECTION("Iteration"){
+        // test1 with all characters ++
+        DSString test = "uftu2";
+
+        for(auto& it : test){
+            it--;
+        }
+
+        REQUIRE(testStringArray[0] == test);
     }
 }
 

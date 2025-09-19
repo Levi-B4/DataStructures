@@ -5,6 +5,68 @@
 
 class DSString
 {
+private:
+    /**
+     * @brief The iterator struct - iterator for the string class
+     */
+    struct iterator{
+    public:
+        /**
+         * @brief iterator - constructor
+         * @param ptr - pointer to start iteration from
+         */
+        iterator(char* ptr): ptr(ptr){}
+
+        /**
+         * @brief operator * - dereferences pointer
+         * @return - reference of the character at the pointer's location
+         */
+        char& operator*(){
+            return *ptr;
+        }
+
+        /**
+         * @brief operator ++ - iterates to next pointer
+         * @return this iterator after iteration
+         */
+        iterator operator++(){
+            ++ptr;
+            return *this;
+        }
+
+        /**
+         * @brief operator ++
+         * @return a reference to an iterator before iteration
+         */
+        iterator operator++(int){
+            iterator tmp = *this;
+            ++ptr;
+            return tmp;
+        }
+
+        /**
+         * @brief operator == compares if two iterators are equal
+         * @param a - first iterator to compare
+         * @param b - second iterator to compare
+         * @return true if the two iterators are equal
+         */
+        friend bool operator==(const iterator& a, const iterator& b){
+            return a.ptr == b.ptr;
+        }
+
+        /**
+         * @brief operator != compares if two iterators are equal
+         * @param a - first iterator to compare
+         * @param b - second iterator to compare
+         * @return true if the two iterators are not equal
+         */
+        friend bool operator!=(const iterator& a, const iterator& b){
+            return a.ptr != b.ptr;
+        }
+    private:
+        char* ptr;
+    };
+
 public:
     // default constructor
     DSString();
@@ -86,6 +148,14 @@ public:
     friend std::ostream& operator<<(std::ostream& stream, const DSString& theString);
 
     friend std::istream& operator>>(std::istream& stream, DSString& theString);
+
+    inline iterator begin(){
+        return iterator(data);
+    }
+
+    inline iterator end(){
+        return iterator(data + size());
+    }
 
 private:
     char* data;
