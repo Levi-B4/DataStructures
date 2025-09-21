@@ -206,9 +206,7 @@ private:
  * @brief DSDoublyLL - default constructor
  */
 template <class T>
-DSDoublyLL<T>::DSDoublyLL(){
-
-}
+DSDoublyLL<T>::DSDoublyLL(){}
 
 /**
  * @brief DSDoublyLL - constructor

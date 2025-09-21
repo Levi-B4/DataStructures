@@ -68,25 +68,54 @@ private:
     };
 
 public:
-    // default constructor
+    /**
+     * @brief DSString - default constructor
+     */
     DSString();
-    // constructor - paramaters: const char* otherData
+
+    /**
+     * @brief DSString - constructor
+     * @param data - c-string to turn into string
+     */
     DSString(const char* data);
-    // constructor - paramaters: const DSString& otherData
+
+    /**
+     * @brief DSString - copy constructor
+     * @param other - string to copy
+     */
     DSString(const DSString& other);
 
-    // returns the location of the passed char - parameters: const char searchChar
+    /**
+     * @brief findChar - find the first instance of a character in string
+     * @param searchChar - character to find
+     * @return
+     */
     int findChar(const char searchChar) const;
-    // returns the location of the numInstance instance of the passed char - parameters: const char searchChar, const int numInstance
+
+    /**
+     * @brief findChar - finds the location of the numInstance instance of the passed char
+     * @param searchChar - character to search for
+     * @param numInstance - n'th instance to search for
+     * @return index of found char
+     */
     int findChar(const char searchChar, const int numInstance) const;
 
-    // removes a char from the given index
+    /**
+     * @brief deleteIndex - removes character from given index
+     * @param index - index in which to remove
+     */
     void deleteIndex(const int index);
 
-    // default destructor
+    /**
+     * @brief ~DSString - Default destructor
+     */
     ~DSString();
 
-    // assignment operator - params: const char* data
+    /**
+     * @brief operator = : assignment operator
+     * @param data - character array to set this equal to
+     * @return
+     */
     DSString& operator=(const char* data);
     // assignment operator - params: const DSString& other
     DSString& operator=(const DSString& other);
