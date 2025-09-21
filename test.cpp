@@ -388,6 +388,16 @@ TEST_CASE("Data_Structures_Doubly_Linked_List", "[Doubly_Linked_List][Data_Struc
 
         numList3 = numList1 + numList2;
     }
+
+    SECTION("Iteration"){
+        for(auto& it : numList1){
+            it += 3;
+        }
+
+        REQUIRE(numList1 == numList2);
+
+        numList1 = numList1Copy;
+    }
 }
 
 /*

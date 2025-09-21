@@ -5,6 +5,67 @@
 
 template <class T>
 class DSDoublyLL{
+private:
+    /**
+     * @brief The iterator struct - iterator for the vector class
+     */
+    struct iterator{
+    public:
+        /**
+         * @brief iterator - constructor
+         * @param ptr - pointer to start iteration from
+         */
+        iterator(DSNode<T>* ptr): ptr(ptr){}
+
+        /**
+         * @brief operator * - dereferences pointer
+         * @return - reference of the class T at the pointer's location
+         */
+        T& operator*(){
+            return ptr->data;
+        }
+
+        /**
+         * @brief operator ++ - iterates to next pointer
+         * @return this iterator after iteration
+         */
+        iterator operator++(){
+            ptr = ptr->next;
+            return *this;
+        }
+
+        /**
+         * @brief operator ++
+         * @return a reference to an iterator before iteration
+         */
+        iterator operator++(int){
+            iterator tmp = *this;
+            ptr = ptr->next;
+            return tmp;
+        }
+
+        /**
+         * @brief operator == compares if two iterators are equal
+         * @param a - first iterator to compare
+         * @param b - second iterator to compare
+         * @return true if the two iterators are equal
+         */
+        friend bool operator==(const iterator& a, const iterator& b){
+            return a.ptr == b.ptr;
+        }
+
+        /**
+         * @brief operator != compares if two iterators are equal
+         * @param a - first iterator to compare
+         * @param b - second iterator to compare
+         * @return true if the two iterators are not equal
+         */
+        friend bool operator!=(const iterator& a, const iterator& b){
+            return a.ptr != b.ptr;
+        }
+    private:
+        DSNode<T>* ptr;
+    };
 public:
     /**
      * @brief DSDoublyLL - default constructor
@@ -118,6 +179,14 @@ public:
      * @brief ~DSDoublyLL - default destructor
      */
     ~DSDoublyLL();
+
+    inline iterator begin(){
+        return iterator(head);
+    };
+
+    inline iterator end(){
+        return iterator(nullptr);
+    }
 
 private:
     DSNode<T>* head = nullptr;
