@@ -24,7 +24,7 @@ class DSNode{
          * @brief DSNode - copy consructor
          * @param other - node to copy
          */
-        DSNode(DSNode<T>& other);
+        DSNode(const DSNode<T>& other);
 
         /**
          * @brief operator =
@@ -59,7 +59,7 @@ DSNode<T>::DSNode(T data) : data(data){}
  * @param other - node to be copied
  */
 template <class T>
-DSNode<T>::DSNode(DSNode<T>& other) : data(other.data){}
+DSNode<T>::DSNode(const DSNode<T>& other) : data(other.data){}
 
 /**
  * @brief operator =

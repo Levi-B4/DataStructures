@@ -26,13 +26,13 @@ public:
     /**
      * @brief Getter - numIndexes
      */
-    int size();
+    int size() const;
 
     /**
      * @brief push - adds an element to the top of the stack
      * @param element - element to add to stack
      */
-    void push(T element);
+    void push(const T element);
 
     /**
      * @brief pop - removes the top element of the stack
@@ -43,7 +43,7 @@ public:
      * @brief peek - returns the top element of the stack
      * @return top element of the stack
      */
-    T peek();
+    T peek() const;
 
     /**
      * @brief operator = :  Sets this stack equal to the passed in stack
@@ -101,7 +101,7 @@ DSStack<T>::~DSStack(){}
  * @brief Getter - numIndexes
  */
 template <class T>
-int DSStack<T>::size(){
+int DSStack<T>::size() const{
     return data.size();
 }
 
@@ -110,7 +110,7 @@ int DSStack<T>::size(){
  * @param element - element to add to stack
  */
 template <class T>
-void DSStack<T>::push(T element){
+void DSStack<T>::push(const T element){
     data.pushBack(element);
 }
 
@@ -127,7 +127,7 @@ void DSStack<T>::pop(){
  * @return top element of the stack
  */
 template <class T>
-T DSStack<T>::peek(){
+T DSStack<T>::peek() const{
     return data[size() - 1];
 }
 

@@ -94,26 +94,26 @@ public:
      * @brief getNumIndexes - Getter: numIndexes
      * @return numIndexes
      */
-    int getNumIndexes();
+    int getNumIndexes() const;
 
     /**
      * @brief pushFront - adds element data to the front of the list
      * @param data - data to be added
      */
-    void pushFront(T data);
+    void pushFront(const T data);
 
     /**
      * @brief pushBack - adds data to the front of the list
      * @param data - data to be added
      */
-    void pushBack(T data);
+    void pushBack(const T data);
 
     /**
      * @brief insert - inserts data in list at given index
      * @param data - data to be added
      * @param index - index to insert data
      */
-    void insert(int index, T data);
+    void insert(int index, const T data);
 
     /**
      * @brief remove - removes data from list at given index
@@ -125,7 +125,7 @@ public:
      * @brief remove - removes given data from list
      * @param elemnt - element to be removed
      */
-    void remove(T element, bool onlyFirst = false);
+    void remove(const T element, bool onlyFirst = false);
 
     /**
      * @brief clear - removes all data from list
@@ -147,13 +147,13 @@ public:
      * @param query - item to search for
      * @return true if item is in the list
      */
-    bool contains(const T query);
+    bool contains(const T query) const;
 
     /**
      * @brief size - returns the size of the list
      * @return size of the list
      */
-    int size();
+    int size() const;
 
     /**
      * @brief DSDoublyLL::operator [] - returns data at passed index
@@ -202,11 +202,11 @@ public:
      */
     ~DSDoublyLL();
 
-    inline iterator begin(){
+    inline iterator begin() {
         return iterator(head);
     };
 
-    inline iterator end(){
+    inline iterator end() {
         return iterator(nullptr);
     }
 
@@ -259,7 +259,7 @@ DSDoublyLL<T>::DSDoublyLL(const DSDoublyLL& other){
  * @return numIndexes
  */
 template <class T>
-int DSDoublyLL<T>::getNumIndexes(){
+int DSDoublyLL<T>::getNumIndexes() const{
     return numIndexes;
 }
 
@@ -268,7 +268,7 @@ int DSDoublyLL<T>::getNumIndexes(){
  * @param data - data to be added
  */
 template <class T>
-void DSDoublyLL<T>::pushFront(T data){
+void DSDoublyLL<T>::pushFront(const T data){
     numIndexes++;
     DSNode<T>* newNode = new DSNode<T>;
     newNode->data = data;
@@ -289,7 +289,7 @@ void DSDoublyLL<T>::pushFront(T data){
  * @param data - data to be added
  */
 template <class T>
-void DSDoublyLL<T>::pushBack(T data){
+void DSDoublyLL<T>::pushBack(const T data){
     numIndexes++;
     DSNode<T>* newNode = new DSNode<T>;
     newNode->data = data;
@@ -311,7 +311,7 @@ void DSDoublyLL<T>::pushBack(T data){
  * @param index - index of the new node
  */
 template <class T>
-void DSDoublyLL<T>::insert(int index, T data){
+void DSDoublyLL<T>::insert(int index, const T data){
     if(index == 0){
         pushFront(data);
         return;
@@ -404,7 +404,7 @@ void DSDoublyLL<T>::removeAt(int index){
  * @param element - element to remove
  */
 template<class T>
-void DSDoublyLL<T>::remove(T element, bool onlyFirst)
+void DSDoublyLL<T>::remove(const T element, bool onlyFirst)
 {
     while(head->data == element){
         if(head == tail){
@@ -539,7 +539,7 @@ void DSDoublyLL<T>::popBack(){
  * @return true if query is in data
  */
 template<class T>
-bool DSDoublyLL<T>::contains(const T query)
+bool DSDoublyLL<T>::contains(const T query) const
 {
     for(DSNode<T>* current = head; current != nullptr; current = current->next){
         if(current->data == query){
@@ -555,7 +555,7 @@ bool DSDoublyLL<T>::contains(const T query)
  * @return the number of nodes in the list
  */
 template<class T>
-int DSDoublyLL<T>::size()
+int DSDoublyLL<T>::size() const
 {
     return numIndexes;
 }
