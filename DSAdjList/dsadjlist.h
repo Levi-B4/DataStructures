@@ -54,6 +54,34 @@ public:
     void removeEdge(T node1, T node2);
 
     /**
+     * @brief contains - returns true if the given node is in the list
+     * @param node - node to search for
+     * @return true if node is in the list
+     */
+    bool contains(T node);
+
+    /**
+     * @brief operator = :  sets this list equal to the list passed in
+     * @param other - reference to target list
+     * @return returns this
+     */
+    DSAdjList<T>& operator=(const DSAdjList<T>& other);
+
+    /**
+     * @brief operator == :  compares this list against another list
+     * @param other - reference to target list
+     * @return true if the lists have equal values
+     */
+    bool operator==(DSAdjList<T>& other);
+
+    /**
+     * @brief operator != : compares this list against another list
+     * @param other - reference to target list
+     * @return false if the lists have equal values
+     */
+    bool operator!=(const DSAdjList<T>& other) const;
+
+    /**
      * @brief ~DSAdList - default destructor
      */
     ~DSAdjList();
@@ -71,7 +99,9 @@ DSAdjList<T>::DSAdjList(){}
  * @param other - list to copy
  */
 template <class T>
-DSAdjList<T>::DSAdjList(DSAdjList<T>& other){}
+DSAdjList<T>::DSAdjList(DSAdjList<T>& other){
+    data = other.data;
+}
 
 /**
  * @brief GetConnectedNode - returns all linked list that is the tail of the given element's list
@@ -79,14 +109,30 @@ DSAdjList<T>::DSAdjList(DSAdjList<T>& other){}
  * @return doubly linked list of nodes
  */
 template <class T>
-DSDoublyLL<T> DSAdjList<T>::GetConnectedNodes(T nodeData){}
+DSDoublyLL<T> DSAdjList<T>::GetConnectedNodes(T nodeData){
+    for(auto list : data){
+        if(list[0] == nodeData){
+            DSDoublyLL<T> output = list;
+            output.removeAt(0);
+            return output;
+        }
+    }
+}
 
 /**
  * @brief addNode - creates a new list at the end of the data list for the given node
  * @param nodeData - the value of the new node
  */
 template <class T>
-void DSAdjList<T>::addNode(T nodeData){}
+void DSAdjList<T>::addNode(T nodeData){
+    if(contains(nodeData)){
+        return;
+    }
+
+    DSDoublyLL<T> newNode;
+    newNode.pushBack(nodeData);
+    data.pushBack(newNode);
+}
 
 /**
  * @brief addEdge - adds the given nodes to eachother's lists
@@ -94,14 +140,32 @@ void DSAdjList<T>::addNode(T nodeData){}
  * @param node2 - second node of the edge
  */
 template <class T>
-void DSAdjList<T>::addEdge(T node1, T node2){}
+void DSAdjList<T>::addEdge(T node1, T node2){
+    int nodesFound = 0;
+    for(auto list = data.begin(); nodesFound != 2; list++){
+        if((*list)[0] == node1){
+            if(list->contains(node2)){
+                return;
+            }
+            list->pushBack(node2);
+            nodesFound++;
+        } else if((*list)[0] == node2){
+            if(list->contains(node1)){
+                return;
+            }
+            list->pushBack(node1);
+            nodesFound++;
+        }
+    }
+}
 
 /**
  * @brief remove - removes a node's list and all of its occurances in other lists
  * @param nodeData - the value of the node
  */
 template <class T>
-void DSAdjList<T>::removeNode(T nodeData){}
+void DSAdjList<T>::removeNode(const T nodeData){
+}
 
 /**
  * @brief removeEdge - removes the given nodes from each others lists
@@ -109,7 +173,54 @@ void DSAdjList<T>::removeNode(T nodeData){}
  * @param node2 - second node of the edge
  */
 template <class T>
-void DSAdjList<T>::removeEdge(T node1, T node2){}
+void DSAdjList<T>::removeEdge(const T node1, const T node2){
+}
+
+/**
+ * @brief contains - iterates through data and returns true if node is the head of any list
+ * @param query - nade to search for in data
+ * @return true if node is in data
+ */
+template<class T>
+bool DSAdjList<T>::contains(T query)
+{
+    for(auto list : data){
+        if(list[0] == query){
+            return true;
+        }
+    }
+
+    return false;
+}
+
+//TODO: may make this faster to replace the data as you go through rather than clear the whole list
+/**
+ * @brief operator = :  sets this list equal to the list passed in
+ * @param other - reference to target list
+ * @return returns this
+ */
+template <class T>
+DSAdjList<T>& DSAdjList<T>::operator=(const DSAdjList<T>& other){
+    data = other.list;
+}
+
+/**
+ * @brief operator == :  compares this list against another list by checking for the same nodes and connections
+ * @param other - reference to target list
+ * @return true if the list contains the same connections
+ */
+template <class T>
+bool DSAdjList<T>::operator==(DSAdjList<T>& other){
+}
+
+/**
+ * @brief operator != :  pipes to operator== and flips the return
+ * @param other - reference to target list
+ * @return opposite of operator==
+ */
+template <class T>
+bool DSAdjList<T>::operator!=(const DSAdjList<T>& other) const{
+}
 
 /**
  * @brief ~DSAdList - default destructor

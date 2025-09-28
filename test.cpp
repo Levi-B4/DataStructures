@@ -8,6 +8,7 @@
 #include "DSVector/dsvector.h"
 #include "DSStack/dsstack.h"
 #include "DSDoublyLL/dsdoublyll.h"
+#include "DSAdjList/dsadjlist.h"
 
 /*
  *  DSString
@@ -355,22 +356,54 @@ TEST_CASE("Data_Structures_Doubly_Linked_List", "[Doubly_Linked_List][Data_Struc
 
         REQUIRE(numList4 == numList3);
 
-        // removal
-        numList4.remove(5);
-        numList4.remove(1);
-        numList4.remove(0);
-        numList4.remove(0);
+        // removal at index
+        numList4.removeAt(5);
+        numList4.removeAt(1);
+        numList4.removeAt(0);
+        numList4.removeAt(0);
 
         numList4.insert(2, 5);
 
         REQUIRE(numList4 == numList2);
 
+        // removal of element
+        numList1.pushBack(99);
+        numList1.pushBack(99);
+        numList1.insert(2, 99);
+        numList1.insert(4, 99);
+        numList1.insert(6, 99);
+
+        numList1.remove(99, true);
+
+        REQUIRE(numList1.size() == numList1Copy.size() + 4);
+        REQUIRE(numList1[2] != 99);
+        REQUIRE(numList1.contains(99));
+
+        numList1.pushFront(99);
+        numList1.pushFront(99);
+
+        numList1.remove(99);
+
+        REQUIRE(numList1 == numList1Copy);
+
         // reset list
-        numList4.remove(2);
-        numList4.remove(0);
+        numList4.removeAt(2);
+        numList4.removeAt(0);
 
         numList4.pushFront(2);
         numList4.pushFront(1);
+
+        // clearing
+        numList1.clear();
+
+        REQUIRE(numList1 == DSDoublyLL<int>());
+
+        numList1 = numList1Copy;
+
+        numList1.removeAt(0);
+        numList1.removeAt(0);
+        numList1.removeAt(0);
+
     }
 
     SECTION("popping"){
@@ -389,6 +422,7 @@ TEST_CASE("Data_Structures_Doubly_Linked_List", "[Doubly_Linked_List][Data_Struc
         numList3 = numList1 + numList2;
     }
 
+
     SECTION("Iteration"){
         for(auto& it : numList1){
             it += 3;
@@ -397,6 +431,15 @@ TEST_CASE("Data_Structures_Doubly_Linked_List", "[Doubly_Linked_List][Data_Struc
         REQUIRE(numList1 == numList2);
 
         numList1 = numList1Copy;
+    }
+
+    SECTION("other"){
+        REQUIRE(numList1.contains(0));
+        REQUIRE(!numList1.contains(6));
+
+        numList1.removeAt(0);
+        numList1.removeAt(0);
+        numList1.removeAt(0);
     }
 }
 
@@ -466,3 +509,71 @@ TEST_CASE("Data_Structures_List_Stack", "[Stack][Data_Structures_Test]"){
         numStack1 = numStack1Copy;
     }
 }
+
+/*
+ *  DSAdjList
+ */
+TEST_CASE("Data_Structures_Adjacency_List", "[Adjacency_List][Data_Structures_Test]"){
+    char pairings1[6][2] = {{'A', 'B'}, {'A', 'C'}, {'A', 'D'},
+                            {'B', 'D'}, {'B', 'C'},
+                            {'D', 'E'}};
+    int pairings1Count = 6;
+
+    char pairings2[8][2] = {{'A', 'B'}, {'A', 'C'}, {'A', 'D'}, {'A', 'F'},
+                            {'B', 'D'}, {'B', 'C'},
+                            {'C', 'F'},
+                            {'D', 'E'}};
+    int pairings2Count = 8;
+
+    DSAdjList<char> list1, list2;
+
+    for(int i = 0; i < pairings1Count; i++){
+        if(!list1.contains(pairings1[i][0])){
+            list1.addNode(pairings1[i][0]);
+        }
+        if(!list1.contains(pairings1[i][1])){
+            list1.addNode(pairings1[i][1]);
+        }
+
+        list1.addEdge(pairings1[i][0], pairings1[i][1]);
+    }
+
+    for(int i = 0; i < pairings2Count; i++){
+        if(!list2.contains(pairings2[i][0])){
+            list2.addNode(pairings2[i][0]);
+        }
+        if(!list2.contains(pairings2[i][1])){
+            list2.addNode(pairings2[i][1]);
+        }
+
+        list2.addEdge(pairings2[i][0], pairings2[i][1]);
+    }
+
+    DSAdjList<char> list1Copy = list1;
+
+    SECTION("Connection Retrieval"){
+        char tempArr[3] = {'B', 'C', 'D'};
+        DSDoublyLL<char> temp = DSDoublyLL<char>(tempArr, 3);
+
+        DSDoublyLL<char> connections = list1.GetConnectedNodes('A');
+
+        REQUIRE(connections == temp);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

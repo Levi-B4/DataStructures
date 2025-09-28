@@ -21,8 +21,12 @@ private:
          * @brief operator * - dereferences pointer
          * @return - reference of the class T at the pointer's location
          */
-        T& operator*(){
+        T& operator*() const{
             return ptr->data;
+        }
+
+        T* operator->() const{
+            return &ptr->data;
         }
 
         /**
@@ -115,7 +119,18 @@ public:
      * @brief remove - removes data from list at given index
      * @param index - index to be removed
      */
-    void remove(int index);
+    void removeAt(int index);
+
+    /**
+     * @brief remove - removes given data from list
+     * @param elemnt - element to be removed
+     */
+    void remove(T element, bool onlyFirst = false);
+
+    /**
+     * @brief clear - removes all data from list
+     */
+    void clear();
 
     /**
      * @brief popFront - removes first node from list
@@ -126,6 +141,13 @@ public:
      * @brief popBack - removes last node from list
      */
     void popBack();
+
+    /**
+     * @brief contains - returns true if the given item is in the list
+     * @param query - item to search for
+     * @return true if item is in the list
+     */
+    bool contains(const T query);
 
     /**
      * @brief size - returns the size of the list
@@ -319,13 +341,34 @@ void DSDoublyLL<T>::insert(int index, T data){
  * @param index - index where the node will be removed
  */
 template <class T>
-void DSDoublyLL<T>::remove(int index){
-    if(index == 0){
-        DSNode<T>* temp = head->next;
-        delete head;
+void DSDoublyLL<T>::removeAt(int index){
+    if(index >= numIndexes || index < 0){
+        return;
+    }
 
-        head = temp;
-        head->prev = nullptr;
+    if(numIndexes == 1){
+        delete head;
+        numIndexes--;
+
+        head = nullptr;
+        tail = nullptr;
+
+        return;
+    }
+
+    if(index == 0){
+        if(head == tail){
+            delete head;
+
+            head == nullptr;
+            tail == nullptr;
+        } else{
+            DSNode<T>* temp = head->next;
+            delete head;
+
+            head = temp;
+            head->prev = nullptr;
+        }
 
         numIndexes--;
         return;
@@ -334,11 +377,11 @@ void DSDoublyLL<T>::remove(int index){
     if(index == numIndexes - 1){
         DSNode<T>* temp = tail->prev;
         delete tail;
+        numIndexes--;
 
         tail = temp;
         tail->next = nullptr;
 
-        numIndexes--;
         return;
     }
 
@@ -352,9 +395,82 @@ void DSDoublyLL<T>::remove(int index){
         tail = target->prev;
     }
 
-    numIndexes--;
-
     delete target;
+    numIndexes--;
+}
+
+/**
+ * @brief DSDoublyLL::remove - iterates through list and removes the given element
+ * @param element - element to remove
+ */
+template<class T>
+void DSDoublyLL<T>::remove(T element, bool onlyFirst)
+{
+    while(head->data == element){
+        if(head == tail){
+            delete head;
+
+            head == nullptr;
+            tail == nullptr;
+            numIndexes--;
+            return;
+        } else{
+            DSNode<T>* temp = head->next;
+            delete head;
+
+            head = temp;
+            head->prev = nullptr;
+
+            numIndexes--;
+            if(onlyFirst){
+                return;
+            }
+        }
+    }
+
+    for(DSNode<T>* current = head->next; current != tail; current = current->next){
+        if(current->data == element){
+            current->prev->next = current->next;
+            current->next->prev = current->prev;
+
+            DSNode<T>* temp = current;
+            current = current->prev;
+            delete temp;
+
+            numIndexes--;
+            if(onlyFirst){
+                return;
+            }
+        }
+    }
+
+    while(tail->data == element){
+        DSNode<T>* temp = tail->prev;
+        delete tail;
+
+        tail = temp;
+        tail->next = nullptr;
+
+        numIndexes--;
+        if(onlyFirst){
+            return;
+        }
+    }
+}
+
+template <class T>
+void DSDoublyLL<T>::clear(){
+    DSNode<T>* next;
+    DSNode<T>* current = head;
+    while(current != nullptr){
+        next = current->next;
+        delete current;
+        current = next;
+    }
+
+    numIndexes = 0;
+    head = nullptr;
+    tail = nullptr;
 }
 
 /**
@@ -418,6 +534,23 @@ void DSDoublyLL<T>::popBack(){
 }
 
 /**
+ * @brief contains - iterates through data and returns true if query is found
+ * @param query - item to search for in data
+ * @return true if query is in data
+ */
+template<class T>
+bool DSDoublyLL<T>::contains(const T query)
+{
+    for(DSNode<T>* current = head; current != nullptr; current = current->next){
+        if(current->data == query){
+            return true;
+        }
+    }
+
+    return false;
+}
+
+/**
  * @brief DSDoublyLL::size - itterates through the list and counts the number of nodes
  * @return the number of nodes in the list
  */
@@ -437,6 +570,7 @@ T& DSDoublyLL<T>::operator[](int index) const{
     return getNodeAt(index)->data;
 }
 
+//TODO: may make this faster to replace the data as you go through rather than clear the whole list
 /**
  * @brief operator = :  sets this list equal to the list passed in
  * @param other - reference to target list
@@ -462,6 +596,7 @@ DSDoublyLL<T>& DSDoublyLL<T>::operator=(const DSDoublyLL<T>& other){
 
     return *this;
 }
+
 
 /**
  * @brief operator + : returns a linked list combining this and the given list
@@ -550,10 +685,6 @@ DSDoublyLL<T>::~DSDoublyLL(){
 template <class T>
 DSNode<T>* DSDoublyLL<T>::getNodeAt(int index) const{
     DSNode<T>* current;
-
-    //ToDo: throw an "index out of bounds" error
-
-    // set indexing to start from the closer end node
     if(index < 0){
         index = numIndexes + index;
     }
