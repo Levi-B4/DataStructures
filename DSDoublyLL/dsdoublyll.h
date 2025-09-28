@@ -155,6 +155,8 @@ public:
      */
     int size() const;
 
+    bool unorderedEquals(const DSDoublyLL<T>& other) const;
+
     /**
      * @brief DSDoublyLL::operator [] - returns data at passed index
      * @param index - index to retrieve data
@@ -558,6 +560,49 @@ template<class T>
 int DSDoublyLL<T>::size() const
 {
     return numIndexes;
+}
+
+template<class T>
+bool DSDoublyLL<T>::unorderedEquals(const DSDoublyLL<T> &other) const
+{
+    if(numIndexes != other.numIndexes){
+        return false;
+    }
+
+    if(numIndexes == 0){
+        return true;
+    }
+
+    DSDoublyLL<T> temp = other;
+
+    // iterate through list1
+
+    // if index is in list 2 itterate list 1 and remove from list 2
+
+    for(DSNode<T>* i = head; i != nullptr; i = i->next){
+        DSNode<T>* match = nullptr;
+
+        for(DSNode<T>* j = temp.head; j != nullptr; j = j->next){
+            if(i->data == j->data){
+                match = j;
+                break;
+            }
+        }
+
+        if(match == nullptr){
+            return false;
+        }
+
+        if(match == temp.head){
+            temp.head = match->next;
+        } else{
+            match->prev->next = match->next;
+        }
+
+        delete match;
+    }
+
+    return true;
 }
 
 /**

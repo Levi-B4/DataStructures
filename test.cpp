@@ -282,15 +282,13 @@ TEST_CASE("Data_Structures_Doubly_Linked_List", "[Doubly_Linked_List][Data_Struc
     int arr2StartSize = 3;
     const int intArray3[6] = {0, 1, 2, 3, 4, 5};
     int arr3StartSize = 6;
-
-    const int intArray4[3] = {1,2,4};
+    const int intArray4[3] = {1, 2, 4};
     int arr4StartSize = 3;
+    const int intArray5[6] = {4, 5, 3, 2, 1, 0};
+    int arr5StartSize = 6;
 
-    DSDoublyLL<int> numList1;
+    DSDoublyLL<int> numList1, numList2, numList3, numList4, numList5;
     DSDoublyLL<int> numList1Copy;
-    DSDoublyLL<int> numList2;
-    DSDoublyLL<int> numList3;
-    DSDoublyLL<int> numList4;
 
     for(int element : intArray1){
         numList1.pushBack(element);
@@ -303,6 +301,7 @@ TEST_CASE("Data_Structures_Doubly_Linked_List", "[Doubly_Linked_List][Data_Struc
 
     numList3 = DSDoublyLL<int>(intArray3, arr3StartSize);
     numList4 = DSDoublyLL<int>(intArray4, arr4StartSize);
+    numList5 = DSDoublyLL<int>(intArray5, arr5StartSize);
 
 
     SECTION("Comparison Operators"){
@@ -317,6 +316,8 @@ TEST_CASE("Data_Structures_Doubly_Linked_List", "[Doubly_Linked_List][Data_Struc
         numList1 = numList1Copy;
 
         REQUIRE(numList1 != numList2);
+
+        REQUIRE(numList3.unorderedEquals(numList5));
     }
 
     SECTION("indexing"){

@@ -117,6 +117,8 @@ DSDoublyLL<T> DSAdjList<T>::GetConnectedNodes(T nodeData){
             return output;
         }
     }
+
+    return DSDoublyLL<T>();
 }
 
 /**
@@ -201,7 +203,7 @@ bool DSAdjList<T>::contains(T query)
  */
 template <class T>
 DSAdjList<T>& DSAdjList<T>::operator=(const DSAdjList<T>& other){
-    data = other.list;
+    data = other.data;
 }
 
 /**
