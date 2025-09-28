@@ -160,7 +160,7 @@ public:
      * @param index - index to retrieve data
      * @return data at passed index
      */
-    T& operator[](const int index) const;
+    T& operator[](int index) const;
 
     /**
      * @brief operator = :  sets this list equal to the list passed in
