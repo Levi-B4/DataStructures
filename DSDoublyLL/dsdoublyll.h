@@ -13,12 +13,14 @@ private:
     public:
         /**
          * @brief iterator - constructor
-         * @param ptr - pointer to start iteration from
+         * @param ptr - pointer to the node which to start iteration from
          */
         iterator(DSNode<T>* ptr): ptr(ptr){}
 
+        friend class DSDoublyLL;
+
         /**
-         * @brief operator * - dereferences pointer
+         * @brief operator * - dereferences pointer and returns node's data
          * @return - reference of the class T at the pointer's location
          */
         T& operator*() const{
@@ -26,11 +28,11 @@ private:
         }
 
         T* operator->() const{
-            return &ptr->data;
+            return &(ptr->data);
         }
 
         /**
-         * @brief operator ++ - iterates to next pointer
+         * @brief operator ++ - iterates to next node
          * @return this iterator after iteration
          */
         iterator operator++(){
@@ -39,12 +41,31 @@ private:
         }
 
         /**
-         * @brief operator ++
+         * @brief operator ++ - iterates to next pointer
          * @return a reference to an iterator before iteration
          */
         iterator operator++(int){
             iterator tmp = *this;
             ptr = ptr->next;
+            return tmp;
+        }
+
+        /**
+         * @brief operator -- : iterates to previous pointer
+         * @return this iterator after iteration
+         */
+        iterator operator--(){
+            ptr = ptr->prev;
+            return *this;
+        }
+
+        /**
+         * @brief operator -- :  iterates to previous  pointer
+         * @return a reference to an iterator before iteration
+         */
+        iterator operator--(int){
+            iterator tmp = *this;
+            ptr = ptr->prev;
             return tmp;
         }
 
@@ -120,6 +141,12 @@ public:
      * @param index - index to be removed
      */
     void removeAt(int index);
+
+    /**
+     * @brief removeAt - removes data from given node location
+     * @param index - location of node to be removed
+     */
+    iterator removeAt(iterator index);
 
     /**
      * @brief remove - removes given data from list
@@ -402,6 +429,58 @@ void DSDoublyLL<T>::removeAt(int index){
 }
 
 /**
+ * @brief DSDoublyLL::removeAt - remove element at the given iterator
+ * @param index - iterator pointing to the target element
+ */
+template<class T>
+typename DSDoublyLL<T>::iterator DSDoublyLL<T>::removeAt(iterator index)
+{
+    if(numIndexes <= 0){
+        return iterator(head);
+    }
+
+    if(numIndexes == 1 && head == index.ptr){
+        head = nullptr;
+        tail = nullptr;
+
+        delete index.ptr;
+        numIndexes = 0;
+
+        return iterator(head);
+    }
+
+    if(head == index.ptr){
+        head = head->next;
+        head->prev = nullptr;
+
+        delete index.ptr;
+        numIndexes--;
+
+        return iterator(head);
+    }
+
+    if(tail == index.ptr){
+        tail = tail->prev;
+        tail->next = nullptr;
+
+        delete index.ptr;
+        numIndexes--;
+
+        return iterator(nullptr);
+    }
+
+    index.ptr->prev->next = index.ptr->next;
+    index.ptr->next->prev = index.ptr->prev;
+
+    iterator output = iterator(index.ptr->next);
+
+    delete index.ptr;
+    numIndexes--;
+
+    return output;
+}
+
+/**
  * @brief DSDoublyLL::remove - iterates through list and removes the given element
  * @param element - element to remove
  */
@@ -562,6 +641,11 @@ int DSDoublyLL<T>::size() const
     return numIndexes;
 }
 
+/**
+ * @brief DSDoublyLL::unorderedEquals - returns true if this and the given list contain the same elements
+ * @param other - a list to compare against
+ * @return true if both lists contain the same elements reguardless of order
+ */
 template<class T>
 bool DSDoublyLL<T>::unorderedEquals(const DSDoublyLL<T> &other) const
 {
@@ -664,9 +748,9 @@ DSDoublyLL<T> DSDoublyLL<T>::operator+(const DSDoublyLL<T>& other) const{
 }
 
 /**
- * @brief operator += : combines this
- * @param other
- * @return
+ * @brief operator += : sets data equal to this and the given doubly linked list
+ * @param other - the list to be added to this
+ * @return a reference to this
  */
 template <class T>
 DSDoublyLL<T>& DSDoublyLL<T>::operator+=(const DSDoublyLL<T>& other){

@@ -72,7 +72,7 @@ public:
      * @param other - reference to target list
      * @return true if the lists have equal values
      */
-    bool operator==(DSAdjList<T>& other);
+    bool operator==(const DSAdjList<T>& other) const;
 
     /**
      * @brief operator != : compares this list against another list
@@ -212,7 +212,36 @@ DSAdjList<T>& DSAdjList<T>::operator=(const DSAdjList<T>& other){
  * @return true if the list contains the same connections
  */
 template <class T>
-bool DSAdjList<T>::operator==(DSAdjList<T>& other){
+bool DSAdjList<T>::operator==(const DSAdjList<T>& other) const{
+    if(data.size() != other.data.size()){
+        return false;
+    }
+
+    if(data.size() == 0){
+        return true;
+    }
+
+    DSDoublyLL<DSDoublyLL<T>> tempData = data;
+    DSDoublyLL<DSDoublyLL<T>> tempOther = other.data;
+
+    for (auto i = tempData.begin(); i != tempData.end(); i++) {
+        auto match = tempOther.end();
+
+        for (auto j = tempOther.begin(); j != tempOther.end(); j++){
+            if (i->unorderedEquals(*j)) {
+                match = j;
+                break;
+            }
+        }
+
+        if (match == tempOther.end()) {
+            return false;
+        }
+
+        tempOther.removeAt(match);
+    }
+
+    return true;
 }
 
 /**
@@ -222,6 +251,7 @@ bool DSAdjList<T>::operator==(DSAdjList<T>& other){
  */
 template <class T>
 bool DSAdjList<T>::operator!=(const DSAdjList<T>& other) const{
+    return !*this==other;
 }
 
 /**

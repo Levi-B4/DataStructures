@@ -423,6 +423,14 @@ TEST_CASE("Data_Structures_Doubly_Linked_List", "[Doubly_Linked_List][Data_Struc
         numList3 = numList1 + numList2;
     }
 
+    SECTION("other"){
+        REQUIRE(numList1.contains(0));
+        REQUIRE(!numList1.contains(6));
+
+        numList1.removeAt(0);
+        numList1.removeAt(0);
+        numList1.removeAt(0);
+    }
 
     SECTION("Iteration"){
         for(auto& it : numList1){
@@ -432,15 +440,17 @@ TEST_CASE("Data_Structures_Doubly_Linked_List", "[Doubly_Linked_List][Data_Struc
         REQUIRE(numList1 == numList2);
 
         numList1 = numList1Copy;
-    }
 
-    SECTION("other"){
-        REQUIRE(numList1.contains(0));
-        REQUIRE(!numList1.contains(6));
+        for(auto i = numList3.begin(); i != numList3.end();){
+            if(numList2.contains(*i)){
+                i = numList3.removeAt(i);
+            } else {
+                i++;
+            }
+        }
+        REQUIRE(numList3 == numList1);
 
-        numList1.removeAt(0);
-        numList1.removeAt(0);
-        numList1.removeAt(0);
+        numList3 += numList2;
     }
 }
 
@@ -559,6 +569,10 @@ TEST_CASE("Data_Structures_Adjacency_List", "[Adjacency_List][Data_Structures_Te
         DSDoublyLL<char> connections = list1.GetConnectedNodes('A');
 
         REQUIRE(connections == temp);
+    }
+
+    SECTION("Comparison Operators"){
+        REQUIRE(list1 == list1Copy);
     }
 }
 
