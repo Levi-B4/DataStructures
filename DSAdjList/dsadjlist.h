@@ -143,21 +143,33 @@ void DSAdjList<T>::addNode(T nodeData){
  */
 template <class T>
 void DSAdjList<T>::addEdge(T node1, T node2){
-    int nodesFound = 0;
-    for(auto list = data.begin(); nodesFound != 2; list++){
-        if((*list)[0] == node1){
-            if(list->contains(node2)){
+    bool node1Found = false;
+    bool node2Found = false;
+
+    for(auto i = data.begin(); i != data.end() && (!node2Found || !node1Found); i++){
+        if((*i)[0] == node1){
+            if(i->contains(node2)){
                 return;
             }
-            list->pushBack(node2);
-            nodesFound++;
-        } else if((*list)[0] == node2){
-            if(list->contains(node1)){
+            i->pushBack(node2);
+            node1Found = true;
+        } else if((*i)[0] == node2){
+            if(i->contains(node1)){
                 return;
             }
-            list->pushBack(node1);
-            nodesFound++;
+            i->pushBack(node1);
+            node2Found = true;
         }
+    }
+
+    if(!node1Found){
+        addNode(node1);
+        data[data.size() - 1].pushBack(node2);
+    }
+
+    if(!node2Found){
+        addNode(node2);
+        data[data.size() - 1].pushBack(node1);
     }
 }
 
@@ -167,6 +179,14 @@ void DSAdjList<T>::addEdge(T node1, T node2){
  */
 template <class T>
 void DSAdjList<T>::removeNode(const T nodeData){
+    for(auto i = data.begin(); i != data.end();){
+        if((*i)[0] == nodeData){
+            i = data.removeAt(i);
+        } else {
+            i->remove(nodeData, true);
+            i++;
+        }
+    }
 }
 
 /**
@@ -176,6 +196,13 @@ void DSAdjList<T>::removeNode(const T nodeData){
  */
 template <class T>
 void DSAdjList<T>::removeEdge(const T node1, const T node2){
+    for(auto& list : data){
+        if(list[0] == node1){
+            list.remove(node2, true);
+        } else if(list[0] == node2){
+            list.remove(node1, true);
+        }
+    }
 }
 
 /**
@@ -195,7 +222,6 @@ bool DSAdjList<T>::contains(T query)
     return false;
 }
 
-//TODO: may make this faster to replace the data as you go through rather than clear the whole list
 /**
  * @brief operator = :  sets this list equal to the list passed in
  * @param other - reference to target list
@@ -251,7 +277,7 @@ bool DSAdjList<T>::operator==(const DSAdjList<T>& other) const{
  */
 template <class T>
 bool DSAdjList<T>::operator!=(const DSAdjList<T>& other) const{
-    return !*this==other;
+    return !(*this == other);
 }
 
 /**

@@ -536,27 +536,15 @@ TEST_CASE("Data_Structures_Adjacency_List", "[Adjacency_List][Data_Structures_Te
                             {'D', 'E'}};
     int pairings2Count = 8;
 
+    char pairings1_2Difference[2][2] = {{'A', 'F'},{'C', 'F'}};
+
     DSAdjList<char> list1, list2;
 
     for(int i = 0; i < pairings1Count; i++){
-        if(!list1.contains(pairings1[i][0])){
-            list1.addNode(pairings1[i][0]);
-        }
-        if(!list1.contains(pairings1[i][1])){
-            list1.addNode(pairings1[i][1]);
-        }
-
         list1.addEdge(pairings1[i][0], pairings1[i][1]);
     }
 
     for(int i = 0; i < pairings2Count; i++){
-        if(!list2.contains(pairings2[i][0])){
-            list2.addNode(pairings2[i][0]);
-        }
-        if(!list2.contains(pairings2[i][1])){
-            list2.addNode(pairings2[i][1]);
-        }
-
         list2.addEdge(pairings2[i][0], pairings2[i][1]);
     }
 
@@ -572,6 +560,37 @@ TEST_CASE("Data_Structures_Adjacency_List", "[Adjacency_List][Data_Structures_Te
     }
 
     SECTION("Comparison Operators"){
+        REQUIRE(list1 == list1Copy);
+
+        REQUIRE(list1 != list2);
+    }
+
+    SECTION("Adding and Removing"){
+        list1.addNode('F');
+        list1.addEdge('A', 'F');
+        list1.addEdge('C', 'F');
+
+        REQUIRE(list1 == list2);
+
+        list1.removeNode('F');
+
+        REQUIRE(list1 == list1Copy);
+
+        list1.addEdge('A', 'F');
+        list1.addEdge('C', 'F');
+
+        REQUIRE(list1 == list2);
+
+        list1.removeEdge('A', 'F');
+        list1.removeEdge('C', 'F');
+
+        list1Copy.addNode('F');
+
+        REQUIRE(list1 == list1Copy);
+
+        list1.removeNode('F');
+        list1Copy.removeNode('F');
+
         REQUIRE(list1 == list1Copy);
     }
 }
