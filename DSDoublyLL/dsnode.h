@@ -21,6 +21,12 @@ class DSNode{
         DSNode(T data);
 
         /**
+         * @brief DSNode - copy consructor
+         * @param other - node to copy
+         */
+        DSNode(const DSNode<T>& other);
+
+        /**
          * @brief operator =
          * @param data - new data to replace current
          * @return reference to this node
@@ -41,10 +47,19 @@ DSNode<T>::DSNode(){
 
 }
 
+/**
+ * @brief DSNode::DSNode - constrcutor
+ * @param data - data of the new node
+ */
 template <class T>
-DSNode<T>::DSNode(T data){
-    this->data = data;
-}
+DSNode<T>::DSNode(T data) : data(data){}
+
+/**
+ * @brief DSNode::DSNode - copy constructor
+ * @param other - node to be copied
+ */
+template <class T>
+DSNode<T>::DSNode(const DSNode<T>& other) : data(other.data){}
 
 /**
  * @brief operator =

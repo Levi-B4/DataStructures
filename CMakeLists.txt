@@ -28,11 +28,17 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_executable(${EXE_NAME} ./main.cpp
-	DSString/dsstring.h DSString/dsstring.cpp 
 	./catch.hpp
         ./test.cpp
+
+        DSString/dsstring.h DSString/dsstring.cpp
+
         DSVector/dsvector.h
-        DSStack/dsstack.h
+
         DSDoublyLL/dsnode.h
         DSDoublyLL/dsdoublyll.h
-        DSDoublyLL/dsliststack.h)
+
+        DSStack/dsstack.h
+
+        DSAdjList/dsadjlist.h
+)
