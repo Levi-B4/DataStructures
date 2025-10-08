@@ -714,7 +714,6 @@ T& DSDoublyLL<T>::operator[](int index) const{
     return getNodeAt(index)->data;
 }
 
-//TODO: may make this faster to replace the data as you go through rather than clear the whole list
 /**
  * @brief operator = :  copy constructor
  * @param other - reference to target list
@@ -722,20 +721,35 @@ T& DSDoublyLL<T>::operator[](int index) const{
  */
 template <class T>
 DSDoublyLL<T>& DSDoublyLL<T>::operator=(const DSDoublyLL<T>& other){
-    DSNode<T>* next;
-    DSNode<T>* current = head;
-    while(current != nullptr){
-        next = current->next;
-        delete current;
-        current = next;
+    DSNode<T>* dataI = head;
+    DSNode<T>* otherI = other.head;
+
+    while(otherI != nullptr){
+        if(dataI == nullptr){
+            break;
+        } else {
+            dataI->data = otherI->data;
+            dataI = dataI->next;
+            otherI = otherI->next;
+        }
     }
-    numIndexes = 0;
 
-    head = nullptr;
-    tail = nullptr;
+    while(otherI != nullptr){
+        pushBack(otherI->data);
+        otherI = otherI->next;
+    }
 
-    for(current = other.head; current != nullptr; current = current->next){
-        pushBack(current->data);
+    if(dataI != nullptr){
+        DSNode<T>* next;
+        tail = dataI->prev;
+        tail->next = nullptr;
+
+        while(dataI != nullptr){
+            next = dataI->next;
+            delete dataI;
+            dataI = next;
+            numIndexes--;
+        }
     }
 
     return *this;
