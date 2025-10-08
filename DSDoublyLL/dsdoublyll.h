@@ -21,12 +21,16 @@ class DSDoublyLL{
 
                 /**
                  * @brief operator * - dereferences pointer and returns node's data
-                 * @return - reference of the class T at the pointer's location
+                 * @return reference of the class T at the pointer's location
                  */
                 T& operator*() const{
                     return ptr->data;
                 }
 
+                /**
+                 * @brief operator -> returns the address of the data of the node pointed to
+                 * @return address to a node's data
+                 */
                 T* operator->() const{
                     return &(ptr->data);
                 }
@@ -182,6 +186,11 @@ class DSDoublyLL{
          */
         int size() const;
 
+        /**
+         * @brief unorderedEquals - compares two lists by seeing if they contain the same elements
+         * @param other - list to compare against
+         * @return true if both lists contain the same elements
+         */
         bool unorderedEquals(const DSDoublyLL<T>& other) const;
 
         /**
@@ -231,10 +240,18 @@ class DSDoublyLL{
          */
         ~DSDoublyLL();
 
+        /**
+         * @brief begin - returns an iterator for the first element of the list
+         * @return iterator for the first element of the list
+         */
         inline iterator begin() {
             return iterator(head);
         };
 
+        /**
+         * @brief begin - returns an iterator for the element after the last element of the list, nullptr
+         * @return iterator for the element after the last element of the list, nullptr
+         */
         inline iterator end() {
             return iterator(nullptr);
         }
@@ -538,6 +555,9 @@ void DSDoublyLL<T>::remove(const T element, bool onlyFirst)
     }
 }
 
+/**
+ * @brief clear - removes all data from list
+ */
 template <class T>
 void DSDoublyLL<T>::clear(){
     DSNode<T>* next;
@@ -658,10 +678,6 @@ bool DSDoublyLL<T>::unorderedEquals(const DSDoublyLL<T> &other) const
 
     DSDoublyLL<T> temp = other;
 
-    // iterate through list1
-
-    // if index is in list 2 itterate list 1 and remove from list 2
-
     for(DSNode<T>* i = head; i != nullptr; i = i->next){
         DSNode<T>* match = nullptr;
 
@@ -700,7 +716,7 @@ T& DSDoublyLL<T>::operator[](int index) const{
 
 //TODO: may make this faster to replace the data as you go through rather than clear the whole list
 /**
- * @brief operator = :  sets this list equal to the list passed in
+ * @brief operator = :  copy constructor
  * @param other - reference to target list
  * @return returns this
  */

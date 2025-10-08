@@ -21,7 +21,7 @@ public:
     DSAdjList(DSAdjList<T>& other);
 
     /**
-     * @brief GetConnectedNode - returns all nodes connected to the given nodes
+     * @brief GetConnectedNode - returns all nodes connected to the given node
      * @param nodeData - data of the source node for connections
      * @return doubly linked list of nodes
      */
@@ -34,7 +34,7 @@ public:
     void addNode(T nodeData);
 
     /**
-     * @brief addEdge - adds a connection between two nodes with their weight
+     * @brief addEdge - adds a connection between two nodes and adding the nodes if needed
      * @param node1 - first node of the edge
      * @param node2 - second node of the edge
      */
