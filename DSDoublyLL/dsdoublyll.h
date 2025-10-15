@@ -215,11 +215,25 @@ class DSDoublyLL{
         DSDoublyLL<T> operator+(const DSDoublyLL<T>& other) const;
 
         /**
-         * @brief operator += : combines this
-         * @param other
-         * @return
+         * @brief operator + : returns a linked list combining this list with the given element
+         * @param other - reference to given the element
+         * @return combined linked list of this and given list
+         */
+        DSDoublyLL<T> operator+(const T& other) const;
+
+        /**
+         * @brief operator += : combines this with the given linked list
+         * @param other: referrence to the linked list to combine with this
+         * @return this
          */
         DSDoublyLL<T>& operator+=(const DSDoublyLL<T>& other);
+
+        /**
+         * @brief operator += : returns a linked list combining this list with the given element
+         * @param other - reference to the element to append to this
+         * @return this
+         */
+        DSDoublyLL<T>& operator+=(const T& other);
 
         /**
          * @brief operator == :  compares this list against another list
@@ -777,6 +791,24 @@ DSDoublyLL<T> DSDoublyLL<T>::operator+(const DSDoublyLL<T>& other) const{
 }
 
 /**
+ * @brief operator + : returns a linked list combining this list with the given element
+ * @param data - reference to given the element
+ * @return combined linked list of this and given list
+ */
+template <class T>
+DSDoublyLL<T> DSDoublyLL<T>::operator+(const T& data) const{
+    DSDoublyLL<T> result;
+
+    for(DSNode<T>* current = this->head; current != nullptr; current = current->next){
+        result.pushBack(current->data);
+    }
+
+    result.pushBack(data);
+
+    return result;
+}
+
+/**
  * @brief operator += : sets data equal to this and the given doubly linked list
  * @param other - the list to be added to this
  * @return a reference to this
@@ -789,6 +821,19 @@ DSDoublyLL<T>& DSDoublyLL<T>::operator+=(const DSDoublyLL<T>& other){
 
     return *this;
 }
+
+/**
+ * @brief operator += : returns a linked list combining this list with the given element
+ * @param other - reference to the element to append to this
+ * @return data
+ */
+template <class T>
+DSDoublyLL<T>& DSDoublyLL<T>::operator+=(const T& data){
+    pushBack(data);
+
+    return *this;
+}
+
 
 /**
  * @brief operator == :  compares this list against another list
