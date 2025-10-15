@@ -339,11 +339,19 @@ TEST_CASE("Data_Structures_Doubly_Linked_List", "[Doubly_Linked_List][Data_Struc
     SECTION("Other Operators"){
         // adding
         REQUIRE(numList3 == numList1 + numList2);
+        REQUIRE(numList3 == numList1 + 3 + 4 + 5);
 
         // adding and setting equal
         numList1 += numList2;
         REQUIRE(numList3 == numList1);
         numList1 = numList1Copy;
+
+        numList1 += 3;
+        numList1 += 4;
+        numList1 += 5;
+        REQUIRE(numList3 == numList1);
+        numList1 = numList1Copy;
+
 
         // size
         REQUIRE(numList1.size() == 3);
