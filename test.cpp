@@ -9,6 +9,7 @@
 #include "DSStack/dsstack.h"
 #include "DSDoublyLL/dsdoublyll.h"
 #include "DSAdjList/dsadjlist.h"
+#include "DSTrie/dstrie.h"
 
 /*
  *  DSString
@@ -603,9 +604,12 @@ TEST_CASE("Data_Structures_Adjacency_List", "[Adjacency_List][Data_Structures_Te
     }
 }
 
-
-
-
+/*
+ *  DSTrie
+ */
+TEST_CASE("Data_Structures_Trie", "[Trie][Data_Structures_Test]"){
+    DSTrie trie1;
+}
 
 
 

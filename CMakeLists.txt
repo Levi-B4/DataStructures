@@ -41,4 +41,6 @@ add_executable(${EXE_NAME} ./main.cpp
         DSStack/dsstack.h
 
         DSAdjList/dsadjlist.h
+        DSTrie/dstrie.h
+        DSTrie/dstrie.cpp
 )
