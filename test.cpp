@@ -608,7 +608,30 @@ TEST_CASE("Data_Structures_Adjacency_List", "[Adjacency_List][Data_Structures_Te
  *  DSTrie
  */
 TEST_CASE("Data_Structures_Trie", "[Trie][Data_Structures_Test]"){
+    DSVector<DSString> strs;
+    DSString strArray[7] = {
+        "bee",
+        "because",
+        "trie",
+        "basket",
+        "basketball",
+        "baseball",
+        "zebra"
+    };
+
+    for(DSString str : strArray){
+        strs.pushBack(str);
+    }
+
     DSTrie trie1;
+    DSTrie trie2(strs);
+    DSTrie trie3;
+
+    for(DSString str : strArray){
+        trie3.addString(str);
+    }
+
+    //REQUIRE(trie2 == trie3);
 }
 
 

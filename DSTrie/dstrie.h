@@ -8,13 +8,35 @@ class DSTrie{
     private:
         class Node{
             public:
+                char data = '\0';
+                bool isWord = false;
+                DSVector<Node*> children;
+
                 /**
                  * @brief Node - default constructor
                  */
                 Node();
-                char data = '\0';
-                bool isWord = false;
-                DSVector<Node> children;
+
+                /**
+                 * @brief Node - copy constructor
+                 * @param other - node to copy
+                 */
+                Node(const Node& other);
+
+                /**
+                 * @brief Node - constructor instantiating data
+                 * @param data - character to set node equal to
+                 */
+                Node(char data);
+
+                /**
+                 * @brief getChild - retrieves the child with the given character
+                 * @param data - character to check children for
+                 * @return pointer to the matching child node, or a nullptr
+                 */
+                Node* getChild(char data);
+
+                Node& operator=(const Node& other);
 
                 /**
                  * @brief ~Node - default destructor
@@ -31,29 +53,41 @@ class DSTrie{
         DSTrie();
 
         /**
+         * @brief DSTrie - copy constructor
+         * @param other - trie to copy
+         */
+        DSTrie(const DSTrie& other);
+
+        /**
+         * @brief DSTrie - constructor from a vector of strings
+         * @param data - vector of strings to turn into a trie
+         */
+        DSTrie(const DSVector<DSString>& data);
+
+        /**
          * @brief addString - Adds a string to the trie
          * @param str - string to add
          */
-        void addString(DSString str);
+        void addString(const DSString str);
 
         /**
          * @brief addStrings - Adds each string in the given string vector to the trie
          * @param strs - vector of strings to add
          */
-        void addStrings(DSVector<DSString> strs);
+        void addStrings(const DSVector<DSString> strs);
 
         /**
          * @brief removeString - removes a string from the trie
          * @param str - string to remove
          */
-        void removeString(DSString str);
+        void removeString(const DSString str);
 
 
         /**
          * @brief removestrings - removes each string in the given vector from the trie
          * @param strs - vector of strings
          */
-        void removestrings(DSVector<DSString> strs);
+        void removestrings(const DSVector<DSString> strs);
 
         /**
          * @brief clear - removes all data from the trie
@@ -64,28 +98,28 @@ class DSTrie{
          * @brief getAll - returns all strings in the trie
          * @return - a vector containing all the strings in the trie
          */
-        DSVector<DSString> getAll();
+        DSVector<DSString> getAll() const;
 
         /**
          * @brief has - checks if the trie has the given string
          * @param str - string to check for
          * @return true if the trie contains the string, requires the last character Node to have isWord == true
          */
-        bool has(DSString word);
+        bool has(const DSString word) const;
 
         /**
          * @brief has - checks if the trie has every string in the given vector
          * @param words - vector of strings to check for
          * @return true if the trie contains EVERY string, requires the last character Node to have isWord == true
          */
-        bool has(DSVector<DSString> words);
+        bool has(const DSVector<DSString> words) const;
 
         /**
          * @brief hasPrefix - Checks if the trie has the given prefix
          * @param prefix - prefix to check for
          * @return true if the trie contains the prefix
          */
-        bool hasPrefix(DSString prefix);
+        bool hasPrefix(const DSString prefix) const;
 
         /**
          * @brief operator = : sets this trie equal to the trie given
