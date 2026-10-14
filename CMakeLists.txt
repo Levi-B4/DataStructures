@@ -45,8 +45,9 @@ add_executable(${EXE_NAME} ./main.cpp
         DSTrie/dstrie.cpp
 )
 
-target_link_libraries(Data_Structures_Test
-    PRIVATE
-    log
-)
-
+if(ANDROID OR CMAKE_SYSTEM_NAME STREQUAL "Android")
+        target_link_libraries(Data_Structures_Test
+            PRIVATE 
+            log
+        )
+endif()
