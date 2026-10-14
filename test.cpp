@@ -637,8 +637,8 @@ TEST_CASE("Data_Structures_Trie", "[Trie][Data_Structures_Test]"){
 
     REQUIRE(trie2 == trie3);
 
-    //trie1 = trie2;
-    //REQUIRE(trie1 == trie3);
+    trie1 = trie2;
+    REQUIRE(trie1 == trie3);
 }
 
 

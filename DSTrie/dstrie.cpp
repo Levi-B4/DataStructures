@@ -53,7 +53,7 @@ DSTrie::Node& DSTrie::Node::operator=(const Node& other){
     }
 
     if(children.getNumIndexes() < other.children.getNumIndexes()){
-        for(int i = min - 1; i < other.children.getNumIndexes(); i++){
+        for(int i = min; i < other.children.getNumIndexes(); i++){
             Node* child = new Node(*other.children[i]);
             children.pushBack(child);
         }
@@ -96,11 +96,7 @@ bool DSTrie::Node::operator!=(const Node& other) const{
 /**
  * @brief DSTrie::Node::~Node - default destructor
  */
-DSTrie::Node::~Node(){
-    for(int i = 0; i < children.getNumIndexes(); i++){
-        delete children[i];
-    }
-}
+DSTrie::Node::~Node(){}
 
 /**
  * @brief DSTrie::DSTrie - default constructor
@@ -229,6 +225,7 @@ bool DSTrie::hasPrefix(const DSString prefix) const
  * @return reference to this trie
  */
 DSTrie& DSTrie::operator=(const DSTrie& other){
+    *root = *other.root;
     return *this;
 }
 
