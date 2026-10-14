@@ -24,10 +24,10 @@ DSTrie::Node::Node(char data) : data(data){}
  * @param data - character to check children for
  * @return pointer to the matching child node, or a nullptr
  */
-DSTrie::Node* DSTrie::Node::getChild(char data){
+DSTrie::Node* DSTrie::Node::getChild(char query){
 
     for(Node* child : children){
-        if(child->data == data){
+        if(child->data == query){
             return child;
         }
     }
@@ -66,6 +66,31 @@ DSTrie::Node& DSTrie::Node::operator=(const Node& other){
     }
 
     return *this;
+}
+
+
+bool DSTrie::Node::operator==(const Node& other) const{
+    if(data != other.data ||
+            isWord != other.isWord ||
+                children.getNumIndexes() != other.children.getNumIndexes()){
+        return false;
+    }
+
+    if(children == other.children){
+        return true;
+    }
+
+    for(int i = 0; i < children.getNumIndexes(); i++){
+        if(*children[i] != *other.children[i]){
+            return false;
+        }
+    }
+
+    return true;
+}
+
+bool DSTrie::Node::operator!=(const Node& other) const{
+    return !(*this == other);
 }
 
 /**
@@ -258,7 +283,7 @@ DSTrie DSTrie::operator+(const DSVector<DSString>& other) const{
  * @return true if both tries are equal
  */
 bool DSTrie::operator==(const DSTrie& other) const{
-    return false;
+    return *root == *other.root;
 }
 
 /**
@@ -267,7 +292,7 @@ bool DSTrie::operator==(const DSTrie& other) const{
  * @return false if both ries are equal
  */
 bool DSTrie::operator!=(const DSTrie& other) const{
-    return false;
+    return !(*this == other);
 }
 
 /**

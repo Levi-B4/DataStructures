@@ -631,7 +631,14 @@ TEST_CASE("Data_Structures_Trie", "[Trie][Data_Structures_Test]"){
         trie3.addString(str);
     }
 
-    //REQUIRE(trie2 == trie3);
+    DSTrie trie4, trie5;
+
+    REQUIRE(trie4 == trie5);
+
+    REQUIRE(trie2 == trie3);
+
+    //trie1 = trie2;
+    //REQUIRE(trie1 == trie3);
 }
 
 

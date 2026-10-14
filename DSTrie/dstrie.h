@@ -36,7 +36,13 @@ class DSTrie{
                  */
                 Node* getChild(char data);
 
+                
                 Node& operator=(const Node& other);
+
+
+                bool operator==(const Node& other) const;
+
+                bool operator!=(const Node& other) const;
 
                 /**
                  * @brief ~Node - default destructor
