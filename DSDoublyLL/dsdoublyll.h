@@ -420,8 +420,8 @@ void DSDoublyLL<T>::removeAt(int index){
         if(head == tail){
             delete head;
 
-            head == nullptr;
-            tail == nullptr;
+            head = nullptr;
+            tail = nullptr;
         } else{
             DSNode<T>* temp = head->next;
             delete head;
@@ -521,8 +521,8 @@ void DSDoublyLL<T>::remove(const T element, bool onlyFirst)
         if(head == tail){
             delete head;
 
-            head == nullptr;
-            tail == nullptr;
+            head = nullptr;
+            tail = nullptr;
             numIndexes--;
             return;
         } else{
