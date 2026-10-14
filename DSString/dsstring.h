@@ -75,6 +75,12 @@ public:
 
     /**
      * @brief DSString - constructor
+     * @param data - character to create string from
+     */
+    DSString(char data);
+
+    /**
+     * @brief DSString - constructor
      * @param data - c-string to turn into string
      */
     DSString(const char* data);

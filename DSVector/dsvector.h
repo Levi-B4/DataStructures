@@ -5,67 +5,87 @@ template <class T>
 class DSVector
 {
 private:
+    public:
     /**
      * @brief The iterator struct - iterator for the vector class
      */
     struct iterator{
-    public:
-        /**
-         * @brief iterator - constructor
-         * @param ptr - pointer to start iteration from
-         */
-        iterator(T* ptr): ptr(ptr){}
+        public:
+            /**
+             * @brief iterator - constructor
+             * @param ptr - pointer to start iteration from
+             */
+            iterator(T* ptr = nullptr): ptr(ptr){}
 
-        /**
-         * @brief operator * - dereferences pointer
-         * @return - reference of the class T at the pointer's location
-         */
-        T& operator*(){
-            return *ptr;
-        }
+            /**
+             * @brief operator * - dereferences pointer
+             * @return - reference of the class T at the pointer's location
+             */
+            T& operator*(){
+                return *ptr;
+            }
 
-        /**
-         * @brief operator ++ - iterates to next pointer
-         * @return this iterator after iteration
-         */
-        iterator operator++(){
-            ++ptr;
-            return *this;
-        }
+            T operator*() const{
+                return *ptr;
+            }
 
-        /**
-         * @brief operator ++
-         * @return a reference to an iterator before iteration
-         */
-        iterator operator++(int){
-            iterator tmp = *this;
-            ++ptr;
-            return tmp;
-        }
+            T* operator->(){
+                return ptr;
+            }
 
-        /**
-         * @brief operator == compares if two iterators are equal
-         * @param a - first iterator to compare
-         * @param b - second iterator to compare
-         * @return true if the two iterators are equal
-         */
-        friend bool operator==(const iterator& a, const iterator& b){
-            return a.ptr == b.ptr;
-        }
+            T* operator->() const{
+                return ptr;
+            }
 
-        /**
-         * @brief operator != compares if two iterators are equal
-         * @param a - first iterator to compare
-         * @param b - second iterator to compare
-         * @return true if the two iterators are not equal
-         */
-        friend bool operator!=(const iterator& a, const iterator& b){
-            return a.ptr != b.ptr;
-        }
-    private:
-        T* ptr;
+            /**
+             * @brief operator ++ - iterates to next pointer
+             * @return this iterator after iteration
+             */
+            iterator operator++(){
+                ++ptr;
+                return *this;
+            }
+
+            /**
+             * @brief operator ++
+             * @return a reference to an iterator before iteration
+             */
+            iterator operator++(int){
+                iterator tmp = *this;
+                ++ptr;
+                return tmp;
+            }
+
+            iterator operator+(int){
+                return ptr + 1;
+            }
+
+            iterator operator-(int){
+                return ptr - 1;
+            }
+
+            /**
+             * @brief operator == compares if two iterators are equal
+             * @param a - first iterator to compare
+             * @param b - second iterator to compare
+             * @return true if the two iterators are equal
+             */
+            friend bool operator==(const iterator& a, const iterator& b){
+                return a.ptr == b.ptr;
+            }
+
+            /**
+             * @brief operator != compares if two iterators are equal
+             * @param a - first iterator to compare
+             * @param b - second iterator to compare
+             * @return true if the two iterators are not equal
+             */
+            friend bool operator!=(const iterator& a, const iterator& b){
+                return a.ptr != b.ptr;
+            }
+        private:
+            T* ptr;
     };
-    public:
         //default constructor - params: int resizeIncrement = 5
         DSVector(int resizeIncrement = 5);
 
@@ -90,6 +110,12 @@ private:
 
         // removes last element of data array
         void removeLast();
+
+        // removes element at the given index
+        void remove(int index);
+
+        // removes element at the given iterator
+        void remove(const iterator index);
 
         // creates new vector with capacity equal to numIndexes
         void shrink();
@@ -252,6 +278,28 @@ void DSVector<T>::pushBack(const T& newElement){
 // removes last element of data array
 template <class T>
 void DSVector<T>::removeLast(){
+    numIndexes--;
+}
+
+// removes element at the given index
+template<class T>
+inline void DSVector<T>::remove(int index)
+{
+    for(int i = index; i < numIndexes - 1; i++){
+        i = i+1;
+    }
+
+    numIndexes--;
+}
+
+// removes element at the given iterator
+template<class T>
+inline void DSVector<T>::remove(const iterator index)
+{
+    for(iterator it = index; it != end() - 1; it++){
+        *it = *it+1;
+    }
+
     numIndexes--;
 }
 

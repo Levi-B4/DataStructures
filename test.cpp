@@ -639,6 +639,14 @@ TEST_CASE("Data_Structures_Trie", "[Trie][Data_Structures_Test]"){
 
     trie1 = trie2;
     REQUIRE(trie1 == trie3);
+
+    DSVector<DSString> trie1Strs = trie1.getAll();
+
+    DSString warning;
+    for(DSString& str : trie1Strs){
+        warning += str + ", ";
+    }
+    WARN(warning);
 }
 
 

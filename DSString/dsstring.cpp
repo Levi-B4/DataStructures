@@ -9,6 +9,11 @@ DSString::DSString() {
     data[0] = '\0';
 }
 
+DSString::DSString(char data)
+{
+    this->data = new char[2]{data, '\0'};
+}
+
 // constructor - parameters: const char* otherData
 DSString::DSString(const char* data) {
     this->data = new char[unsigned(strlen(data)) + 1];

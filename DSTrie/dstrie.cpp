@@ -35,6 +35,24 @@ DSTrie::Node* DSTrie::Node::getChild(char query){
     return nullptr;
 }
 
+DSVector<DSString> DSTrie::Node::getAll(){
+    DSVector<DSString> output;
+    for(Node* child : children){
+        child->getAll(output, "");
+    }
+
+    return output;
+}
+
+void DSTrie::Node::getAll(DSVector<DSString>& output, const DSString& current){
+    if(isWord){
+        output += current + DSString(data);
+    }
+
+    for(Node* child : children){
+        child->getAll(output, current + data);
+    }
+}
 
 DSTrie::Node& DSTrie::Node::operator=(const Node& other){
     data = other.data;
@@ -137,8 +155,8 @@ void DSTrie::addString(const DSString str)
         current = child;
     }
 
-    if(child != nullptr){
-        child->isWord = true;
+    if(current != nullptr){
+        current->isWord = true;
     }
 }
 
@@ -159,7 +177,37 @@ void DSTrie::addStrings(const DSVector<DSString> strs)
  */
 void DSTrie::removeString(const DSString str)
 {
+    Node* current = root;
+    DSVector<DSVector<Node*>::iterator> trail;
+    for(int i = 0; i < str.size(); i++){
+        for(DSVector<Node*>::iterator it = current->children.begin(); true; it++){
+            if((*it)->data == str[i]){
+                trail.pushBack(it);
+                current = *it;
+                break;
+            }
 
+            if(it == current->children.end() - 1){
+                return;
+            }
+        }
+    }
+
+    if(current->isWord != true){
+        return;
+    }
+    current->isWord = false;
+
+    while(trail.getNumIndexes() > 0){
+        if( current->children.getNumIndexes() == 0){
+            DSVector<Node*>::iterator temp = trail.back();
+            trail.removeLast();
+            (*trail.back())->children.remove(temp);
+            delete *temp;
+        } else {
+            return;
+        }
+    }
 }
 
 /**
@@ -186,7 +234,7 @@ void DSTrie::clear()
  */
 DSVector<DSString> DSTrie::getAll() const
 {
-    return DSVector<DSString>();
+    return root->getAll();
 }
 
 /**

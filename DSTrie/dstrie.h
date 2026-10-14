@@ -36,6 +36,10 @@ class DSTrie{
                  */
                 Node* getChild(char data);
 
+                DSVector<DSString> getAll();
+
+                void getAll(DSVector<DSString>& output, const DSString& current);
+
                 
                 Node& operator=(const Node& other);
 
