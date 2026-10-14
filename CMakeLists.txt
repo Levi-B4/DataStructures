@@ -44,3 +44,9 @@ add_executable(${EXE_NAME} ./main.cpp
         DSTrie/dstrie.h
         DSTrie/dstrie.cpp
 )
+
+target_link_libraries(Data_Structures_Test
+    PRIVATE
+    log
+)
+
