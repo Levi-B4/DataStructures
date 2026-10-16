@@ -37,20 +37,19 @@ DSTrie::Node* DSTrie::Node::getChild(char query){
 
 DSVector<DSString> DSTrie::Node::getAll(){
     DSVector<DSString> output;
-    for(Node* child : children){
-        child->getAll(output, "");
-    }
+
+    getAll(output, "");
 
     return output;
 }
 
 void DSTrie::Node::getAll(DSVector<DSString>& output, const DSString& current){
     if(isWord){
-        output += current + DSString(data);
+        output += current;
     }
 
     for(Node* child : children){
-        child->getAll(output, current + data);
+        child->getAll(output, current + child->data);
     }
 }
 
@@ -216,7 +215,9 @@ void DSTrie::removeString(const DSString str)
  */
 void DSTrie::removestrings(const DSVector<DSString> strs)
 {
-
+    for(int i = 0; i < strs.getNumIndexes(); i ++){
+        removeString(strs[i]);
+    }
 }
 
 /**
@@ -242,9 +243,29 @@ DSVector<DSString> DSTrie::getAll() const
  * @param word - string to check for
  * @return true if the trie contains that string, requires the last character Node to have isWord == true
  */
-bool DSTrie::has(const DSString word) const
+bool DSTrie::has(const DSString str) const
 {
-    return false;
+    Node* current = root;
+
+    if(root->children.getNumIndexes() == 0 ||
+            str == ""){
+        return false;
+    }
+
+    for(int i = 0; i < str.size(); i++){
+        for(DSVector<Node*>::iterator it = current->children.begin(); true; it++){
+            if((*it)->data == str[i]){
+                current = *it;
+                break;
+            }
+
+            if(it == current->children.end() - 1){
+                return false;
+            }
+        }
+    }
+
+    return current->isWord;
 }
 
 /**
@@ -252,9 +273,15 @@ bool DSTrie::has(const DSString word) const
  * @param words - vector of strings to check for
  * @return true if the trie contains EVERY string, requires the last character Node to have isWord == true
  */
-bool DSTrie::has(const DSVector<DSString> words) const
+bool DSTrie::has(const DSVector<DSString> strs) const
 {
-    return false;
+   for(int i = 0; i < strs.getNumIndexes(); i ++){
+        if(!has(strs[i])){
+            return false;
+        }
+    }
+
+    return true;
 }
 
 /**
@@ -264,7 +291,57 @@ bool DSTrie::has(const DSVector<DSString> words) const
  */
 bool DSTrie::hasPrefix(const DSString prefix) const
 {
-    return false;
+    Node* current = root;
+
+    if(root->children.getNumIndexes() == 0 ||
+            prefix == ""){
+        return false;
+    }
+
+    for(int i = 0; i < prefix.size(); i++){
+        for(DSVector<Node*>::iterator it = current->children.begin(); true; it++){
+            if((*it)->data == prefix[i]){
+                current = *it;
+                break;
+            }
+
+            if(it == current->children.end() - 1){
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+DSVector<DSString> DSTrie::getPrefix(const DSString prefix) const{
+    Node* current = root;
+
+    if(root->children.getNumIndexes() == 0){
+        return DSVector<DSString>();
+    }
+
+    if(prefix == ""){
+        return getAll();
+    }
+
+    for(int i = 0; i < prefix.size(); i++){
+        for(DSVector<Node*>::iterator it = current->children.begin(); true; it++){
+            if((*it)->data == prefix[i]){
+                current = *it;
+                break;
+            }
+
+            if(it == current->children.end() - 1){
+                return DSVector<DSString>();
+            }
+        }
+    }
+
+    DSVector<DSString> output;
+    current->getAll(output, prefix);
+
+    return output;
 }
 
 /**

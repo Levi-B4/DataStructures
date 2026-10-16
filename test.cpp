@@ -647,6 +647,17 @@ TEST_CASE("Data_Structures_Trie", "[Trie][Data_Structures_Test]"){
         warning += str + ", ";
     }
     WARN(warning);
+
+    REQUIRE(trie1.has("basket"));
+
+    warning = "";
+    for(DSString& str : trie1.getPrefix("ba")){
+        warning += str + ", ";
+    }
+    WARN(warning);
+
+ 
+    
 }
 
 

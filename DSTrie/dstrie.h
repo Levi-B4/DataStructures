@@ -115,14 +115,14 @@ class DSTrie{
          * @param str - string to check for
          * @return true if the trie contains the string, requires the last character Node to have isWord == true
          */
-        bool has(const DSString word) const;
+        bool has(const DSString str) const;
 
         /**
          * @brief has - checks if the trie has every string in the given vector
          * @param words - vector of strings to check for
          * @return true if the trie contains EVERY string, requires the last character Node to have isWord == true
          */
-        bool has(const DSVector<DSString> words) const;
+        bool has(const DSVector<DSString> strs) const;
 
         /**
          * @brief hasPrefix - Checks if the trie has the given prefix
@@ -130,6 +130,8 @@ class DSTrie{
          * @return true if the trie contains the prefix
          */
         bool hasPrefix(const DSString prefix) const;
+
+        DSVector<DSString> getPrefix(const DSString prefix) const;
 
         /**
          * @brief operator = : sets this trie equal to the trie given
