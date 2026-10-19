@@ -78,26 +78,26 @@ class DSTrie{
          * @brief addString - Adds a string to the trie
          * @param str - string to add
          */
-        void addString(const DSString str);
+        void addString(const DSString& str);
 
         /**
          * @brief addStrings - Adds each string in the given string vector to the trie
          * @param strs - vector of strings to add
          */
-        void addStrings(const DSVector<DSString> strs);
+        void addStrings(const DSVector<DSString>& strs);
 
         /**
          * @brief removeString - removes a string from the trie
          * @param str - string to remove
          */
-        void removeString(const DSString str);
+        void removeString(const DSString& str);
 
 
         /**
          * @brief removestrings - removes each string in the given vector from the trie
          * @param strs - vector of strings
          */
-        void removestrings(const DSVector<DSString> strs);
+        void removestrings(const DSVector<DSString>& strs);
 
         /**
          * @brief clear - removes all data from the trie
@@ -115,23 +115,23 @@ class DSTrie{
          * @param str - string to check for
          * @return true if the trie contains the string, requires the last character Node to have isWord == true
          */
-        bool has(const DSString str) const;
+        bool has(const DSString& str) const;
 
         /**
          * @brief has - checks if the trie has every string in the given vector
          * @param words - vector of strings to check for
          * @return true if the trie contains EVERY string, requires the last character Node to have isWord == true
          */
-        bool has(const DSVector<DSString> strs) const;
+        bool has(const DSVector<DSString>& strs) const;
 
         /**
          * @brief hasPrefix - Checks if the trie has the given prefix
          * @param prefix - prefix to check for
          * @return true if the trie contains the prefix
          */
-        bool hasPrefix(const DSString prefix) const;
+        bool hasPrefix(const DSString& prefix) const;
 
-        DSVector<DSString> getPrefix(const DSString prefix) const;
+        DSVector<DSString> getPrefix(const DSString& prefix) const;
 
         /**
          * @brief operator = : sets this trie equal to the trie given

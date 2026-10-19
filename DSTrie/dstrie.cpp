@@ -140,7 +140,7 @@ DSTrie::DSTrie(const DSVector<DSString>& data){
  * @brief DSTrie::addString -
  * @param str - string to add
  */
-void DSTrie::addString(const DSString str)
+void DSTrie::addString(const DSString& str)
 {
     Node* current = root;
     Node* child = nullptr;
@@ -163,7 +163,7 @@ void DSTrie::addString(const DSString str)
  * @brief DSTrie::addStrings
  * @param strs - vector of strings to add
  */
-void DSTrie::addStrings(const DSVector<DSString> strs)
+void DSTrie::addStrings(const DSVector<DSString>& strs)
 {
     for(int i = 0; i < strs.getNumIndexes(); i++){
         addString(strs[i]);
@@ -174,7 +174,7 @@ void DSTrie::addStrings(const DSVector<DSString> strs)
  * @brief DSTrie::removeString
  * @param str - string to remove
  */
-void DSTrie::removeString(const DSString str)
+void DSTrie::removeString(const DSString& str)
 {
     Node* current = root;
     DSVector<DSVector<Node*>::iterator> trail;
@@ -213,7 +213,7 @@ void DSTrie::removeString(const DSString str)
  * @brief DSTrie::removestrings
  * @param strs - vector of strings to remove
  */
-void DSTrie::removestrings(const DSVector<DSString> strs)
+void DSTrie::removestrings(const DSVector<DSString>& strs)
 {
     for(int i = 0; i < strs.getNumIndexes(); i ++){
         removeString(strs[i]);
@@ -243,7 +243,7 @@ DSVector<DSString> DSTrie::getAll() const
  * @param word - string to check for
  * @return true if the trie contains that string, requires the last character Node to have isWord == true
  */
-bool DSTrie::has(const DSString str) const
+bool DSTrie::has(const DSString& str) const
 {
     Node* current = root;
 
@@ -273,7 +273,7 @@ bool DSTrie::has(const DSString str) const
  * @param words - vector of strings to check for
  * @return true if the trie contains EVERY string, requires the last character Node to have isWord == true
  */
-bool DSTrie::has(const DSVector<DSString> strs) const
+bool DSTrie::has(const DSVector<DSString>& strs) const
 {
    for(int i = 0; i < strs.getNumIndexes(); i ++){
         if(!has(strs[i])){
@@ -289,7 +289,7 @@ bool DSTrie::has(const DSVector<DSString> strs) const
  * @param prefix - prefix to check for
  * @return true if the trie contains the prefix
  */
-bool DSTrie::hasPrefix(const DSString prefix) const
+bool DSTrie::hasPrefix(const DSString& prefix) const
 {
     Node* current = root;
 
@@ -314,7 +314,7 @@ bool DSTrie::hasPrefix(const DSString prefix) const
     return true;
 }
 
-DSVector<DSString> DSTrie::getPrefix(const DSString prefix) const{
+DSVector<DSString> DSTrie::getPrefix(const DSString& prefix) const{
     Node* current = root;
 
     if(root->children.getNumIndexes() == 0){
@@ -396,7 +396,9 @@ DSTrie DSTrie::operator+(const DSTrie& other) const{
  * @return  the sum of the given vector of strings and this trie
  */
 DSTrie DSTrie::operator+(const DSVector<DSString>& other) const{
-    return DSTrie();
+    DSTrie temp = *this;
+    temp.addStrings(other);
+    return temp;
 }
 
 /**
@@ -405,7 +407,11 @@ DSTrie DSTrie::operator+(const DSVector<DSString>& other) const{
  * @return true if both tries are equal
  */
 bool DSTrie::operator==(const DSTrie& other) const{
-    return *root == *other.root;
+    if(root == other.root){
+        return true;
+    } else {
+        return *root == *other.root;
+    }
 }
 
 /**
