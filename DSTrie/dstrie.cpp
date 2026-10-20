@@ -85,6 +85,28 @@ DSTrie::Node& DSTrie::Node::operator=(const Node& other){
     return *this;
 }
 
+DSTrie::Node &DSTrie::Node::operator+=(const Node &other)
+{
+    for(int i = 0; i < other.children.getNumIndexes(); i++){
+        bool found = false;
+        Node* otherChild = other.children[i];
+        for(int j = 0; j < children.getNumIndexes(); j++){
+            Node* myChild = children[i];
+            if(otherChild->data == myChild->data){
+                *myChild += *otherChild;
+                found = true;
+                break;
+            }
+        }
+
+        if(!found){
+            children.pushBack(new Node(*otherChild));
+        }
+    }
+
+    return *this;
+}
+
 
 bool DSTrie::Node::operator==(const Node& other) const{
     if(data != other.data ||
@@ -213,7 +235,7 @@ void DSTrie::removeString(const DSString& str)
  * @brief DSTrie::removestrings
  * @param strs - vector of strings to remove
  */
-void DSTrie::removestrings(const DSVector<DSString>& strs)
+void DSTrie::removeStrings(const DSVector<DSString>& strs)
 {
     for(int i = 0; i < strs.getNumIndexes(); i ++){
         removeString(strs[i]);
@@ -369,6 +391,7 @@ DSTrie& DSTrie::operator=(const DSVector<DSString>& other){
  * @return reference to this trie
  */
 DSTrie& DSTrie::operator+=(const DSTrie& other){
+    *root += *other.root;
     return *this;
 }
 
@@ -378,6 +401,7 @@ DSTrie& DSTrie::operator+=(const DSTrie& other){
  * @return referenece to this trie
  */
 DSTrie& DSTrie::operator+=(const DSVector<DSString>& other){
+    addStrings(other);
     return *this;
 }
 
@@ -387,6 +411,7 @@ DSTrie& DSTrie::operator+=(const DSVector<DSString>& other){
  * @return the sum of the given trie and this trie
  */
 DSTrie DSTrie::operator+(const DSTrie& other) const{
+    DSTrie temp = other;
     return DSTrie();
 }
 
@@ -397,7 +422,7 @@ DSTrie DSTrie::operator+(const DSTrie& other) const{
  */
 DSTrie DSTrie::operator+(const DSVector<DSString>& other) const{
     DSTrie temp = *this;
-    temp.addStrings(other);
+    temp += other;
     return temp;
 }
 

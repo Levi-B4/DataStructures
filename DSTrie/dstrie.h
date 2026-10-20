@@ -43,6 +43,8 @@ class DSTrie{
                 
                 Node& operator=(const Node& other);
 
+                Node& operator+=(const Node& other);
+
 
                 bool operator==(const Node& other) const;
 
@@ -97,7 +99,7 @@ class DSTrie{
          * @brief removestrings - removes each string in the given vector from the trie
          * @param strs - vector of strings
          */
-        void removestrings(const DSVector<DSString>& strs);
+        void removeStrings(const DSVector<DSString>& strs);
 
         /**
          * @brief clear - removes all data from the trie
